@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BGIS Intrazone Revamp — Alfred Law</title>
+  <meta name="description" content="BGIS Intrazone revamp: modernising an enterprise employee portal and bringing it to WCAG 2.1 accessibility compliance. Senior Product Designer case study by Alfred Law." />
+  <link rel="stylesheet" href="../style.css" />
+  <style>
+    /* ── Case nav ── */
+    .case-nav { padding: var(--space-2) 0; border-bottom: 1px solid var(--color-border); margin-top: 64px; }
+    .case-nav a { font-size: var(--size-sm); color: var(--color-ink-3); display: inline-flex; align-items: center; gap: var(--space-1); transition: color var(--transition); }
+    .case-nav a:hover { color: var(--color-ink); }
+
+    /* ── Hero ── */
+    .cs-hero { padding: var(--space-12) 0 var(--space-8); border-bottom: 1px solid var(--color-border); }
+    .hero-tags { display: flex; gap: var(--space-1); flex-wrap: wrap; margin-bottom: var(--space-4); }
+    .hero-tag { font-size: var(--size-xs); font-weight: 500; letter-spacing: .06em; padding: 4px 12px; border-radius: 100px; border: 1px solid var(--color-border); color: var(--color-ink-2); }
+    .hero-tag--filled { background: var(--color-surface); }
+    .hero-h1 { font-family: var(--font-display); font-size: clamp(2.5rem, 5.5vw, 4.5rem); font-weight: 700; line-height: 1.08; letter-spacing: -.02em; color: var(--color-ink); margin-bottom: var(--space-3); }
+    .hero-h1 em { font-style: italic; }
+    .hero-lead { font-size: var(--size-md); line-height: 1.75; color: var(--color-ink-2); max-width: 60ch; margin-bottom: var(--space-8); }
+    .hero-meta { display: flex; gap: 0; flex-wrap: wrap; border-top: 1px solid var(--color-border); padding-top: var(--space-4); }
+    .hero-meta-item { padding-right: var(--space-6); padding-bottom: var(--space-2); }
+    .meta-label { font-size: var(--size-xs); font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--color-ink-3); margin-bottom: 5px; max-width: none; }
+    .meta-value { font-size: var(--size-sm); font-weight: 500; color: var(--color-ink); max-width: none; line-height: 1.4; }
+
+    /* ── Stat row ── */
+    .stat-row { display: grid; grid-template-columns: repeat(4,1fr); border-bottom: 1px solid var(--color-border); }
+    .stat-cell { padding: var(--space-6) var(--space-4); border-right: 1px solid var(--color-border); }
+    .stat-cell:last-child { border-right: none; }
+    .stat-num { font-family: var(--font-display); font-size: 3rem; font-weight: 700; line-height: 1; color: var(--color-ink); margin-bottom: 6px; }
+    .stat-desc { font-size: var(--size-sm); color: var(--color-ink-3); max-width: none; }
+
+    /* ── Sections ── */
+    .cs-section { padding: var(--space-12) 0; border-bottom: 1px solid var(--color-border); }
+    .cs-section:last-child { border-bottom: none; }
+    .cs-section--surface { background: var(--color-surface); }
+    .cs-section h2 { margin-bottom: var(--space-3); }
+    .cs-section p  { margin-bottom: var(--space-3); }
+    .cs-section p:last-child { margin-bottom: 0; }
+
+    .eyebrow { font-size: var(--size-xs); font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--color-ink-3); display: flex; align-items: center; gap: 10px; margin-bottom: var(--space-4); }
+    .eyebrow::after { content: ''; flex: 1; max-width: 48px; height: 1px; background: var(--color-border); }
+
+    /* ── 2-col grid ── */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-8); align-items: start; }
+
+    /* ── Problem list ── */
+    .problem-list { list-style: none; margin-top: var(--space-4); }
+    .problem-list li { font-size: var(--size-sm); color: var(--color-ink-2); line-height: 1.6; padding: var(--space-3) 0; border-bottom: 1px solid var(--color-border); display: grid; grid-template-columns: 28px 1fr; gap: var(--space-2); align-items: baseline; }
+    .problem-list li:last-child { border-bottom: none; }
+    .problem-tag { font-size: var(--size-xs); font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-ink-3); }
+
+    /* ── Before/After ── */
+    .ba-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); margin-top: var(--space-6); }
+    .ba-card { border: 1px solid var(--color-border); overflow: hidden; }
+    .ba-card--after { border-color: var(--color-ink); }
+    .ba-header { padding: var(--space-2) var(--space-3); border-bottom: 1px solid var(--color-border); display: flex; align-items: center; justify-content: space-between; }
+    .ba-card--after .ba-header { background: var(--color-ink); border-color: var(--color-ink); }
+    .ba-label { font-size: var(--size-xs); font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--color-ink-3); }
+    .ba-card--after .ba-label { color: rgba(255,255,255,.6); }
+    .ba-badge { font-size: var(--size-xs); font-weight: 700; color: var(--color-ink); background: var(--color-surface); border: 1px solid var(--color-border); padding: 2px 10px; border-radius: 100px; }
+    .ba-card--after .ba-badge { background: rgba(255,255,255,.15); border-color: rgba(255,255,255,.2); color: #fff; }
+    .ba-body { padding: var(--space-4); }
+    .ba-item { font-size: var(--size-sm); color: var(--color-ink-2); padding: var(--space-1) 0; border-bottom: 1px solid var(--color-border); display: flex; align-items: baseline; gap: var(--space-2); line-height: 1.5; }
+    .ba-item:last-child { border-bottom: none; }
+    .ba-item::before { content: '—'; color: var(--color-ink-3); flex-shrink: 0; font-size: var(--size-xs); }
+
+    /* ── Decisions ── */
+    .decision { display: grid; grid-template-columns: 200px 1fr; gap: 0; border-top: 1px solid var(--color-border); padding: var(--space-6) 0; }
+    .decision:last-child { border-bottom: 1px solid var(--color-border); }
+    .d-num { font-family: var(--font-display); font-size: 2.5rem; font-weight: 700; color: var(--color-border); line-height: 1; margin-bottom: 6px; }
+    .d-title { font-size: var(--size-sm); font-weight: 600; color: var(--color-ink); padding-right: var(--space-4); }
+    .d-chosen { display: inline-flex; align-items: center; gap: 5px; font-size: var(--size-xs); font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--color-ink); background: var(--color-surface); border: 1px solid var(--color-border); padding: 3px 11px; border-radius: 100px; margin-bottom: var(--space-2); }
+    .d-rationale { font-size: var(--size-sm); color: var(--color-ink-2); line-height: 1.75; max-width: none; margin-bottom: var(--space-2); }
+    .d-note { margin-top: var(--space-2); padding-top: var(--space-2); border-top: 1px solid var(--color-border); font-size: var(--size-xs); color: var(--color-ink-3); line-height: 1.6; max-width: none; }
+    .d-note strong { color: var(--color-ink-2); }
+
+    /* ── WCAG checklist ── */
+    .wcag-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: var(--space-3); margin-top: var(--space-6); }
+    .wcag-card { border: 1px solid var(--color-border); padding: var(--space-4); }
+    .wcag-icon { width: 32px; height: 32px; border: 1.5px solid var(--color-ink); display: flex; align-items: center; justify-content: center; margin-bottom: var(--space-3); font-size: var(--size-xs); font-weight: 700; }
+    .wcag-title { font-size: var(--size-sm); font-weight: 700; color: var(--color-ink); margin-bottom: 6px; max-width: none; }
+    .wcag-desc { font-size: var(--size-xs); color: var(--color-ink-3); line-height: 1.6; max-width: none; }
+
+    /* ── Responsive diagram ── */
+    .device-grid { display: grid; grid-template-columns: 2fr 1.2fr 0.8fr; gap: var(--space-3); margin-top: var(--space-6); align-items: end; }
+    .device-card { border: 1px solid var(--color-border); overflow: hidden; }
+    .device-screen { background: var(--color-surface); border-bottom: 1px solid var(--color-border); display: flex; flex-direction: column; overflow: hidden; }
+    .device-info { padding: var(--space-2) var(--space-3); }
+    .device-name { font-size: var(--size-sm); font-weight: 600; color: var(--color-ink); margin-bottom: 3px; }
+    .device-desc { font-size: 11px; color: var(--color-ink-3); line-height: 1.5; }
+
+    /* Screen mockup elements */
+    .ds-bar { height: 28px; background: #0A0A0A; display: flex; align-items: center; padding: 0 10px; gap: 6px; }
+    .ds-logo { font-family: 'Playfair Display', serif; font-size: 9px; font-weight: 700; color: #fff; }
+    .ds-nav { display: flex; gap: 8px; margin-left: auto; }
+    .ds-nav-item { font-size: 7px; color: rgba(255,255,255,.7); }
+    .ds-content { display: flex; flex: 1; }
+    .ds-main { flex: 1; padding: 8px; }
+    .ds-sidebar { width: 28%; border-left: 1px solid #E2E2E2; padding: 6px; background: #fff; }
+    .ds-hero-block { background: #F7F7F7; border: 1px solid #E2E2E2; border-radius: 2px; padding: 6px 8px; margin-bottom: 6px; }
+    .ds-hero-title { font-size: 8px; font-weight: 700; color: #0A0A0A; margin-bottom: 2px; }
+    .ds-hero-sub { font-size: 5px; color: #888; }
+    .ds-section-label { font-size: 5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: #888; margin-bottom: 3px; }
+    .ds-card-row { display: flex; gap: 3px; margin-bottom: 4px; }
+    .ds-card { flex: 1; background: #F7F7F7; border: 1px solid #E2E2E2; border-radius: 2px; padding: 4px; }
+    .ds-card-title { font-size: 5px; font-weight: 600; color: #0A0A0A; margin-bottom: 1px; }
+    .ds-card-sub { font-size: 4px; color: #888; }
+    .ds-link-group { margin-bottom: 4px; }
+    .ds-link-label { font-size: 5px; font-weight: 700; color: #0A0A0A; margin-bottom: 2px; }
+    .ds-link-item { font-size: 4px; color: #444; padding: 1px 0; border-bottom: 1px solid #F0F0F0; }
+    /* Tablet mockup */
+    .ds-tablet-content { display: flex; flex-direction: column; flex: 1; }
+    .ds-tab-hero { background: #F7F7F7; border-bottom: 1px solid #E2E2E2; padding: 6px 8px; }
+    .ds-tab-hero-title { font-size: 7px; font-weight: 700; color: #0A0A0A; margin-bottom: 1px; }
+    .ds-tab-grid { display: flex; gap: 3px; padding: 6px 8px; }
+    .ds-tab-card { flex: 1; background: #F7F7F7; border: 1px solid #E2E2E2; padding: 5px; border-radius: 2px; }
+    .ds-tab-card-title { font-size: 5px; font-weight: 600; color: #0A0A0A; margin-bottom: 2px; }
+    .ds-tab-links { padding: 4px 8px; border-top: 1px solid #E2E2E2; display: flex; align-items: center; justify-content: space-between; }
+    .ds-tab-links-label { font-size: 5px; font-weight: 700; color: #0A0A0A; }
+    .ds-tab-links-btn { font-size: 4px; background: #0A0A0A; color: #fff; padding: 2px 5px; border-radius: 100px; }
+    /* Mobile mockup */
+    .ds-mob-bar { height: 24px; background: #0A0A0A; display: flex; align-items: center; padding: 0 8px; justify-content: space-between; }
+    .ds-mob-hamburger { display: flex; flex-direction: column; gap: 2px; }
+    .ds-mob-line { width: 10px; height: 1px; background: #fff; }
+    .ds-mob-logo { font-family: 'Playfair Display', serif; font-size: 7px; font-weight: 700; color: #fff; }
+    .ds-mob-btn { font-size: 5px; background: rgba(255,255,255,.2); color: #fff; padding: 2px 5px; border-radius: 100px; }
+    .ds-mob-hero { background: #F7F7F7; border-bottom: 1px solid #E2E2E2; padding: 7px 8px; }
+    .ds-mob-title { font-size: 8px; font-weight: 700; color: #0A0A0A; margin-bottom: 1px; }
+    .ds-mob-sub { font-size: 5px; color: #888; }
+    .ds-mob-cards { padding: 5px 8px; display: flex; flex-direction: column; gap: 3px; }
+    .ds-mob-card { background: #F7F7F7; border: 1px solid #E2E2E2; border-radius: 2px; padding: 5px; display: flex; align-items: center; justify-content: space-between; }
+    .ds-mob-card-title { font-size: 6px; font-weight: 600; color: #0A0A0A; }
+    .ds-mob-arrow { font-size: 7px; color: #888; }
+
+    /* ── Contrast mode demo ── */
+    .contrast-demo { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); margin-top: var(--space-6); }
+    .contrast-card { border: 1px solid var(--color-border); overflow: hidden; }
+    .contrast-header { padding: var(--space-2) var(--space-3); border-bottom: 1px solid var(--color-border); display: flex; align-items: center; justify-content: space-between; }
+    .contrast-label { font-size: var(--size-xs); font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--color-ink-3); }
+    .contrast-body { padding: var(--space-4); }
+    .contrast-body--hc { background: #000; }
+    .contrast-row { display: flex; align-items: center; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid #E2E2E2; }
+    .contrast-body--hc .contrast-row { border-color: #444; }
+    .contrast-text { font-size: var(--size-xs); color: var(--color-ink); }
+    .contrast-body--hc .contrast-text { color: #FFFF00; font-weight: 600; }
+    .contrast-link { font-size: var(--size-xs); color: var(--color-ink-3); text-decoration: underline; }
+    .contrast-body--hc .contrast-link { color: #fff; }
+    .contrast-ratio { font-size: 10px; font-weight: 700; padding: 2px 8px; border: 1px solid var(--color-border); border-radius: 100px; color: var(--color-ink-3); }
+    .contrast-ratio--pass { border-color: var(--color-ink); color: var(--color-ink); }
+
+    /* ── Outcomes ── */
+    .outcomes-grid { display: grid; grid-template-columns: repeat(3,1fr); border: 1px solid var(--color-border); margin-top: var(--space-4); }
+    .outcome-cell { padding: var(--space-6) var(--space-4); border-right: 1px solid var(--color-border); }
+    .outcome-cell:last-child { border-right: none; }
+    .outcome-num { font-family: var(--font-display); font-size: 3.25rem; font-weight: 700; line-height: 1; color: var(--color-ink); margin-bottom: 6px; }
+    .outcome-label { font-size: var(--size-sm); font-weight: 600; color: var(--color-ink); margin-bottom: 6px; max-width: none; }
+    .outcome-detail { font-size: var(--size-xs); color: var(--color-ink-3); line-height: 1.6; max-width: none; }
+
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      .grid-2 { grid-template-columns: 1fr; gap: var(--space-6); }
+      .ba-grid { grid-template-columns: 1fr; }
+      .decision { grid-template-columns: 1fr; }
+      .d-title { padding-right: 0; margin-bottom: var(--space-2); }
+      .wcag-grid { grid-template-columns: 1fr 1fr; }
+      .device-grid { grid-template-columns: 1fr; }
+      .contrast-demo { grid-template-columns: 1fr; }
+      .stat-row { grid-template-columns: 1fr 1fr; }
+      .outcomes-grid { grid-template-columns: 1fr; }
+      .outcome-cell { border-right: none; border-bottom: 1px solid var(--color-border); }
+      .outcome-cell:last-child { border-bottom: none; }
+    }
+    @media (max-width: 600px) {
+      .wcag-grid { grid-template-columns: 1fr; }
+      .stat-row { grid-template-columns: 1fr; }
+      .stat-cell { border-right: none; border-bottom: 1px solid var(--color-border); }
+      .stat-cell:last-child { border-bottom: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav" role="navigation" aria-label="Main">
+    <div class="nav__inner">
+      <a href="/" class="nav__logo" aria-label="Alfred Law — home" style="display:flex;align-items:center;gap:12px;">
+        <img src="../assets/images/AL.webp" alt="AL" />
+        <span style="font-size:var(--size-sm);font-weight:500;color:var(--color-ink-2);letter-spacing:0.01em;">Alfred Law · Portfolio</span>
+      </a>
+      <ul class="nav__links" id="nav-links" role="list">
+        <li><a href="/">Work</a></li>
+        <li><a href="../about.html">About</a></li>
+        <li><a href="../assets/alfred-law-resume.pdf" target="_blank" rel="noopener">Résumé</a></li>
+      </ul>
+      <button class="nav__hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="nav-links">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- BREADCRUMB -->
+  <div class="case-nav">
+    <div class="container">
+      <a href="/">← All work</a>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <section class="cs-hero">
+    <div class="container">
+      <div class="hero-tags">
+        <span class="hero-tag hero-tag--filled">UX/UI Designer</span>
+        <span class="hero-tag">BGIS · 2021</span>
+        <span class="hero-tag">WCAG 2.1</span>
+      </div>
+      <h1 class="hero-h1 fade-up">Designing for the employees<br><em>everyone else forgot.</em></h1>
+      <p class="hero-lead fade-up">BGIS's internal employee portal — Intrazone — hadn't been updated in years. It was inaccessible, non-responsive, and visually outdated. I redesigned it from the ground up: modern UI, WCAG 2.1 compliant, and responsive across desktop, tablet, and mobile. The result was received so well the business commissioned the same approach across its other internal sites.</p>
+      <div class="hero-meta fade-up">
+        <div class="hero-meta-item">
+          <p class="meta-label">Role</p>
+          <p class="meta-value">UX/UI Designer</p>
+        </div>
+        <div class="hero-meta-item">
+          <p class="meta-label">Company</p>
+          <p class="meta-value">BGIS</p>
+        </div>
+        <div class="hero-meta-item">
+          <p class="meta-label">Platform</p>
+          <p class="meta-value">Web · SharePoint</p>
+        </div>
+        <div class="hero-meta-item">
+          <p class="meta-label">Year</p>
+          <p class="meta-value">2021</p>
+        </div>
+        <div class="hero-meta-item">
+          <p class="meta-label">Standard</p>
+          <p class="meta-value">WCAG 2.1 AA</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div>
+    <div class="container" style="padding-left:0;padding-right:0;max-width:100%;">
+      <div class="stat-row" style="max-width:var(--max-width);margin:0 auto;padding:0 var(--space-4);">
+        <div class="stat-cell" style="padding-left:0;">
+          <p class="stat-num">AA</p>
+          <p class="stat-desc">WCAG 2.1 compliance achieved — including high contrast mode</p>
+        </div>
+        <div class="stat-cell">
+          <p class="stat-num">3</p>
+          <p class="stat-desc">Platforms fully supported — desktop, tablet, and mobile</p>
+        </div>
+        <div class="stat-cell">
+          <p class="stat-num">2</p>
+          <p class="stat-desc">Languages supported without simultaneous display issues</p>
+        </div>
+        <div class="stat-cell">
+          <p class="stat-num">+</p>
+          <p class="stat-desc">Approach extended to additional BGIS internal sites after launch</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTEXT -->
+  <section class="cs-section">
+    <div class="container">
+      <p class="eyebrow">01 — Context</p>
+      <div class="grid-2">
+        <div>
+          <h2>Enterprise internal tools are often the last to get design attention.</h2>
+          <p>Intrazone is BGIS's employee homepage — the central hub linking to administrative tasks, training resources, employee health information, and team SharePoint pages. Every BGIS employee uses it. None of them had any say in how it looked or worked.</p>
+          <p>Internal tools tend to get deprioritised because they don't generate revenue directly. But they affect everyone who generates that revenue. A poorly designed employee portal creates friction every single day — for every single person who uses it.</p>
+        </div>
+        <div>
+          <p>By 2021, Intrazone was showing its age in ways that went beyond aesthetics. The site hadn't been meaningfully updated in years. New accessibility legislation and WCAG standards had raised the bar. The adoption of a new BGIS brand required a visual refresh. And the shift toward hybrid and remote work had created new demand for mobile and tablet access that the site simply didn't support.</p>
+          <p>The mandate was clear: modernise the look and feel, bring the site to WCAG 2.1 AA compliance, and make it fully responsive — without breaking the content workflows that administrators relied on to maintain it.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXISTING SITE AUDIT -->
+  <section class="cs-section cs-section--surface">
+    <div class="container">
+      <p class="eyebrow">02 — Existing site audit</p>
+      <div class="grid-2" style="margin-bottom:var(--space-8);">
+        <div>
+          <h2>Four compounding problems — each making the others worse.</h2>
+          <p>The existing site wasn't just outdated — it had structural problems that actively worked against usability and compliance. Each issue independently warranted a fix; together they made a strong case for a ground-up redesign rather than incremental patching.</p>
+        </div>
+        <div>
+          <p>An audit of the existing site mapped four distinct problem categories. Fixing them required coordinated design decisions — resolving one in isolation would have created new problems elsewhere.</p>
+        </div>
+      </div>
+
+      <div class="ba-grid">
+        <div class="ba-card" style="background:var(--color-surface);">
+          <div class="ba-header">
+            <span class="ba-label">Existing site</span>
+            <span class="ba-badge">Before</span>
+          </div>
+          <div class="ba-body">
+            <div class="ba-item">Text embedded in images — not readable by screen readers or search</div>
+            <div class="ba-item">English and French content displayed simultaneously with no language switching</div>
+            <div class="ba-item">No responsive layout — desktop-only, broken on mobile and tablet</div>
+            <div class="ba-item">Outdated brand colours no longer aligned with BGIS identity</div>
+            <div class="ba-item">No high contrast mode — colour contrast ratios below WCAG minimums</div>
+            <div class="ba-item">Links scattered across the page with no consistent navigation pattern</div>
+          </div>
+        </div>
+        <div class="ba-card ba-card--after">
+          <div class="ba-header">
+            <span class="ba-label">Redesign</span>
+            <span class="ba-badge">After</span>
+          </div>
+          <div class="ba-body">
+            <div class="ba-item" style="color:#0A0A0A;">All text in live HTML — accessible to screen readers and indexable</div>
+            <div class="ba-item" style="color:#0A0A0A;">Language toggle — single language displayed at a time</div>
+            <div class="ba-item" style="color:#0A0A0A;">Fully responsive across desktop, tablet, and mobile breakpoints</div>
+            <div class="ba-item" style="color:#0A0A0A;">Updated to new BGIS brand colours with consistent application</div>
+            <div class="ba-item" style="color:#0A0A0A;">High contrast mode toggle meeting WCAG 2.1 AA requirements</div>
+            <div class="ba-item" style="color:#0A0A0A;">Persistent links hub — consistent location on every page</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DESIGN DECISIONS -->
+  <section class="cs-section">
+    <div class="container">
+      <p class="eyebrow">03 — Design decisions</p>
+      <div class="grid-2" style="margin-bottom:var(--space-8);">
+        <div>
+          <h2>Three decisions that shaped the whole system.</h2>
+        </div>
+        <div>
+          <p>Each design decision was driven by a specific problem from the audit and had implications across the whole design — not just the surface it addressed directly.</p>
+        </div>
+      </div>
+
+      <div>
+        <div class="decision">
+          <div>
+            <p class="d-num">01</p>
+            <p class="d-title">Persistent links hub</p>
+          </div>
+          <div>
+            <span class="d-chosen">✦ Fixed right-column sidebar on all pages</span>
+            <p class="d-rationale">The most-accessed links on Intrazone were buried inconsistently across different pages. Users had to remember where things lived rather than develop a predictable mental model. The redesign anchors a links hub to the right-hand side of every page — persistent across navigation, always in the same place regardless of content.</p>
+            <p class="d-note"><strong>Why right column:</strong> The main content area needed to remain the focal point. Placing the links hub on the right preserves left-to-right reading flow while ensuring utility links are always within a short eye movement. On mobile and tablet, the sidebar collapses behind a persistent floating button — maintaining access without competing with the primary content.</p>
+          </div>
+        </div>
+
+        <div class="decision">
+          <div>
+            <p class="d-num">02</p>
+            <p class="d-title">High contrast mode toggle</p>
+          </div>
+          <div>
+            <span class="d-chosen">✦ User-triggered accessibility mode</span>
+            <p class="d-rationale">WCAG 2.1 AA requires a minimum contrast ratio of 4.5:1 for normal text. The existing site's colour palette failed this threshold in multiple places. Rather than simply selecting compliant colours for the default theme and calling it done, the redesign introduced a high contrast mode toggle — giving users with visual impairments the option to activate significantly enhanced contrast at any time.</p>
+            <p class="d-note"><strong>Why a toggle vs. system preference detection:</strong> Enterprise environments often have managed system settings that don't reflect individual employee preferences. A user-controlled toggle inside the portal ensures the option is always available regardless of what the operating system reports. It also makes the accessibility commitment visible — a signal that the organisation takes it seriously.</p>
+          </div>
+        </div>
+
+        <div class="decision">
+          <div>
+            <p class="d-num">03</p>
+            <p class="d-title">Modular, maintainable layout</p>
+          </div>
+          <div>
+            <span class="d-chosen">✦ Defined sections with minimal admin overhead</span>
+            <p class="d-rationale">A redesign that administrators couldn't maintain would revert to the old site within months. The layout was structured around well-defined, modular sections — each independently updatable without touching the others. This reduced maintenance effort significantly and ensured the redesign would stay current rather than accumulate debt.</p>
+            <p class="d-note"><strong>Constraint acknowledged:</strong> SharePoint imposes real constraints on layout flexibility. The design was scoped to what the CMS could reliably support — not what was theoretically ideal. This required early conversations about what was buildable before committing to layouts in the design phase.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESPONSIVE -->
+  <section class="cs-section cs-section--surface">
+    <div class="container">
+      <p class="eyebrow">04 — Responsive design</p>
+      <div class="grid-2" style="margin-bottom:var(--space-8);">
+        <div>
+          <h2>The same experience — adapted for where people actually are.</h2>
+          <p>With hybrid and remote work accelerating in 2021, employees were no longer guaranteed to be at a desktop when they needed to access Intrazone. A site that only worked at a desk wasn't a site that worked for its users.</p>
+        </div>
+        <div>
+          <p>Three distinct breakpoints — desktop, tablet, and mobile — each with intentional layout decisions rather than simple content stacking. The goal was to feel native to the device, not just technically functional on it.</p>
+        </div>
+      </div>
+
+      <div class="device-grid">
+        <!-- Desktop -->
+        <div class="device-card">
+          <div class="device-screen" style="height:240px;">
+            <div class="ds-bar">
+              <span class="ds-logo">BGIS Intrazone</span>
+              <div class="ds-nav">
+                <span class="ds-nav-item">Home</span>
+                <span class="ds-nav-item">Teams</span>
+                <span class="ds-nav-item">Training</span>
+                <span class="ds-nav-item">HR</span>
+              </div>
+            </div>
+            <div class="ds-content">
+              <div class="ds-main">
+                <div class="ds-hero-block">
+                  <div class="ds-hero-title">Welcome to Intrazone</div>
+                  <div class="ds-hero-sub">Your central hub for BGIS resources</div>
+                </div>
+                <div class="ds-section-label">Quick access</div>
+                <div class="ds-card-row">
+                  <div class="ds-card"><div class="ds-card-title">Training</div><div class="ds-card-sub">Courses &amp; certifications</div></div>
+                  <div class="ds-card"><div class="ds-card-title">HR</div><div class="ds-card-sub">Benefits &amp; policies</div></div>
+                  <div class="ds-card"><div class="ds-card-title">IT Help</div><div class="ds-card-sub">Support &amp; tickets</div></div>
+                </div>
+                <div class="ds-section-label">News &amp; announcements</div>
+                <div class="ds-card-row">
+                  <div class="ds-card" style="flex:2;"><div class="ds-card-title">Q3 Update</div><div class="ds-card-sub">Company performance highlights</div></div>
+                  <div class="ds-card"><div class="ds-card-title">Events</div><div class="ds-card-sub">Upcoming</div></div>
+                </div>
+              </div>
+              <div class="ds-sidebar">
+                <div class="ds-link-group">
+                  <div class="ds-link-label">Most visited</div>
+                  <div class="ds-link-item">Payroll portal</div>
+                  <div class="ds-link-item">Time &amp; attendance</div>
+                  <div class="ds-link-item">Benefits</div>
+                  <div class="ds-link-item">IT helpdesk</div>
+                  <div class="ds-link-item">Sharepoint</div>
+                </div>
+                <div class="ds-link-group" style="margin-top:6px;">
+                  <div class="ds-link-label">My team</div>
+                  <div class="ds-link-item">Team hub</div>
+                  <div class="ds-link-item">Documents</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="device-info">
+            <p class="device-name">Desktop</p>
+            <p class="device-desc">Full two-column layout. Links hub always visible in right sidebar.</p>
+          </div>
+        </div>
+
+        <!-- Tablet -->
+        <div class="device-card">
+          <div class="device-screen" style="height:240px;">
+            <div class="ds-bar" style="height:24px;padding:0 8px;">
+              <span class="ds-logo" style="font-size:8px;">BGIS Intrazone</span>
+              <span style="font-size:14px;color:rgba(255,255,255,.7);margin-left:auto;">≡</span>
+            </div>
+            <div class="ds-tablet-content">
+              <div class="ds-tab-hero">
+                <div class="ds-tab-hero-title">Welcome to Intrazone</div>
+                <div style="font-size:5px;color:#888;margin-top:1px;">Your central hub for BGIS resources</div>
+              </div>
+              <div class="ds-tab-grid">
+                <div class="ds-tab-card"><div class="ds-tab-card-title">Training</div><div style="font-size:4px;color:#888;">Courses</div></div>
+                <div class="ds-tab-card"><div class="ds-tab-card-title">HR</div><div style="font-size:4px;color:#888;">Benefits</div></div>
+              </div>
+              <div class="ds-tab-grid" style="padding-top:0;">
+                <div class="ds-tab-card"><div class="ds-tab-card-title">IT Help</div><div style="font-size:4px;color:#888;">Support</div></div>
+                <div class="ds-tab-card"><div class="ds-tab-card-title">News</div><div style="font-size:4px;color:#888;">Updates</div></div>
+              </div>
+              <div style="flex:1;"></div>
+              <div class="ds-tab-links">
+                <span class="ds-tab-links-label">Quick Links</span>
+                <span class="ds-tab-links-btn">Open ↑</span>
+              </div>
+            </div>
+          </div>
+          <div class="device-info">
+            <p class="device-name">Tablet</p>
+            <p class="device-desc">Grid layout. Links hub collapses into a persistent bottom button.</p>
+          </div>
+        </div>
+
+        <!-- Mobile -->
+        <div class="device-card">
+          <div class="device-screen" style="height:240px;">
+            <div class="ds-mob-bar">
+              <div class="ds-mob-hamburger"><div class="ds-mob-line"></div><div class="ds-mob-line"></div><div class="ds-mob-line"></div></div>
+              <span class="ds-mob-logo">Intrazone</span>
+              <span class="ds-mob-btn">Links</span>
+            </div>
+            <div class="ds-mob-hero">
+              <div class="ds-mob-title">Welcome back</div>
+              <div class="ds-mob-sub">Your BGIS resource hub</div>
+            </div>
+            <div class="ds-mob-cards">
+              <div class="ds-mob-card"><span class="ds-mob-card-title">Training &amp; Certifications</span><span class="ds-mob-arrow">›</span></div>
+              <div class="ds-mob-card"><span class="ds-mob-card-title">HR &amp; Benefits</span><span class="ds-mob-arrow">›</span></div>
+              <div class="ds-mob-card"><span class="ds-mob-card-title">IT Help &amp; Support</span><span class="ds-mob-arrow">›</span></div>
+              <div class="ds-mob-card"><span class="ds-mob-card-title">News &amp; Announcements</span><span class="ds-mob-arrow">›</span></div>
+            </div>
+          </div>
+          <div class="device-info">
+            <p class="device-name">Mobile</p>
+            <p class="device-desc">Stacked list layout. Hamburger nav + floating Links button in header.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ACCESSIBILITY -->
+  <section class="cs-section">
+    <div class="container">
+      <p class="eyebrow">05 — Accessibility</p>
+      <div class="grid-2" style="margin-bottom:var(--space-8);">
+        <div>
+          <h2>WCAG 2.1 AA isn't a checkbox. It's a minimum.</h2>
+          <p>Accessibility compliance for internal tools is often treated as a legal formality — something to check off before launch and then forget. This project treated it as a design constraint that improved the experience for everyone, not just users with disabilities.</p>
+        </div>
+        <div>
+          <p>The existing site had multiple WCAG failures — most significantly, embedding text inside images, which made content invisible to screen readers and impossible to resize. Every failure was addressed systematically, not just the ones most likely to be audited.</p>
+        </div>
+      </div>
+
+      <div class="wcag-grid">
+        <div class="wcag-card">
+          <div class="wcag-icon">1.4</div>
+          <p class="wcag-title">Distinguishable — Contrast</p>
+          <p class="wcag-desc">All text in the default theme meets the 4.5:1 minimum contrast ratio. High contrast mode significantly exceeds this threshold, targeting users with low vision or colour sensitivity.</p>
+        </div>
+        <div class="wcag-card">
+          <div class="wcag-icon">1.3</div>
+          <p class="wcag-title">Adaptable — Structure</p>
+          <p class="wcag-desc">All content is in live HTML with semantic heading structure. No text embedded in images. Screen readers can navigate the full content hierarchy without workarounds.</p>
+        </div>
+        <div class="wcag-card">
+          <div class="wcag-icon">1.4</div>
+          <p class="wcag-title">Resize Text</p>
+          <p class="wcag-desc">Content reflows correctly at 200% zoom without horizontal scrolling or content loss. Layouts were tested at multiple zoom levels across all three responsive breakpoints.</p>
+        </div>
+        <div class="wcag-card">
+          <div class="wcag-icon">2.1</div>
+          <p class="wcag-title">Keyboard Accessible</p>
+          <p class="wcag-desc">All interactive elements — navigation, links hub, language toggle, contrast mode toggle — are reachable and operable via keyboard alone, with visible focus indicators throughout.</p>
+        </div>
+        <div class="wcag-card">
+          <div class="wcag-icon">3.1</div>
+          <p class="wcag-title">Language of Page</p>
+          <p class="wcag-desc">The bilingual display issue is resolved. A language toggle presents a single language at a time, with correct lang attribute set on the HTML element so screen readers use the right voice profile.</p>
+        </div>
+        <div class="wcag-card">
+          <div class="wcag-icon">HC</div>
+          <p class="wcag-title">High Contrast Mode</p>
+          <p class="wcag-desc">A user-triggered high contrast mode was designed as a full theme — not just colour inversion. Foreground colours are WCAG AAA-compliant (7:1+) for users who need maximum legibility.</p>
+        </div>
+      </div>
+
+      <div class="contrast-demo" style="margin-top:var(--space-6);">
+        <div class="contrast-card">
+          <div class="contrast-header">
+            <span class="contrast-label">Default theme</span>
+          </div>
+          <div class="contrast-body">
+            <div class="contrast-row">
+              <span class="contrast-text">Page heading — Intrazone</span>
+              <span class="contrast-ratio contrast-ratio--pass">7.5:1 ✓</span>
+            </div>
+            <div class="contrast-row">
+              <span class="contrast-text">Body text — Welcome to BGIS</span>
+              <span class="contrast-ratio contrast-ratio--pass">5.8:1 ✓</span>
+            </div>
+            <div class="contrast-row" style="border:none;">
+              <span class="contrast-link">Quick link — Payroll portal</span>
+              <span class="contrast-ratio contrast-ratio--pass">4.7:1 ✓</span>
+            </div>
+          </div>
+        </div>
+        <div class="contrast-card">
+          <div class="contrast-header">
+            <span class="contrast-label">High contrast mode</span>
+          </div>
+          <div class="contrast-body contrast-body--hc">
+            <div class="contrast-row">
+              <span class="contrast-text">Page heading — Intrazone</span>
+              <span class="contrast-ratio contrast-ratio--pass" style="border-color:#fff;color:#fff;">21:1 ✓</span>
+            </div>
+            <div class="contrast-row">
+              <span class="contrast-text">Body text — Welcome to BGIS</span>
+              <span class="contrast-ratio contrast-ratio--pass" style="border-color:#fff;color:#fff;">21:1 ✓</span>
+            </div>
+            <div class="contrast-row" style="border:none;">
+              <span class="contrast-link">Quick link — Payroll portal</span>
+              <span class="contrast-ratio contrast-ratio--pass" style="border-color:#fff;color:#fff;">21:1 ✓</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OUTCOMES -->
+  <section class="cs-section cs-section--surface">
+    <div class="container">
+      <p class="eyebrow">06 — Outcomes</p>
+      <div class="grid-2" style="margin-bottom:var(--space-8);align-items:start;">
+        <div>
+          <h2>Warm reception — and an immediate request for more.</h2>
+          <p>The redesign launched to strongly positive internal feedback. Employees noticed the difference immediately — the improvement in usability and visual clarity was significant enough that the reaction was qualitatively clear without needing formal measurement.</p>
+        </div>
+        <div>
+          <p>The business response was the clearest signal of success: BGIS requested that the same design principles and approach be applied to its other internal sites. A single project had established a design system and methodology that could scale across the organization's digital workplace.</p>
+        </div>
+      </div>
+      <div class="outcomes-grid">
+        <div class="outcome-cell">
+          <p class="outcome-num">AA</p>
+          <p class="outcome-label">WCAG 2.1 compliance</p>
+          <p class="outcome-detail">Full WCAG 2.1 AA compliance achieved, including dedicated high contrast mode designed as a complete theme rather than a toggle.</p>
+        </div>
+        <div class="outcome-cell">
+          <p class="outcome-num">3×</p>
+          <p class="outcome-label">Platform reach</p>
+          <p class="outcome-detail">Desktop, tablet, and mobile — all supported with intentional layouts, not just stacked content.</p>
+        </div>
+        <div class="outcome-cell">
+          <p class="outcome-num">+</p>
+          <p class="outcome-label">Extended to other sites</p>
+          <p class="outcome-detail">The business commissioned the same design approach for additional internal sites — the strongest possible endorsement of the work.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REFLECTION -->
+  <section class="cs-section">
+    <div class="container">
+      <p class="eyebrow">07 — Reflection</p>
+      <div class="grid-2">
+        <div>
+          <h2>What I'd do differently.</h2>
+          <p>The high contrast mode was designed as a user toggle, which was the right call for enterprise environments. But in hindsight, I'd push harder to also support the <code>prefers-contrast: more</code> CSS media query — so users whose operating system is already set to high contrast would get the mode automatically, without needing to discover and enable it manually.</p>
+          <p>I'd also build in a more formal usability testing phase with actual employees before launch. The warm reception suggests the design was on the right track, but qualitative feedback after launch is harder to act on than structured usability findings before it.</p>
+        </div>
+        <div>
+          <h2>What this reinforced.</h2>
+          <p>Accessibility work teaches you to design for the edges — and when you do that well, the middle benefits too. Every fix we made for screen reader compatibility, keyboard navigation, or colour contrast made the experience better for users without those needs as well. Accessible design is just good design.</p>
+          <p>The maintainability constraint also sharpened the design. When you know a content admin — not a developer — needs to update the site every month, you stop designing for ideal conditions and start designing for the real workflow. That constraint produced a more durable result than an unconstrained design would have.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__inner">
+        <p class="footer__copy">© 2026 Alfred Law. All rights reserved.</p>
+        <div class="footer__links">
+          <a href="mailto:alfred.lawsn@gmail.com">Email</a>
+          <a href="https://www.linkedin.com/in/alfredlaw/" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://dribbble.com/iamalfred" target="_blank" rel="noopener">Dribbble</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../script.js"></script>
+</body>
+</html>
