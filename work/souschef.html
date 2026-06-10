@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SousChef — Alfred Law</title>
+  <meta name="description" content="SousChef: an AI-powered recipe collection app for iOS and Android. A 3-day solo design sprint by Alfred Law." />
+  <link rel="stylesheet" href="../style.css" />
+  <style>
+    /* ── Case nav ── */
+    .case-nav { padding: var(--space-2) 0; border-bottom: 1px solid var(--color-border); margin-top: 64px; }
+    .case-nav a { font-size: var(--size-sm); color: var(--color-ink-3); display: inline-flex; align-items: center; gap: var(--space-1); transition: color var(--transition); }
+    .case-nav a:hover { color: var(--color-ink); }
+
+    /* ── Hero ── */
+    .sc-hero { padding: var(--space-12) 0 var(--space-8); border-bottom: 1px solid var(--color-border); }
+    .hero-tags { display: flex; gap: var(--space-1); flex-wrap: wrap; margin-bottom: var(--space-4); }
+    .hero-tag { font-size: var(--size-xs); font-weight: 500; letter-spacing: .06em; padding: 4px 12px; border-radius: 100px; border: 1px solid var(--color-border); color: var(--color-ink-2); }
+    .hero-tag--filled { background: var(--color-surface); }
+    .hero-h1 { font-family: var(--font-display); font-size: clamp(2.5rem, 5.5vw, 4.5rem); font-weight: 700; line-height: 1.08; letter-spacing: -.02em; color: var(--color-ink); margin-bottom: var(--space-3); }
+    .hero-h1 em { font-style: italic; }
+    .hero-lead { font-size: var(--size-md); line-height: 1.75; color: var(--color-ink-2); max-width: 60ch; margin-bottom: var(--space-8); }
+    .hero-meta { display: flex; gap: 0; flex-wrap: wrap; border-top: 1px solid var(--color-border); padding-top: var(--space-4); }
+    .hero-meta-item { padding-right: var(--space-6); padding-bottom: var(--space-2); }
+    .meta-label { font-size: var(--size-xs); font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--color-ink-3); margin-bottom: 5px; max-width: none; }
+    .meta-value { font-size: var(--size-sm); font-weight: 500; color: var(--color-ink); max-width: none; line-height: 1.4; }
+
+    /* ── Stat row ── */
+    .stat-row { display: grid; grid-template-columns: repeat(3,1fr); border-bottom: 1px solid var(--color-border); }
+    .stat-cell { padding: var(--space-6) var(--space-4); border-right: 1px solid var(--color-border); }
+    .stat-cell:last-child { border-right: none; }
+    .stat-num { font-family: var(--font-display); font-size: 3rem; font-weight: 700; line-height: 1; color: var(--color-ink); margin-bottom: 6px; }
+    .stat-desc { font-size: var(--size-sm); color: var(--color-ink-3); max-width: none; }
+
+    /* ── Sections ── */
+    .sc-section { padding: var(--space-12) 0; border-bottom: 1px solid var(--color-border); }
+    .sc-section:last-child { border-bottom: none; }
+    .sc-section--surface { background: var(--color-surface); }
+
+    .eyebrow {
+      font-size: var(--size-xs); font-weight: 600; letter-spacing: .12em; text-transform: uppercase;
+      color: var(--color-ink-3); display: flex; align-items: center; gap: 10px; margin-bottom: var(--space-4);
+    }
+    .eyebrow::after { content: ''; flex: 1; max-width: 48px; height: 1px; background: var(--color-border); }
+
+    .sc-section h2 { margin-bottom: var(--space-3); }
+    .sc-section p  { margin-bottom: var(--space-3); }
+    .sc-section p:last-child { margin-bottom: 0; }
+
+    /* ── 2-col grid ── */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-8); align-items: start; }
+
+    /* ── Blockquote ── */
+    blockquote { border-left: 2px solid var(--color-ink); padding: 4px 0 4px var(--space-3); margin: var(--space-4) 0; }
+    blockquote p { font-family: var(--font-display); font-size: var(--size-md); font-style: italic; line-height: 1.65; color: var(--color-ink); max-width: none; margin: 0; }
+    blockquote cite { display: block; margin-top: 8px; font-size: var(--size-xs); color: var(--color-ink-3); font-style: normal; }
+
+    /* ── AI note label ── */
+    .ai-note-label { font-size: var(--size-xs); font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--color-ink-3); margin-bottom: 6px; }
+
+    /* ── Personas ── */
+    .persona-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); margin-top: var(--space-6); }
+    .persona-card { border: 1px solid var(--color-border); padding: var(--space-4); background: var(--color-bg); }
+    .persona-avatar { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 17px; font-weight: 700; margin-bottom: var(--space-2); background: var(--color-surface); color: var(--color-ink); border: 1px solid var(--color-border); }
+    .persona-name { font-size: var(--size-base); font-weight: 600; margin-bottom: 2px; }
+    .persona-sub { font-size: var(--size-xs); color: var(--color-ink-3); margin-bottom: var(--space-2); max-width: none; }
+    .persona-desc { font-size: var(--size-sm); color: var(--color-ink-2); line-height: 1.65; margin-bottom: var(--space-2); max-width: none; }
+    .persona-need { font-size: var(--size-sm); color: var(--color-ink-2); line-height: 1.65; padding-top: var(--space-2); border-top: 1px solid var(--color-border); max-width: none; }
+    .persona-need strong { color: var(--color-ink); font-weight: 600; }
+
+    /* ── Audit table ── */
+    .audit-table { width: 100%; border-collapse: collapse; margin-top: var(--space-3); }
+    .audit-table th { text-align: left; padding: 10px 16px; font-size: var(--size-xs); font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--color-ink-3); border-bottom: 1.5px solid var(--color-ink); }
+    .audit-table td { padding: 12px 16px; font-size: var(--size-sm); color: var(--color-ink-2); border-bottom: 1px solid var(--color-border); }
+    .audit-table tr:last-child td { border-bottom: none; }
+    .audit-table td:first-child { font-weight: 600; color: var(--color-ink); }
+    .yes { color: var(--color-ink); }
+    .no  { color: var(--color-ink-3); }
+    .audit-hl { background: var(--color-bg); }
+    .audit-hl td:first-child { font-weight: 700; }
+
+    /* ── Journey map ── */
+    .journey { display: grid; grid-template-columns: repeat(5,1fr); border: 1px solid var(--color-border); margin-top: var(--space-4); }
+    .j-stage { padding: var(--space-3) var(--space-2); border-right: 1px solid var(--color-border); }
+    .j-stage:last-child { border-right: none; }
+    .j-label { font-size: 10px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; color: var(--color-ink-3); margin-bottom: 8px; }
+    .j-title { font-family: var(--font-display); font-size: var(--size-sm); font-weight: 700; color: var(--color-ink); line-height: 1.3; margin-bottom: 7px; }
+    .j-body { font-size: 11px; color: var(--color-ink-2); line-height: 1.55; max-width: none; }
+    .j-mood { margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--color-border); font-size: 11px; font-weight: 500; color: var(--color-ink-3); }
+    .j-bar { height: 3px; border-radius: 2px; margin-top: 6px; background: var(--color-ink); }
+
+    /* ── HMW ── */
+    .hmw-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: var(--space-2); margin-top: var(--space-3); }
+    .hmw-card { background: var(--color-bg); border: 1px solid var(--color-border); padding: var(--space-3); }
+    .hmw-card p { font-family: var(--font-display); font-size: var(--size-sm); font-style: italic; color: var(--color-ink); line-height: 1.65; max-width: none; margin: 0; }
+
+    /* ── Decisions ── */
+    .decision { display: grid; grid-template-columns: 200px 1fr; gap: 0; border-top: 1px solid var(--color-border); padding: var(--space-6) 0; }
+    .decision:last-child { border-bottom: 1px solid var(--color-border); }
+    .d-num { font-family: var(--font-display); font-size: 2.5rem; font-weight: 700; color: var(--color-border); line-height: 1; margin-bottom: 6px; }
+    .d-title { font-size: var(--size-sm); font-weight: 600; color: var(--color-ink); padding-right: var(--space-4); }
+    .d-chosen { display: inline-flex; align-items: center; gap: 5px; font-size: var(--size-xs); font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--color-ink); background: var(--color-surface); border: 1px solid var(--color-border); padding: 3px 11px; border-radius: 100px; margin-bottom: var(--space-2); }
+    .d-rationale { font-size: var(--size-sm); color: var(--color-ink-2); line-height: 1.75; max-width: none; margin-bottom: 0; }
+    .d-rejected { margin-top: var(--space-2); padding-top: var(--space-2); border-top: 1px solid var(--color-border); font-size: var(--size-xs); color: var(--color-ink-3); line-height: 1.6; max-width: none; }
+    .d-rejected strong { color: var(--color-ink-2); }
+
+    /* ── Design system ── */
+    .swatch-strip { display: grid; grid-template-columns: repeat(7,1fr); gap: 6px; margin: 16px 0; }
+    .swatch { aspect-ratio: 1; border-radius: 2px; border: 1px solid rgba(0,0,0,.06); position: relative; overflow: hidden; }
+    .swatch span { position: absolute; bottom: 3px; left: 0; right: 0; text-align: center; font-size: 8px; font-weight: 600; letter-spacing: .04em; }
+    .type-row { display: flex; align-items: baseline; gap: var(--space-3); padding: 12px 0; border-bottom: 1px solid var(--color-border); }
+    .type-row:last-child { border-bottom: none; }
+    .type-meta { font-size: 11px; color: var(--color-ink-3); min-width: 160px; flex-shrink: 0; line-height: 1.5; }
+    .pf { font-family: var(--font-display); }
+
+    /* ── Screen cards ── */
+    .screens-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: var(--space-3); margin-top: var(--space-4); }
+    .screen-card { border: 1px solid var(--color-border); background: var(--color-bg); overflow: hidden; }
+    .screen-thumb { aspect-ratio: 9/17; background: var(--color-surface); display: flex; align-items: center; justify-content: center; border-bottom: 1px solid var(--color-border); position: relative; overflow: hidden; }
+    .screen-badge { position: absolute; bottom: 9px; left: 9px; font-size: 9px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-ink); background: var(--color-bg); border: 1px solid var(--color-border); padding: 2px 8px; border-radius: 100px; }
+    .screen-info { padding: 14px 16px; }
+    .screen-name { font-size: var(--size-sm); font-weight: 600; color: var(--color-ink); margin-bottom: 3px; }
+    .screen-desc { font-size: 11px; color: var(--color-ink-3); line-height: 1.5; }
+
+    /* ── Outcomes ── */
+    .outcomes-grid { display: grid; grid-template-columns: repeat(3,1fr); border: 1px solid var(--color-border); margin-top: var(--space-4); }
+    .outcome-cell { padding: var(--space-6) var(--space-4); border-right: 1px solid var(--color-border); }
+    .outcome-cell:last-child { border-right: none; }
+    .outcome-num { font-family: var(--font-display); font-size: 3.25rem; font-weight: 700; line-height: 1; color: var(--color-ink); margin-bottom: 6px; }
+    .outcome-num sup { font-size: 1.5rem; }
+    .outcome-label { font-size: var(--size-sm); font-weight: 600; color: var(--color-ink); margin-bottom: 6px; max-width: none; }
+    .outcome-detail { font-size: var(--size-xs); color: var(--color-ink-3); line-height: 1.6; max-width: none; }
+
+    /* ── Learnings ── */
+    .learnings-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); margin-top: var(--space-4); }
+    .learning { border: 1px solid var(--color-border); padding: var(--space-4); }
+    .learning-n { font-family: var(--font-display); font-size: 1.75rem; font-weight: 700; color: var(--color-border); line-height: 1; margin-bottom: var(--space-2); }
+    .learning-title { font-size: var(--size-sm); font-weight: 600; color: var(--color-ink); margin-bottom: var(--space-2); line-height: 1.4; max-width: none; }
+    .learning-body { font-size: var(--size-sm); color: var(--color-ink-2); line-height: 1.75; max-width: none; }
+
+    /* ── Phone mockup (SousChef green preserved) ── */
+    :root {
+      --sc-g-action: #2A3D1C; --sc-g-mid: #3A5428; --sc-g-border: #7FAF52;
+      --sc-g-light: #D4E8C2;  --sc-g-pale: #EFF4EB; --sc-g-dark: #1E2E14;
+      --sc-ink: #1a1a1a; --sc-ink-2: #444441; --sc-ink-3: #5F5E5A;
+      --sc-rule: #E8E4DC; --sc-rule-lt: #F0EDE6; --sc-surface: #F5F2EB;
+      --sc-card-bg: #fff; --sc-card-bd: #E0DDD5;
+      --sc-warn-bg: #EDD8CC; --sc-warn-fg: #3D1800; --sc-warn-bd: #A05030;
+    }
+    .mp { width: 72%; background: #fff; border: 1px solid var(--sc-card-bd); border-radius: 10px; overflow: hidden; box-shadow: 0 3px 14px rgba(0,0,0,.07); }
+    .mp-sb { height: 10px; background: #fff; border-bottom: 1px solid var(--sc-rule); display: flex; align-items: center; justify-content: flex-end; padding: 0 6px; gap: 3px; }
+    .mp-sb-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--sc-rule); }
+    .mp-nav { background: #fff; border-bottom: 1px solid var(--sc-rule); padding: 5px 7px; display: flex; align-items: center; justify-content: space-between; }
+    .mp-wm { font-family: 'Playfair Display', serif; font-size: 8px; font-weight: 700; color: var(--sc-ink); }
+    .mp-tabs { background: #fff; border-top: 1px solid var(--sc-rule); display: flex; padding: 5px 0 6px; }
+    .mp-tab { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px; }
+    .mp-ti { width: 9px; height: 9px; border-radius: 1px; background: var(--sc-rule-lt); }
+    .mp-ti.on { background: var(--sc-ink); }
+    .mp-tl { font-size: 4px; color: var(--sc-ink-3); }
+    .mp-tl.on { color: var(--sc-ink); font-weight: 700; }
+    .mp-hero { background: var(--sc-g-pale); padding: 7px 8px; border-bottom: 1px solid var(--sc-g-light); }
+    .mp-greet { font-size: 5px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--sc-g-action); margin-bottom: 2px; }
+    .mp-q { font-family: 'Playfair Display', serif; font-size: 8px; font-weight: 700; color: var(--sc-ink); line-height: 1.25; }
+    .mp-stats { display: flex; gap: 6px; margin-top: 5px; padding-top: 5px; border-top: 1px solid var(--sc-g-light); }
+    .mp-stat-n { font-family: 'Playfair Display', serif; font-size: 9px; font-weight: 700; color: var(--sc-ink); display: block; }
+    .mp-stat-l { font-size: 4px; text-transform: uppercase; letter-spacing: .05em; color: var(--sc-ink-3); display: block; }
+    .mp-sdiv { width: 1px; background: var(--sc-g-light); }
+    .mp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; padding: 5px; }
+    .mp-card { background: #fff; border: 1px solid var(--sc-card-bd); border-radius: 2px; overflow: hidden; }
+    .mp-cimg { height: 17px; background: var(--sc-rule-lt); border-bottom: 1px solid var(--sc-card-bd); }
+    .mp-cbody { padding: 3px 4px; }
+    .mp-ctitle { font-family: 'Playfair Display', serif; font-size: 6px; font-weight: 700; color: var(--sc-ink); line-height: 1.3; }
+    .mp-cmeta { font-size: 4px; color: var(--sc-ink-3); margin-top: 1px; }
+    .mp-ctag { display: inline-block; font-size: 4px; padding: 1px 4px; border-radius: 2px; margin-top: 2px; }
+    .mp-header { background: #fff; border-bottom: 1px solid var(--sc-rule); padding: 5px 7px; display: flex; align-items: center; gap: 4px; }
+    .mp-hclose { width: 8px; height: 8px; border-radius: 50%; background: var(--sc-rule-lt); flex-shrink: 0; }
+    .mp-htitle { font-size: 7px; font-weight: 600; color: var(--sc-ink); }
+    .mp-srcs { display: grid; grid-template-columns: 1fr 1fr; gap: 3px; padding: 6px; }
+    .mp-src { border: 1px solid var(--sc-card-bd); border-radius: 2px; padding: 5px; background: #fff; }
+    .mp-src.on { border-color: var(--sc-g-action); background: var(--sc-g-pale); }
+    .mp-src-ic { width: 8px; height: 8px; border-radius: 1px; background: var(--sc-rule-lt); margin-bottom: 3px; }
+    .mp-src.on .mp-src-ic { background: var(--sc-g-light); }
+    .mp-src-t { font-size: 6px; font-weight: 700; color: var(--sc-ink); }
+    .mp-src-s { font-size: 5px; color: var(--sc-ink-3); }
+    .mp-pipe { padding: 6px; }
+    .mp-ptitle { font-family: 'Playfair Display', serif; font-size: 8px; font-weight: 700; color: var(--sc-ink); margin-bottom: 4px; }
+    .mp-pbar { height: 3px; background: var(--sc-rule); border-radius: 2px; margin-bottom: 6px; }
+    .mp-pbar-fill { height: 100%; width: 45%; background: var(--sc-g-action); border-radius: 2px; }
+    .mp-prow { display: flex; align-items: center; gap: 4px; padding: 2px 0; }
+    .mp-pdot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .mp-pdot.done { background: var(--sc-g-action); }
+    .mp-pdot.act  { background: #fff; border: 1.5px solid var(--sc-g-action); }
+    .mp-pdot.wait { background: #fff; border: 1px solid var(--sc-rule); }
+    .mp-pt { font-size: 6px; color: var(--sc-ink-2); }
+    .mp-pt.dim { color: var(--sc-ink-3); }
+    .mp-confirm { padding: 6px; }
+    .mp-toast { background: var(--sc-warn-bg); border: 1px solid var(--sc-warn-bd); border-radius: 2px; padding: 3px 5px; font-size: 5px; font-weight: 600; color: var(--sc-warn-fg); margin-bottom: 5px; }
+    .mp-rtitle { font-family: 'Playfair Display', serif; font-size: 8px; font-weight: 700; color: var(--sc-ink); margin-bottom: 4px; }
+    .mp-tags { display: flex; gap: 3px; margin-bottom: 5px; }
+    .mp-tag { font-size: 5px; padding: 1px 5px; border-radius: 2px; }
+    .mp-ingrow { display: flex; align-items: center; gap: 4px; padding: 3px 0; border-bottom: 1px solid var(--sc-rule); }
+    .mp-ingrow:last-child { border-bottom: none; }
+    .mp-ingbox { width: 7px; height: 7px; border-radius: 1px; flex-shrink: 0; }
+    .mp-ingbox.chk { background: var(--sc-g-action); }
+    .mp-ingn { font-family: 'Playfair Display', serif; font-size: 6px; color: var(--sc-ink); }
+    .mp-ingn.done { color: var(--sc-ink-3); text-decoration: line-through; }
+    .mp-ingn.warn { color: var(--sc-warn-fg); font-style: italic; }
+    .mp-btn  { background: var(--sc-g-action); color: #fff; border-radius: 100px; padding: 4px 0; font-size: 6px; font-weight: 700; text-align: center; margin-top: 6px; }
+    .mp-btn2 { background: transparent; color: var(--sc-g-action); border: 1px solid var(--sc-g-action); border-radius: 100px; padding: 3px 0; font-size: 6px; font-weight: 700; text-align: center; margin-top: 4px; }
+    .mp-browse-filters { padding: 4px 6px; border-bottom: 1px solid var(--sc-rule); display: flex; gap: 3px; }
+    .mp-chip { font-size: 5px; padding: 2px 6px; border-radius: 100px; border: 1px solid var(--sc-rule); color: var(--sc-ink-3); background: #fff; }
+    .mp-chip.on { background: var(--sc-g-pale); border-color: var(--sc-g-border); color: var(--sc-g-mid); }
+    .mp-det-hero { height: 34px; background: var(--sc-rule-lt); border-bottom: 1px solid var(--sc-card-bd); display: flex; align-items: center; justify-content: center; position: relative; }
+    .mp-det-back { position: absolute; left: 5px; top: 5px; width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,.9); border: 1px solid var(--sc-card-bd); }
+    .mp-det-body { padding: 6px; }
+    .mp-det-title { font-family: 'Playfair Display', serif; font-size: 9px; font-weight: 700; color: var(--sc-ink); margin-bottom: 2px; }
+    .mp-det-desc  { font-family: 'Playfair Display', serif; font-size: 6px; font-style: italic; color: var(--sc-ink-3); margin-bottom: 4px; line-height: 1.4; }
+    .mp-mstrip { display: grid; grid-template-columns: repeat(4,1fr); border: 1px solid var(--sc-card-bd); border-radius: 2px; overflow: hidden; margin: 4px 0; background: var(--sc-surface); }
+    .mp-mc { padding: 3px 2px; text-align: center; border-right: 1px solid var(--sc-card-bd); }
+    .mp-mc:last-child { border-right: none; }
+    .mp-mv { font-family: 'Playfair Display', serif; font-size: 6px; font-weight: 700; display: block; }
+    .mp-ml { font-size: 4px; color: var(--sc-ink-3); display: block; }
+    .mp-cook-hdr { background: var(--sc-g-action); padding: 6px 7px; }
+    .mp-ck-title { font-size: 7px; font-weight: 700; color: #fff; text-align: center; margin-bottom: 4px; }
+    .mp-track { display: flex; gap: 2px; }
+    .mp-tseg { height: 2px; border-radius: 1px; flex: 1; background: rgba(255,255,255,.25); }
+    .mp-tseg.done { background: rgba(255,255,255,.7); }
+    .mp-tseg.cur  { background: #fff; }
+    .mp-ck-img  { height: 28px; background: var(--sc-rule-lt); border-bottom: 1px solid var(--sc-card-bd); display: flex; align-items: center; justify-content: center; }
+    .mp-ck-body { padding: 5px 7px; }
+    .mp-ck-ctx  { font-size: 5px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--sc-ink-3); margin-bottom: 3px; }
+    .mp-ck-instr { font-family: 'Playfair Display', serif; font-size: 7px; color: var(--sc-ink); line-height: 1.5; margin-bottom: 5px; }
+    .mp-ck-tip  { background: var(--sc-g-pale); border: 1px solid var(--sc-g-light); border-radius: 2px; padding: 3px 5px; }
+    .mp-ck-tl   { font-size: 5px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--sc-g-mid); margin-bottom: 2px; }
+    .mp-ck-tt   { font-family: 'Playfair Display', serif; font-size: 6px; font-style: italic; color: var(--sc-g-dark); line-height: 1.4; }
+    .mp-ck-nav  { background: #fff; border-top: 1px solid var(--sc-rule); padding: 4px 6px; }
+    .mp-ck-btn  { background: var(--sc-g-action); color: #fff; border-radius: 100px; padding: 4px 0; font-size: 6px; font-weight: 700; text-align: center; }
+
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      .grid-2 { grid-template-columns: 1fr; gap: var(--space-6); }
+      .stat-row { grid-template-columns: 1fr; }
+      .stat-cell { border-right: none; border-bottom: 1px solid var(--color-border); }
+      .stat-cell:last-child { border-bottom: none; }
+      .persona-grid { grid-template-columns: 1fr; }
+      .hmw-grid { grid-template-columns: 1fr; }
+      .journey { grid-template-columns: 1fr 1fr; }
+      .j-stage { border-bottom: 1px solid var(--color-border); }
+      .decision { grid-template-columns: 1fr; }
+      .d-title { padding-right: 0; margin-bottom: var(--space-2); }
+      .screens-grid { grid-template-columns: 1fr 1fr; }
+      .outcomes-grid { grid-template-columns: 1fr; }
+      .outcome-cell { border-right: none; border-bottom: 1px solid var(--color-border); }
+      .outcome-cell:last-child { border-bottom: none; }
+      .learnings-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      .screens-grid { grid-template-columns: 1fr; }
+      .journey { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav" role="navigation" aria-label="Main">
+    <div class="nav__inner">
+      <a href="/" class="nav__logo" aria-label="Alfred Law — home">
+        <img src="../assets/images/AL.webp" alt="AL" />
+      </a>
+      <ul class="nav__links" id="nav-links" role="list">
+        <li><a href="/">Work</a></li>
+        <li><a href="../about.html">About</a></li>
+        <li><a href="../assets/alfred-law-resume.pdf" target="_blank" rel="noopener">Résumé</a></li>
+      </ul>
+      <button class="nav__hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="nav-links">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- BREADCRUMB -->
+  <div class="case-nav">
+    <div class="container">
+      <a href="/">← All work</a>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <section class="sc-hero">
+    <div class="container">
+      <div class="hero-tags">
+        <span class="hero-tag hero-tag--filled">Senior Product Designer</span>
+        <span class="hero-tag">3-day sprint · 2026</span>
+      </div>
+      <h1 class="hero-h1 fade-up">From screenshot<br>to recipe, <em>instantly.</em></h1>
+      <p class="hero-lead fade-up">Sous Chef is a recipe collection app for iOS and Android that captures recipes from any source — URLs, YouTube videos, screenshots, PDFs — and saves them as structured files in Google Drive. Designed solo in 3 days as an AI-assisted portfolio case study.</p>
+      <div class="hero-meta fade-up">
+        <div class="hero-meta-item">
+          <p class="meta-label">Role</p>
+          <p class="meta-value">Solo product designer</p>
+        </div>
+        <div class="hero-meta-item">
+          <p class="meta-label">Duration</p>
+          <p class="meta-value">3 days</p>
+        </div>
+        <div class="hero-meta-item">
+          <p class="meta-label">Platform</p>
+          <p class="meta-value">iOS · Android</p>
+        </div>
+        <div class="hero-meta-item">
+          <p class="meta-label">AI collaborator</p>
+          <p class="meta-value">Claude (Anthropic)</p>
+        </div>
+        <div class="hero-meta-item">
+          <p class="meta-label">Deliverables</p>
+          <p class="meta-value">Research · Design system · 8-screen prototype</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div>
+    <div class="container" style="padding-left:0;padding-right:0;max-width:100%;">
+      <div class="stat-row" style="max-width:var(--max-width);margin:0 auto;padding:0 var(--space-4);">
+        <div class="stat-cell" style="padding-left:0;">
+          <p class="stat-num">8</p>
+          <p class="stat-desc">Interactive screens built</p>
+        </div>
+        <div class="stat-cell">
+          <p class="stat-num">4</p>
+          <p class="stat-desc">Key design decisions documented</p>
+        </div>
+        <div class="stat-cell">
+          <p class="stat-num">3×</p>
+          <p class="stat-desc">Target increase in cook-through rate</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROBLEM -->
+  <section class="sc-section">
+    <div class="container">
+      <p class="eyebrow">01 — Problem</p>
+      <div class="grid-2">
+        <div>
+          <h2>Recipes live everywhere.<br>Nowhere useful.</h2>
+          <p>Home cooks today collect recipes across dozens of surfaces — YouTube videos, Instagram reels, TikTok saves, blog posts, scanned cookbook pages, screenshots. None of them are structured. None of them are searchable. None of them surface when you're standing at the stove.</p>
+          <p>The result is a spike-and-crash pattern: frantic saving when inspiration strikes, followed by recipes that are never actually cooked. Collections grow, remain inaccessible, and accumulate guilt.</p>
+          <blockquote>
+            <p>"I have 400 saved Instagram posts. I've cooked maybe five of them."</p>
+            <cite>— Research participant, age 31</cite>
+          </blockquote>
+        </div>
+        <div>
+          <p class="eyebrow" style="margin-top:4px;">Problem statement</p>
+          <p class="pf" style="font-size:var(--size-md);font-style:italic;line-height:1.65;color:var(--color-ink);margin-bottom:var(--space-4);">How might we help home cooks capture recipes from any source and surface the right one at the right moment — without disrupting their natural browsing behaviour?</p>
+          <div class="ai-note">
+            <p class="ai-note-label">✦ AI process note</p>
+            <p>The problem statement was refined iteratively with Claude. The first draft focused on organisation, but research synthesis revealed the real gap was in the capture-to-cook pipeline. That reframe shifted the entire product direction.</p>
+          </div>
+          <p style="margin-top:var(--space-3);">No existing recipe app handles video transcript extraction or multi-screenshot stitching. Both became Sous Chef's core differentiators — gaps discovered directly through the competitive audit.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESEARCH -->
+  <section class="sc-section sc-section--surface">
+    <div class="container">
+      <p class="eyebrow">02 — Research</p>
+      <div class="grid-2" style="margin-bottom:var(--space-12);">
+        <div>
+          <h2>Two users, one tension.</h2>
+          <p>Research surfaced two distinct user modes: the <strong>impulsive saver</strong> who needs frictionless capture above all else, and the <strong>deliberate cook</strong> who wants to review before committing. The central design challenge was serving both without a settings toggle.</p>
+        </div>
+        <div>
+          <p>The tension resolved into a <strong>confidence-routing system</strong> — the AI agent silently routes based on extraction confidence. High confidence (≥80%) saves immediately; lower confidence surfaces a review screen. Neither user has to manage this explicitly.</p>
+          <p>This decision is the spine of the entire product. Every subsequent design choice either protects Priya's capture speed or gives Tom the accuracy signals he needs.</p>
+        </div>
+      </div>
+
+      <div class="persona-grid">
+        <div class="persona-card">
+          <div class="persona-avatar">P</div>
+          <p class="persona-name">Priya R., 32</p>
+          <p class="persona-sub">Marketing manager · London</p>
+          <p class="persona-desc">Heavy recipe saver. Sees something on Instagram or YouTube and wants it captured in under five seconds, or the moment passes. Has 400+ saved posts she has never cooked from.</p>
+          <div class="persona-need"><strong>Primary need:</strong> frictionless capture — minimal taps, instant save, no review required unless something is genuinely wrong.</div>
+        </div>
+        <div class="persona-card">
+          <div class="persona-avatar">T</div>
+          <p class="persona-name">Tom K., 41</p>
+          <p class="persona-sub">Software engineer · Toronto</p>
+          <p class="persona-desc">Family cook who plans weekend meals carefully. Values accuracy over speed — would rather check a recipe once than discover a missing ingredient mid-cook on a Sunday afternoon.</p>
+          <div class="persona-need"><strong>Primary need:</strong> confidence in extraction accuracy — clear flags for anything uncertain, easy editing before committing to a save.</div>
+        </div>
+      </div>
+
+      <div style="margin-top:var(--space-12);">
+        <p class="eyebrow">Competitive audit</p>
+        <p>No existing app handles video or multi-screenshot input. That gap defined Sous Chef's core differentiators.</p>
+        <table class="audit-table">
+          <thead>
+            <tr>
+              <th>App</th><th>URL import</th><th>Screenshot OCR</th><th>YouTube extraction</th><th>Multi-screenshot stitch</th><th>Drive storage</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Paprika 3</td><td class="yes">✓</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td></tr>
+            <tr><td>Whisk</td><td class="yes">✓</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td></tr>
+            <tr><td>Cookpad</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td></tr>
+            <tr><td>Apple Notes</td><td class="no">✗</td><td class="yes">✓</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td></tr>
+            <tr class="audit-hl"><td>Sous Chef ✦</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div style="margin-top:var(--space-12);">
+        <p class="eyebrow">Current-state journey</p>
+        <p>The current experience is a spike-and-crash arc. Excitement at discovery, friction at capture, long dormancy, failure at the moment of actual cooking.</p>
+        <div class="journey">
+          <div class="j-stage">
+            <p class="j-label">Discover</p>
+            <p class="j-title">Recipe spotted on Instagram</p>
+            <p class="j-body">Scrolling, sees something appetising. Wants to save instantly.</p>
+            <div class="j-mood">↑ Excited</div>
+            <div class="j-bar" style="width:80%;"></div>
+          </div>
+          <div class="j-stage">
+            <p class="j-label">Capture</p>
+            <p class="j-title">Screenshots multiple slides</p>
+            <p class="j-body">Takes 3 screenshots. Already forgetting context.</p>
+            <div class="j-mood">→ Neutral</div>
+            <div class="j-bar" style="width:50%;opacity:.5;"></div>
+          </div>
+          <div class="j-stage">
+            <p class="j-label">Store</p>
+            <p class="j-title">Buried in camera roll</p>
+            <p class="j-body">No structure. Joins 200 other food screenshots.</p>
+            <div class="j-mood">↓ Frustrated</div>
+            <div class="j-bar" style="width:25%;opacity:.3;"></div>
+          </div>
+          <div class="j-stage">
+            <p class="j-label">Retrieve</p>
+            <p class="j-title">Can't find it later</p>
+            <p class="j-body">Scrolls photos for two minutes. Gives up.</p>
+            <div class="j-mood">↓ Defeated</div>
+            <div class="j-bar" style="width:12%;opacity:.2;"></div>
+          </div>
+          <div class="j-stage">
+            <p class="j-label">Cook</p>
+            <p class="j-title">Never cooked</p>
+            <p class="j-body">Falls back on known recipes. The saved one is forgotten entirely.</p>
+            <div class="j-mood">✗ Abandoned</div>
+            <div class="j-bar" style="width:5%;opacity:.15;"></div>
+          </div>
+        </div>
+        <div class="ai-note" style="margin-top:var(--space-3);">
+          <p class="ai-note-label">✦ AI process note</p>
+          <p>The journey map was drafted collaboratively with Claude, which identified the "long dormancy" phase as the critical gap — not capture friction, as initially assumed. That reframe led directly to cook mode and the ingredient checklist as core features, not nice-to-haves.</p>
+        </div>
+      </div>
+
+      <div style="margin-top:var(--space-12);">
+        <p class="eyebrow">How might we</p>
+        <div class="hmw-grid">
+          <div class="hmw-card"><p>How might we let Priya capture a recipe from a video without pausing it, switching apps, or typing anything?</p></div>
+          <div class="hmw-card"><p>How might we give Tom confidence that the AI extracted the recipe correctly — without making him re-read every ingredient?</p></div>
+          <div class="hmw-card"><p>How might we surface the right recipe at the right moment, even when the cook doesn't know what they're looking for?</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- KEY DECISIONS -->
+  <section class="sc-section">
+    <div class="container">
+      <p class="eyebrow">03 — Key decisions</p>
+      <div class="grid-2" style="margin-bottom:var(--space-8);">
+        <div>
+          <h2>Four choices that<br>defined the product.</h2>
+        </div>
+        <div>
+          <p>Each decision represents a fork where the obvious path was rejected in favour of one grounded in research. The rationale documents exactly why — making the design handoff directly traceable to user insights.</p>
+        </div>
+      </div>
+
+      <div class="decision">
+        <div><p class="d-num">01</p><p class="d-title">Agent routing</p></div>
+        <div>
+          <span class="d-chosen">✦ Silent, confidence-based routing</span>
+          <p class="d-rationale">The agent saves immediately when confidence is ≥80%, and surfaces a review screen when below. Users never configure this. The decision removes cognitive load from the primary capture moment — Priya's most critical touchpoint — while still giving Tom the review he needs when extraction is genuinely uncertain.</p>
+          <p class="d-rejected"><strong>Rejected:</strong> User-configurable settings toggle ("always review" vs "auto-save"). Testing showed adding a choice at capture time increased abandonment by making users feel responsible for a decision they had no context to make.</p>
+        </div>
+      </div>
+
+      <div class="decision">
+        <div><p class="d-num">02</p><p class="d-title">Pipeline visibility</p></div>
+        <div>
+          <span class="d-chosen">✦ Named pipeline steps, not a spinner</span>
+          <p class="d-rationale">The saving screen shows each step by name: OCR extraction → stitching → parsing → confidence scoring → Drive save. Named steps build trust by making the AI's work legible. Users in testing reported significantly higher confidence in the extracted recipe when they could see what had been done — even when the output was identical to the spinner condition.</p>
+          <p class="d-rejected"><strong>Rejected:</strong> Generic loading spinner. "Processing..." gives no signal about what's happening or how long it will take, which measurably increased perceived wait time in testing.</p>
+        </div>
+      </div>
+
+      <div class="decision">
+        <div><p class="d-num">03</p><p class="d-title">Uncertainty display</p></div>
+        <div>
+          <span class="d-chosen">✦ Per-field confidence flags</span>
+          <p class="d-rationale">When confidence is below threshold, the confirm screen flags specific ingredients that are uncertain — "Eggs — quantity unclear across screenshots" — rather than showing a global warning. Precision reduces cognitive load: users only need to review the one thing that's wrong, not re-read the entire recipe.</p>
+          <p class="d-rejected"><strong>Rejected:</strong> Global "low confidence" warning banner. This caused over-correction — users re-read everything when only one field needed checking, increasing task time without improving accuracy.</p>
+        </div>
+      </div>
+
+      <div class="decision">
+        <div><p class="d-num">04</p><p class="d-title">Tag generation</p></div>
+        <div>
+          <span class="d-chosen">✦ Post-extraction, pre-filled and editable</span>
+          <p class="d-rationale">Tags are generated after extraction completes, pre-filled by the AI, and presented as an editable step users can skip entirely. This respects Priya's need for speed while giving Tom full control. The AI doing the initial work means users start from a correct answer rather than a blank form — a fundamentally different cognitive starting point.</p>
+          <p class="d-rejected"><strong>Rejected:</strong> Asking users to add tags before save. This added friction at the worst moment — when save intent is highest — and consistently produced worse tags than the AI extraction.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DESIGN SYSTEM -->
+  <section class="sc-section sc-section--surface">
+    <div class="container">
+      <p class="eyebrow">04 — Design system</p>
+      <div class="grid-2" style="margin-bottom:var(--space-8);align-items:start;">
+        <div>
+          <h2>Editorial with warmth.</h2>
+          <p>The visual system is built on one principle from NYT Cooking: <strong>serif for recipe content, sans-serif for UI chrome.</strong> Playfair Display handles every piece of recipe content — titles, descriptions, step instructions, metadata values. DM Sans handles all navigation, labels, buttons, and tags.</p>
+          <p>That single typographic split is what makes the app feel editorial rather than like another productivity tool. Recipe content reads like a cookbook. UI reads like an interface. The two never blur.</p>
+          <p>Avocado green is the <em>only</em> action colour. It appears on primary buttons, checked ingredients, active steps, progress fills, and nowhere else. Every green element is interactive or confirmed.</p>
+        </div>
+        <div>
+          <p style="font-size:var(--size-xs);font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--color-ink-3);margin-bottom:10px;max-width:none;">Avocado — 7 stops</p>
+          <div class="swatch-strip">
+            <div class="swatch" style="background:#EFF4EB;"><span style="color:#3A5428;">pale</span></div>
+            <div class="swatch" style="background:#D4E8C2;"><span style="color:#1E2E14;">light</span></div>
+            <div class="swatch" style="background:#AECF8A;"><span style="color:#1E2E14;">mid-lt</span></div>
+            <div class="swatch" style="background:#7FAF52;"><span style="color:#fff;">mid</span></div>
+            <div class="swatch" style="background:#3A5428;"><span style="color:#D4E8C2;">mid-dk</span></div>
+            <div class="swatch" style="background:#2A3D1C;"><span style="color:#AECF8A;">action</span></div>
+            <div class="swatch" style="background:#1E2E14;"><span style="color:#7FAF52;">dark</span></div>
+          </div>
+          <p style="font-size:var(--size-xs);font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--color-ink-3);margin-bottom:10px;margin-top:20px;max-width:none;">Warm neutrals</p>
+          <div class="swatch-strip">
+            <div class="swatch" style="background:#FAFAF8;border:1px solid #E8E4DC;"><span style="color:#C8C4BC;">offwh</span></div>
+            <div class="swatch" style="background:#F5F2EB;"><span style="color:#C8C4BC;">surf</span></div>
+            <div class="swatch" style="background:#E8E4DC;"><span style="color:#888780;">rule</span></div>
+            <div class="swatch" style="background:#C8C4BC;"><span style="color:#fff;">bdr</span></div>
+            <div class="swatch" style="background:#5F5E5A;"><span style="color:#fff;">muted</span></div>
+            <div class="swatch" style="background:#444441;"><span style="color:#C8C4BC;">sec</span></div>
+            <div class="swatch" style="background:#1a1a1a;"><span style="color:#666;">ink</span></div>
+          </div>
+          <p style="font-size:var(--size-xs);font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--color-ink-3);margin-bottom:10px;margin-top:20px;max-width:none;">Tag colours — WCAG AA verified</p>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <div style="background:#D4E8C2;color:#1E2E14;border:1px solid #7FAF52;font-size:12px;font-weight:500;padding:4px 12px;border-radius:4px;">Italian</div>
+            <div style="background:#E8E0CC;color:#3D2B00;border:1px solid #A08040;font-size:12px;font-weight:500;padding:4px 12px;border-radius:4px;">Dinner</div>
+            <div style="background:#EDD8CC;color:#3D1800;border:1px solid #A05030;font-size:12px;font-weight:500;padding:4px 12px;border-radius:4px;">Pasta</div>
+          </div>
+          <p style="font-size:var(--size-xs);font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--color-ink-3);margin-bottom:10px;margin-top:20px;max-width:none;">Icons — Tabler Icons (MIT)</p>
+          <p style="font-size:var(--size-sm);color:var(--color-ink-2);line-height:1.65;max-width:none;">Exclusively Tabler Icons throughout. Consistent 1.5px stroke, rounded caps, 24×24 grid. Zero mixed icon sources — a deliberate constraint to maintain visual coherence across all 8 screens.</p>
+        </div>
+      </div>
+      <div>
+        <p style="font-size:var(--size-xs);font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--color-ink-3);margin-bottom:16px;max-width:none;">Typography scale</p>
+        <div>
+          <div class="type-row"><span class="type-meta">Playfair Display 700<br>Recipe titles</span><span class="pf" style="font-size:24px;font-weight:700;color:var(--color-ink);">Spaghetti carbonara</span></div>
+          <div class="type-row"><span class="type-meta">Playfair Display 400i<br>Recipe description</span><span class="pf" style="font-size:15px;font-style:italic;color:var(--color-ink-2);line-height:1.6;">A silky Roman classic — no cream, no shortcuts.</span></div>
+          <div class="type-row"><span class="type-meta">Playfair Display 700<br>Step instructions</span><span class="pf" style="font-size:14px;color:var(--color-ink);line-height:1.65;">Bring a large pot of generously salted water to a boil.</span></div>
+          <div class="type-row"><span class="type-meta">DM Sans 500<br>UI navigation</span><span style="font-size:14px;font-weight:500;color:var(--color-ink);">Ingredients · 25 min · 4 servings</span></div>
+          <div class="type-row"><span class="type-meta">DM Sans 400<br>Secondary / metadata</span><span style="font-size:13px;color:var(--color-ink-2);">Saved from 3 screenshots · View originals</span></div>
+          <div class="type-row"><span class="type-meta">DM Sans 700 caps<br>Section labels</span><span style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--color-ink-3);">Ingredients</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCREENS -->
+  <section class="sc-section">
+    <div class="container">
+      <div style="display:flex;align-items:baseline;justify-content:space-between;border-bottom:1.5px solid var(--color-ink);padding-bottom:14px;margin-bottom:var(--space-2);">
+        <p class="eyebrow" style="margin-bottom:0;">05 — Screen designs</p>
+        <p style="font-size:var(--size-xs);color:var(--color-ink-3);max-width:none;">8 screens · All flows interactive</p>
+      </div>
+      <p style="margin-top:var(--space-3);max-width:60ch;">Every screen in the complete user flow, from first open to active cooking. Checklists, timers, tag editing, step navigation, and overlap detection all functional in the prototype.</p>
+
+      <div class="screens-grid">
+
+        <!-- 1 HOME -->
+        <div class="screen-card">
+          <div class="screen-thumb">
+            <div class="mp">
+              <div class="mp-sb"><div class="mp-sb-dot"></div><div class="mp-sb-dot"></div><div class="mp-sb-dot"></div></div>
+              <div class="mp-nav"><span class="mp-wm">SousChef</span><div style="width:11px;height:11px;border-radius:50%;border:1px solid var(--sc-rule);"></div></div>
+              <div class="mp-hero">
+                <div class="mp-greet">Good evening</div>
+                <div class="mp-q">What are you cooking tonight?</div>
+                <div class="mp-stats">
+                  <div><span class="mp-stat-n">24</span><span class="mp-stat-l">Recipes</span></div>
+                  <div class="mp-sdiv"></div>
+                  <div><span class="mp-stat-n">6</span><span class="mp-stat-l">Cuisines</span></div>
+                  <div class="mp-sdiv"></div>
+                  <div><span class="mp-stat-n">3</span><span class="mp-stat-l">This week</span></div>
+                </div>
+              </div>
+              <div class="mp-grid">
+                <div class="mp-card"><div class="mp-cimg"></div><div class="mp-cbody"><div class="mp-ctitle">Spaghetti carbonara</div><div class="mp-cmeta">Italian · 25 min</div><div class="mp-ctag" style="background:#D4E8C2;color:#1E2E14;">Italian</div></div></div>
+                <div class="mp-card"><div class="mp-cimg"></div><div class="mp-cbody"><div class="mp-ctitle">Miso glazed salmon</div><div class="mp-cmeta">Japanese · 30 min</div><div class="mp-ctag" style="background:#D4E8C2;color:#1E2E14;">Japanese</div></div></div>
+                <div class="mp-card"><div class="mp-cimg"></div><div class="mp-cbody"><div class="mp-ctitle">Chicken tikka masala</div><div class="mp-cmeta">Indian · 45 min</div><div class="mp-ctag" style="background:#E8E0CC;color:#3D2B00;">Dinner</div></div></div>
+                <div class="mp-card"><div class="mp-cimg"></div><div class="mp-cbody"><div class="mp-ctitle">Shakshuka</div><div class="mp-cmeta">· 25 min</div><div class="mp-ctag" style="background:#E8E0CC;color:#3D2B00;">Breakfast</div></div></div>
+              </div>
+              <div class="mp-tabs">
+                <div class="mp-tab"><div class="mp-ti on"></div><div class="mp-tl on">Recipes</div></div>
+                <div class="mp-tab"><div class="mp-ti"></div><div class="mp-tl">Browse</div></div>
+                <div class="mp-tab"><div class="mp-ti"></div><div class="mp-tl">Add</div></div>
+                <div class="mp-tab"><div class="mp-ti"></div><div class="mp-tl">Settings</div></div>
+              </div>
+            </div>
+            <span class="screen-badge">Home</span>
+          </div>
+          <div class="screen-info"><p class="screen-name">Home</p><p class="screen-desc">Hero band with stats. Recently saved and viewed grids. Grid/list toggle.</p></div>
+        </div>
+
+        <!-- 2 ADD -->
+        <div class="screen-card">
+          <div class="screen-thumb">
+            <div class="mp">
+              <div class="mp-sb"><div class="mp-sb-dot"></div><div class="mp-sb-dot"></div><div class="mp-sb-dot"></div></div>
+              <div class="mp-header"><div class="mp-hclose"></div><span class="mp-htitle">Add a recipe</span></div>
+              <div style="padding:6px;">
+                <div style="font-family:'Playfair Display',serif;font-size:8px;font-weight:700;color:var(--sc-ink);margin-bottom:5px;">Where is your recipe?</div>
+                <div class="mp-srcs">
+                  <div class="mp-src on"><div class="mp-src-ic"></div><div class="mp-src-t">Website URL</div><div class="mp-src-s">Recipe site</div></div>
+                  <div class="mp-src"><div class="mp-src-ic"></div><div class="mp-src-t">YouTube</div><div class="mp-src-s">With transcript</div></div>
+                  <div class="mp-src"><div class="mp-src-ic"></div><div class="mp-src-t">Screenshot</div><div class="mp-src-s">Any app</div></div>
+                  <div class="mp-src"><div class="mp-src-ic"></div><div class="mp-src-t">PDF or doc</div><div class="mp-src-s">Scan, Word</div></div>
+                </div>
+                <div style="margin-top:7px;border:1px solid var(--sc-card-bd);border-radius:3px;padding:4px 6px;background:#fff;font-size:5px;color:var(--sc-ink-3);">Paste URL here…</div>
+                <div style="margin-top:6px;background:var(--sc-g-action);color:#fff;border-radius:100px;padding:4px;font-size:6px;font-weight:700;text-align:center;">Extract recipe</div>
+              </div>
+              <div class="mp-tabs">
+                <div class="mp-tab"><div class="mp-ti"></div><div class="mp-tl">Recipes</div></div>
+                <div class="mp-tab"><div class="mp-ti"></div><div class="mp-tl">Browse</div></div>
+                <div class="mp-tab"><div class="mp-ti on"></div><div class="mp-tl on">Add</div></div>
+                <div class="mp-tab"><div class="mp-ti"></div><div class="mp-tl">Settings</div></div>
+              </div>
+            </div>
+            <span class="screen-badge">Add</span>
+          </div>
+          <div class="screen-info"><p class="screen-name">Add recipe</p><p class="screen-desc">Source-first flow. 4 source types. Inline input panels expand on selection.</p></div>
+        </div>
+
+        <!-- 3 SAVING -->
+        <div class="screen-card">
+          <div class="screen-thumb">
+            <div class="mp">
+              <div class="mp-sb"><div class="mp-sb-dot"></div><div class="mp-sb-dot"></div><div class="mp-sb-dot"></div></div>
+              <div class="mp-header"><div class="mp-hclose"></div><span class="mp-htitle">Extracting…</span></div>
+              <div class="mp-pipe">
+                <div class="mp-ptitle">Saving recipe</div>
+                <div class="mp-pbar"><div class="mp-pbar-fill"></div></div>
+                <div class="mp-prow"><div class="mp-pdot done"></div><span class="mp-pt">3 screenshots received</span></div>
+                <div class="mp-prow"><div class="mp-pdot done"></div><span class="mp-pt">OCR extraction complete</span></div>
+                <div class="mp-prow"><div class="mp-pdot act"></div><span class="mp-pt">Stitching &amp; deduplicating…</span></div>
+                <div class="mp-prow"><div class="mp-pdot wait"></div><span class="mp-pt dim">Parsing ingredients &amp; steps</span></div>
+                <div class="mp-prow"><div class="mp-pdot wait"></div><span class="mp-pt dim">Generating tags</span></div>
+                <div class="mp-prow"><div class="mp-pdot wait"></div><span class="mp-pt dim">Scoring confidence</span></div>
+                <div class="mp-prow"><div class="mp-pdot wait"></div><span class="mp-pt dim">Saving to Drive</span></div>
+              </div>
+            </div>
+            <span class="screen-badge">Saving</span>
+          </div>
+          <div class="screen-info"><p class="screen-name">Saving</p><p class="screen-desc">Named pipeline steps with progress bar. Makes AI work legible, not a spinner.</p></div>
+        </div>
+
+        <!-- 4 CONFIRM -->
+        <div class="screen-card">
+          <div class="screen-thumb">
+            <div class="mp">
+              <div class="mp-sb"><div class="mp-sb-dot"></div><div class="mp-sb-dot"></div><div class="mp-sb-dot"></div></div>
+              <div class="mp-header"><div class="mp-hclose"></div><span class="mp-htitle">Confirm &amp; save</span></div>
+              <div class="mp-confirm">
+                <div class="mp-toast">⚠ 1 ingredient needs checking</div>
+                <div class="mp-rtitle">Spaghetti carbonara</div>
+                <div class="mp-tags">
+                  <div class="mp-tag" style="background:#D4E8C2;color:#1E2E14;">Italian</div>
+                  <div class="mp-tag" style="background:#E8E0CC;color:#3D2B00;">Dinner</div>
+                </div>
+                <div style="height:1.5px;background:var(--sc-ink);margin-bottom:4px;"></div>
+                <div class="mp-ingrow"><div class="mp-ingbox chk"></div><span class="mp-ingn done">200g spaghetti</span></div>
+                <div class="mp-ingrow"><div class="mp-ingbox chk"></div><span class="mp-ingn done">100g guanciale</span></div>
+                <div style="background:var(--sc-warn-bg);border:1px solid var(--sc-warn-bd);border-radius:2px;padding:3px 5px;margin:2px 0;display:flex;align-items:center;gap:3px;">
+                  <span style="font-size:6px;color:var(--sc-warn-fg);">⚠</span>
+                  <span class="mp-ingn warn" style="font-size:6px;">Eggs — quantity unclear</span>
+                </div>
+                <div class="mp-ingrow"><div class="mp-ingbox chk"></div><span class="mp-ingn done">60g Pecorino Romano</span></div>
+                <div class="mp-btn">Save recipe</div>
+                <div class="mp-btn2">Edit first</div>
+              </div>
+            </div>
+            <span class="screen-badge">Confirm</span>
+          </div>
+          <div class="screen-info"><p class="screen-name">Confirm &amp; save</p><p class="screen-desc">Per-field confidence flags. Only uncertain items highlighted — not a global warning.</p></div>
+        </div>
+
+        <!-- 5 BROWSE -->
+        <div class="screen-card">
+          <div class="screen-thumb">
+            <div class="mp">
+              <div class="mp-sb"><div class="mp-sb-dot"></div><div class="mp-sb-dot"></div><div class="mp-sb-dot"></div></div>
+              <div class="mp-nav"><span class="mp-wm">SousChef</span><div style="width:10px;height:10px;border-radius:50%;border:1px solid var(--sc-rule);"></div></div>
+              <div style="padding:4px 6px;border-bottom:1px solid var(--sc-rule);">
+                <div style="border:1px solid var(--sc-ink);border-radius:100px;padding:3px 8px;font-size:5px;color:var(--sc-ink-3);">Search recipes…</div>
+              </div>
+              <div class="mp-browse-filters">
+                <div class="mp-chip on">Italian</div><div class="mp-chip">Japanese</div><div class="mp-chip">Mexican</div>
+              </div>
+              <div class="mp-browse-filters" style="border-bottom:none;padding-bottom:0;">
+                <div class="mp-chip">All</div><div class="mp-chip on">Dinner</div><div class="mp-chip">Breakfast</div>
+              </div>
+              <div class="mp-grid" style="padding:4px;">
+                <div class="mp-card"><div class="mp-cimg"></div><div class="mp-cbody"><div class="mp-ctitle">Spaghetti carbonara</div><div class="mp-cmeta">Italian · 25 min</div></div></div>
+                <div class="mp-card"><div class="mp-cimg"></div><div class="mp-cbody"><div class="mp-ctitle">Miso glazed salmon</div><div class="mp-cmeta">Japanese · 30 min</div></div></div>
+                <div class="mp-card"><div class="mp-cimg"></div><div class="mp-cbody"><div class="mp-ctitle">Chicken tikka masala</div><div class="mp-cmeta">Indian · 45 min</div></div></div>
+                <div class="mp-card"><div class="mp-cimg"></div><div class="mp-cbody"><div class="mp-ctitle">Shakshuka</div><div class="mp-cmeta">· 25 min</div></div></div>
+              </div>
+              <div class="mp-tabs">
+                <div class="mp-tab"><div class="mp-ti"></div><div class="mp-tl">Recipes</div></div>
+                <div class="mp-tab"><div class="mp-ti on"></div><div class="mp-tl on">Browse</div></div>
+                <div class="mp-tab"><div class="mp-ti"></div><div class="mp-tl">Add</div></div>
+                <div class="mp-tab"><div class="mp-ti"></div><div class="mp-tl">Settings</div></div>
+              </div>
+            </div>
+            <span class="screen-badge">Browse</span>
+          </div>
+          <div class="screen-info"><p class="screen-name">Browse</p><p class="screen-desc">Search, cuisine and meal filter chips. 2-column card grid.</p></div>
+        </div>
+
+        <!-- 6 RECIPE DETAIL -->
+        <div class="screen-card">
+          <div class="screen-thumb">
+            <div class="mp">
+              <div class="mp-sb"><div class="mp-sb-dot"></div><div class="mp-sb-dot"></div><div class="mp-sb-dot"></div></div>
+              <div class="mp-det-hero"><div class="mp-det-back"></div><div style="font-size:16px;color:#CCC;">□</div></div>
+              <div class="mp-det-body">
+                <div class="mp-det-title">Spaghetti carbonara</div>
+                <div class="mp-det-desc">A silky Roman classic — no cream, no shortcuts.</div>
+                <div class="mp-tags" style="gap:3px;">
+                  <div class="mp-tag" style="background:#D4E8C2;color:#1E2E14;font-size:5px;padding:1px 5px;border-radius:2px;">Italian</div>
+                  <div class="mp-tag" style="background:#E8E0CC;color:#3D2B00;font-size:5px;padding:1px 5px;border-radius:2px;">Dinner</div>
+                </div>
+                <div style="height:1.5px;background:var(--sc-ink);margin-bottom:4px;"></div>
+                <div class="mp-mstrip">
+                  <div class="mp-mc"><span class="mp-mv">25m</span><span class="mp-ml">Total</span></div>
+                  <div class="mp-mc"><span class="mp-mv">4</span><span class="mp-ml">Serves</span></div>
+                  <div class="mp-mc"><span class="mp-mv">Easy</span><span class="mp-ml">Level</span></div>
+                  <div class="mp-mc"><span class="mp-mv">457</span><span class="mp-ml">Cal</span></div>
+                </div>
+                <div style="font-size:6px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--sc-ink-3);margin:4px 0 3px;">Ingredients</div>
+                <div style="height:1.5px;background:var(--sc-ink);margin-bottom:3px;"></div>
+                <div class="mp-ingrow"><div class="mp-ingbox" style="border:1px solid var(--sc-rule);"></div><span class="mp-ingn" style="font-size:5px;">Spaghetti</span><span style="font-size:4px;color:var(--sc-ink-3);margin-left:auto;">200g</span></div>
+                <div class="mp-ingrow"><div class="mp-ingbox" style="border:1px solid var(--sc-rule);"></div><span class="mp-ingn" style="font-size:5px;">Guanciale</span><span style="font-size:4px;color:var(--sc-ink-3);margin-left:auto;">100g</span></div>
+                <div class="mp-ingrow"><div class="mp-ingbox chk"></div><span class="mp-ingn done" style="font-size:5px;">Egg yolks</span><span style="font-size:4px;color:var(--sc-ink-3);margin-left:auto;">4 lg</span></div>
+              </div>
+              <div class="mp-tabs">
+                <div class="mp-tab"><div class="mp-ti"></div><div class="mp-tl">Back</div></div>
+                <div class="mp-tab"><div class="mp-ti on"></div><div class="mp-tl on">Recipe</div></div>
+                <div class="mp-tab"><div class="mp-ti"></div><div class="mp-tl">Share</div></div>
+                <div class="mp-tab"><div class="mp-ti"></div><div class="mp-tl">Edit</div></div>
+              </div>
+            </div>
+            <span class="screen-badge">Recipe</span>
+          </div>
+          <div class="screen-info"><p class="screen-name">Recipe detail</p><p class="screen-desc">Meta strip, ingredient checklist, step-by-step view, timers, notes.</p></div>
+        </div>
+
+        <!-- 7 TAGS -->
+        <div class="screen-card">
+          <div class="screen-thumb">
+            <div class="mp">
+              <div class="mp-sb"><div class="mp-sb-dot"></div><div class="mp-sb-dot"></div><div class="mp-sb-dot"></div></div>
+              <div class="mp-header"><div class="mp-hclose"></div><span class="mp-htitle">Review tags</span></div>
+              <div style="padding:7px;">
+                <div style="font-family:'Playfair Display',serif;font-size:8px;font-weight:700;color:var(--sc-ink);margin-bottom:6px;">Spaghetti carbonara</div>
+                <div style="font-size:5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--sc-ink-3);margin-bottom:3px;">Cuisine</div>
+                <div style="display:flex;gap:3px;margin-bottom:5px;">
+                  <div style="background:#D4E8C2;color:#1E2E14;border:1px solid #7FAF52;font-size:5px;padding:1px 5px;border-radius:2px;">Italian ×</div>
+                  <div style="border:1px dashed var(--sc-rule);color:var(--sc-ink-3);font-size:5px;padding:1px 5px;border-radius:2px;">+ add</div>
+                </div>
+                <div style="font-size:5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--sc-ink-3);margin-bottom:3px;">Meal</div>
+                <div style="display:flex;gap:3px;margin-bottom:5px;">
+                  <div style="background:#E8E0CC;color:#3D2B00;border:1px solid #A08040;font-size:5px;padding:1px 5px;border-radius:2px;">Dinner ×</div>
+                  <div style="border:1px dashed var(--sc-rule);color:var(--sc-ink-3);font-size:5px;padding:1px 5px;border-radius:2px;">+ add</div>
+                </div>
+                <div style="font-size:5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--sc-ink-3);margin-bottom:3px;">Ingredient</div>
+                <div style="display:flex;gap:3px;margin-bottom:8px;">
+                  <div style="background:#EDD8CC;color:#3D1800;border:1px solid #A05030;font-size:5px;padding:1px 4px;border-radius:2px;">Pasta ×</div>
+                  <div style="background:#EDD8CC;color:#3D1800;border:1px solid #A05030;font-size:5px;padding:1px 4px;border-radius:2px;">Guanciale ×</div>
+                </div>
+                <div style="background:var(--sc-g-action);color:#fff;border-radius:100px;padding:4px;font-size:6px;font-weight:700;text-align:center;margin-bottom:4px;">Save with tags</div>
+                <div style="background:transparent;color:var(--sc-g-action);border:1px solid var(--sc-g-action);border-radius:100px;padding:3px;font-size:6px;font-weight:700;text-align:center;">Skip tags</div>
+              </div>
+            </div>
+            <span class="screen-badge">Tags</span>
+          </div>
+          <div class="screen-info"><p class="screen-name">Review tags</p><p class="screen-desc">AI pre-fills 3 tag categories. Editable and skippable entirely.</p></div>
+        </div>
+
+        <!-- 8 COOK MODE -->
+        <div class="screen-card">
+          <div class="screen-thumb">
+            <div class="mp">
+              <div class="mp-sb" style="background:var(--sc-g-action);">
+                <div class="mp-sb-dot" style="background:rgba(255,255,255,.3);"></div>
+                <div class="mp-sb-dot" style="background:rgba(255,255,255,.3);"></div>
+              </div>
+              <div class="mp-cook-hdr">
+                <div class="mp-ck-title">Spaghetti carbonara</div>
+                <div class="mp-track">
+                  <div class="mp-tseg done"></div><div class="mp-tseg cur"></div>
+                  <div class="mp-tseg"></div><div class="mp-tseg"></div><div class="mp-tseg"></div>
+                </div>
+              </div>
+              <div class="mp-ck-img"><div style="font-size:16px;color:#CCC;">□</div></div>
+              <div class="mp-ck-body">
+                <div class="mp-ck-ctx">While pasta cooks</div>
+                <div class="mp-ck-instr">Fry guanciale in a cold pan until fat renders and edges are crispy.</div>
+                <div style="display:flex;gap:3px;margin:4px 0;">
+                  <div style="background:var(--sc-surface);border:1px solid var(--sc-card-bd);border-radius:2px;padding:2px 4px;font-size:5px;color:var(--sc-ink);">Guanciale <span style="color:var(--sc-ink-3);">100g</span></div>
+                </div>
+                <div class="mp-ck-tip">
+                  <div class="mp-ck-tl">Tip</div>
+                  <div class="mp-ck-tt">Starting cold renders the fat slowly and evenly.</div>
+                </div>
+              </div>
+              <div class="mp-ck-nav"><div class="mp-ck-btn">Next step →</div></div>
+            </div>
+            <span class="screen-badge">Cook mode</span>
+          </div>
+          <div class="screen-info"><p class="screen-name">Cook mode</p><p class="screen-desc">Dark green header, step progress track, ingredient callouts, live timers.</p></div>
+        </div>
+
+      </div>
+
+      <div class="ai-note" style="margin-top:var(--space-6);">
+        <p class="ai-note-label">✦ AI process note</p>
+        <p>All 8 screens were built as a fully interactive HTML prototype using Claude as design collaborator — approximately 35 iteration cycles across the sprint. Claude drafted initial layout structures; every design decision — typography, spacing, component choices, colour assignments, accessibility — was evaluated, redirected, and approved by the designer. The AI generated first drafts; the designer set direction.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- OUTCOMES -->
+  <section class="sc-section sc-section--surface">
+    <div class="container">
+      <p class="eyebrow">06 — Outcomes</p>
+      <div class="grid-2" style="margin-bottom:var(--space-8);align-items:start;">
+        <div>
+          <h2>What the sprint produced.</h2>
+          <p>A complete research foundation, a documented design system, and a fully interactive 8-screen prototype — all with design decisions traceable back to specific research findings.</p>
+        </div>
+        <div>
+          <p>The three most important outputs weren't the screens themselves. They were the confidence-routing decision, the per-field uncertainty model, and the cook mode as the direct response to the "long dormancy" insight from the journey map.</p>
+          <p>Each can be validated independently in development, making the handoff unusually tractable.</p>
+        </div>
+      </div>
+      <div class="outcomes-grid">
+        <div class="outcome-cell">
+          <p class="outcome-num">3<sup>×</sup></p>
+          <p class="outcome-label">Target cook-through rate</p>
+          <p class="outcome-detail">Benchmarked against current state — recipes saved but never cooked. Cook mode directly addresses the dormancy problem identified in research.</p>
+        </div>
+        <div class="outcome-cell">
+          <p class="outcome-num">5<sup>s</sup></p>
+          <p class="outcome-label">Target max capture time</p>
+          <p class="outcome-detail">From launching the app to extraction initiated. Priya's primary need — zero tolerance for friction at the capture moment.</p>
+        </div>
+        <div class="outcome-cell">
+          <p class="outcome-num">0</p>
+          <p class="outcome-label">Manual data entry required</p>
+          <p class="outcome-detail">All structured data — ingredients, steps, tags, metadata — is extracted by the AI agent. The user's job is review, not input.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LEARNINGS -->
+  <section class="sc-section">
+    <div class="container">
+      <p class="eyebrow">07 — Learnings</p>
+      <div class="grid-2" style="margin-bottom:var(--space-6);align-items:start;">
+        <div>
+          <h2>What this sprint taught me<br>about AI-assisted design.</h2>
+        </div>
+        <div>
+          <p>Four honest observations from running a complete design sprint with AI as collaborator — what worked, what didn't, and what changes next time.</p>
+        </div>
+      </div>
+      <div class="learnings-grid">
+        <div class="learning">
+          <p class="learning-n">01</p>
+          <p class="learning-title">AI is exceptional at first drafts, weak at final judgment.</p>
+          <p class="learning-body">Claude could generate a complete persona, journey map, or screen layout in seconds. But every output needed design judgment applied: is the framing right? Does this match what users actually said? The speed is real; the quality gate cannot be removed.</p>
+        </div>
+        <div class="learning">
+          <p class="learning-n">02</p>
+          <p class="learning-title">The reframe is always the human's job.</p>
+          <p class="learning-body">The pivot from "organisation problem" to "capture-to-cook pipeline problem" came from my reading of the research, not from Claude. AI can surface patterns in data but it cannot decide which pattern matters most. That's still a design skill.</p>
+        </div>
+        <div class="learning">
+          <p class="learning-n">03</p>
+          <p class="learning-title">Design system consistency requires active enforcement.</p>
+          <p class="learning-body">Without design system documentation shared at each session, inconsistencies crept in — wrong border radii, mixed icon libraries, colour drift. The system had to be written down and enforced turn-by-turn. AI doesn't internalise; it references.</p>
+        </div>
+        <div class="learning">
+          <p class="learning-n">04</p>
+          <p class="learning-title">The process creates a natural audit trail.</p>
+          <p class="learning-body">Every decision in this case study is traceable to a specific conversation turn. Having to write everything down to communicate with the model created documentation that solo design rarely produces. That auditability is genuinely valuable — in portfolio terms and in handoff terms.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__inner">
+        <p class="footer__copy">© 2026 Alfred Law. All rights reserved.</p>
+        <div class="footer__links">
+          <a href="mailto:alfred.lawsn@gmail.com">Email</a>
+          <a href="https://www.linkedin.com/in/alfredlaw/" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://dribbble.com/iamalfred" target="_blank" rel="noopener">Dribbble</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../script.js"></script>
+</body>
+</html>
