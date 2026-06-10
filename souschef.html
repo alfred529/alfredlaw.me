@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SousChef — Alfred Law</title>
+  <meta name="description" content="SousChef: an AI-powered recipe collection app for iOS and Android. A 10-day solo design sprint by Alfred Law." />
+  <link rel="stylesheet" href="../style.css" />
+  <style>
+    .case-hero {
+      padding: calc(64px + var(--space-12)) 0 var(--space-8);
+    }
+
+    .case-hero__kicker {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      margin-bottom: var(--space-4);
+    }
+
+    .case-hero__kicker::before {
+      content: '';
+      display: block;
+      width: 32px;
+      height: 1px;
+      background: var(--color-ink-3);
+    }
+
+    .case-hero h1 { margin-bottom: var(--space-4); }
+    .case-hero p  { font-size: var(--size-lg); max-width: 60ch; }
+
+    .case-meta {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 0;
+      margin: var(--space-8) 0;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+    }
+
+    .case-meta__item {
+      padding: var(--space-3) var(--space-4);
+      border-right: 1px solid var(--color-border);
+    }
+
+    .case-meta__item:last-child { border-right: none; }
+
+    @media (max-width: 640px) {
+      .case-meta { grid-template-columns: 1fr 1fr; }
+      .case-meta__item { border-bottom: 1px solid var(--color-border); }
+      .case-meta__item:nth-child(even) { border-right: none; }
+    }
+
+    .case-meta__label {
+      font-size: var(--size-xs);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--color-ink-3);
+      margin-bottom: 4px;
+    }
+
+    .case-meta__value {
+      font-size: var(--size-sm);
+      font-weight: 500;
+    }
+
+    /* Sections */
+    .case-body { padding-bottom: var(--space-16); }
+
+    .case-section {
+      padding: var(--space-12) 0;
+      border-top: 1px solid var(--color-border);
+    }
+
+    .case-section__eyebrow {
+      font-size: var(--size-xs);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--color-ink-3);
+      margin-bottom: var(--space-2);
+    }
+
+    .case-section h2 { margin-bottom: var(--space-4); }
+    .case-section p  { margin-bottom: var(--space-3); }
+    .case-section p:last-child { margin-bottom: 0; }
+
+    .case-image {
+      width: 100%;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--color-border);
+      margin: var(--space-6) 0;
+    }
+
+    .ai-note {
+      background: var(--color-surface);
+      border-left: 2px solid var(--color-ink);
+      padding: var(--space-3) var(--space-4);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      margin: var(--space-4) 0;
+    }
+
+    .ai-note__label {
+      font-size: var(--size-xs);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--color-ink-3);
+      margin-bottom: var(--space-1);
+    }
+
+    .ai-note p { font-size: var(--size-sm); margin: 0; max-width: none; }
+
+    /* Key decisions grid */
+    .decisions-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-3);
+      margin-top: var(--space-4);
+    }
+
+    @media (max-width: 640px) {
+      .decisions-grid { grid-template-columns: 1fr; }
+    }
+
+    .decision-card {
+      padding: var(--space-4);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+    }
+
+    .decision-card__num {
+      font-size: var(--size-xs);
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      color: var(--color-ink-3);
+      margin-bottom: var(--space-2);
+    }
+
+    .decision-card h3 { font-size: var(--size-md); margin-bottom: var(--space-2); }
+    .decision-card p  { font-size: var(--size-sm); color: var(--color-ink-2); margin: 0; max-width: none; }
+    .decision-card__rejected {
+      margin-top: var(--space-2);
+      font-size: var(--size-xs);
+      color: var(--color-ink-3);
+    }
+
+    /* Nav back */
+    .case-nav {
+      padding: var(--space-4) 0;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .case-nav a {
+      font-size: var(--size-sm);
+      color: var(--color-ink-3);
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-1);
+      transition: color var(--transition);
+    }
+
+    .case-nav a:hover { color: var(--color-ink); }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav" role="navigation" aria-label="Main">
+    <div class="nav__inner">
+      <a href="/" class="nav__logo" aria-label="Alfred Law — home">
+        <img src="../assets/images/logo.png" alt="AL" />
+      </a>
+      <ul class="nav__links" id="nav-links" role="list">
+        <li><a href="/">Work</a></li>
+        <li><a href="../about.html">About</a></li>
+        <li><a href="../assets/alfred-law-resume.pdf" target="_blank" rel="noopener">Résumé</a></li>
+      </ul>
+      <a href="mailto:alfred.lawsn@gmail.com" class="nav__cta btn btn--outline">Say hello</a>
+      <button class="nav__hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="nav-links">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- BREADCRUMB -->
+  <div class="case-nav">
+    <div class="container">
+      <a href="/">← All work</a>
+    </div>
+  </div>
+
+  <!-- CASE HERO -->
+  <section class="case-hero">
+    <div class="container">
+      <div class="case-hero__kicker">
+        <span class="label">Case study · 2026</span>
+      </div>
+      <h1 class="fade-up">SousChef</h1>
+      <p class="fade-up">An AI-powered recipe collection app for iOS and Android — capturing recipes from any source and saving them as structured files. Designed solo in 10 days as an AI-assisted portfolio sprint.</p>
+
+      <div class="case-meta fade-up">
+        <div class="case-meta__item">
+          <p class="case-meta__label">Role</p>
+          <p class="case-meta__value">Solo Product Designer</p>
+        </div>
+        <div class="case-meta__item">
+          <p class="case-meta__label">Duration</p>
+          <p class="case-meta__value">10 days</p>
+        </div>
+        <div class="case-meta__item">
+          <p class="case-meta__label">Platform</p>
+          <p class="case-meta__value">iOS & Android</p>
+        </div>
+        <div class="case-meta__item">
+          <p class="case-meta__label">AI Collaborator</p>
+          <p class="case-meta__value">Claude (Anthropic)</p>
+        </div>
+        <div class="case-meta__item">
+          <p class="case-meta__label">Deliverables</p>
+          <p class="case-meta__value">Research, Design system, 8-screen prototype</p>
+        </div>
+      </div>
+
+      <img src="../assets/images/souschef-cover.png" alt="SousChef app screens" class="case-image" />
+    </div>
+  </section>
+
+  <!-- CASE BODY -->
+  <div class="case-body">
+    <div class="container">
+
+      <!-- PROBLEM -->
+      <section class="case-section fade-up">
+        <p class="case-section__eyebrow">Problem</p>
+        <h2>Recipes live everywhere.<br>Nowhere useful.</h2>
+        <p>Home cooks collect recipes across dozens of surfaces — YouTube videos, Instagram reels, TikTok saves, blog posts, scanned cookbook pages, screenshots. None of them are structured. None of them are searchable. None of them surface when you're standing at the stove.</p>
+        <p>The result is a spike-and-crash pattern: frantic saving when inspiration strikes, followed by recipes that are never actually cooked. Collections grow, remain inaccessible, and accumulate guilt.</p>
+        <div class="ai-note">
+          <p class="ai-note__label">✦ AI process note</p>
+          <p>The problem statement was refined iteratively with Claude. The first draft focused on organisation, but research synthesis revealed the real gap was in the capture-to-cook pipeline. That reframe shifted the entire product direction.</p>
+        </div>
+      </section>
+
+      <!-- RESEARCH -->
+      <section class="case-section fade-up">
+        <p class="case-section__eyebrow">Research</p>
+        <h2>Two users, one tension.</h2>
+        <p>Research surfaced two distinct user modes: the <strong>impulsive saver</strong> who needs frictionless capture above all else, and the <strong>deliberate cook</strong> who wants to review before committing. The central design challenge was serving both without a settings toggle.</p>
+        <p>The tension resolved into a <strong>confidence-routing system</strong> — the AI agent silently routes based on extraction confidence. High confidence (≥80%) saves immediately; lower confidence surfaces a review screen. Neither user has to manage this explicitly.</p>
+        <img src="../assets/images/souschef-research.png" alt="User research and personas" class="case-image" />
+      </section>
+
+      <!-- COMPETITIVE AUDIT -->
+      <section class="case-section fade-up">
+        <p class="case-section__eyebrow">Competitive Audit</p>
+        <h2>The gap no one had filled.</h2>
+        <p>No existing recipe app handles video transcript extraction or multi-screenshot stitching. Both became SousChef's core differentiators — gaps discovered directly through the competitive audit.</p>
+        <img src="../assets/images/souschef-audit.png" alt="Competitive audit matrix" class="case-image" />
+      </section>
+
+      <!-- KEY DECISIONS -->
+      <section class="case-section fade-up">
+        <p class="case-section__eyebrow">Key Decisions</p>
+        <h2>Four choices that<br>defined the product.</h2>
+        <p>Each decision represents a fork where the obvious path was rejected in favour of one grounded in research.</p>
+        <div class="decisions-grid" data-stagger>
+          <div class="decision-card fade-up">
+            <p class="decision-card__num">01 — Agent routing</p>
+            <h3>Silent, confidence-based routing</h3>
+            <p>The agent saves immediately at ≥80% confidence, surfaces a review screen below. Users never configure this — removing cognitive load from the capture moment entirely.</p>
+            <p class="decision-card__rejected">Rejected: User-configurable "always review" toggle. Added choice at the worst moment.</p>
+          </div>
+          <div class="decision-card fade-up">
+            <p class="decision-card__num">02 — Pipeline visibility</p>
+            <h3>Named pipeline steps, not a spinner</h3>
+            <p>The saving screen names each step: OCR extraction → stitching → parsing → confidence scoring → Drive save. Users reported higher trust in the output when they could see what had been done.</p>
+            <p class="decision-card__rejected">Rejected: Generic loading spinner. Measured increase in perceived wait time.</p>
+          </div>
+          <div class="decision-card fade-up">
+            <p class="decision-card__num">03 — Uncertainty display</p>
+            <h3>Per-field confidence flags</h3>
+            <p>Below threshold, the confirm screen flags specific uncertain fields rather than showing a global warning. Precision reduces cognitive load — users review one thing, not everything.</p>
+            <p class="decision-card__rejected">Rejected: Global "low confidence" banner. Caused over-correction in testing.</p>
+          </div>
+          <div class="decision-card fade-up">
+            <p class="decision-card__num">04 — Tag generation</p>
+            <h3>Post-extraction, pre-filled and editable</h3>
+            <p>Tags generated after extraction, pre-filled by AI, presented as an editable step users can skip. Starting from a correct answer beats starting from a blank form.</p>
+            <p class="decision-card__rejected">Rejected: Tags before save. Friction at the moment of highest save intent.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- DESIGN SYSTEM -->
+      <section class="case-section fade-up">
+        <p class="case-section__eyebrow">Design System</p>
+        <h2>Editorial with warmth.</h2>
+        <p>Built on one principle from NYT Cooking: <strong>serif for recipe content, sans-serif for UI chrome.</strong> Playfair Display handles every piece of recipe content. DM Sans handles all navigation, labels, and buttons. That single typographic split is what makes the app feel editorial rather than like another productivity tool.</p>
+        <p>Avocado green is the <em>only</em> action colour — appearing on primary buttons, checked ingredients, active steps, and nowhere else. Every green element is interactive or confirmed.</p>
+        <img src="../assets/images/souschef-design-system.png" alt="SousChef design system" class="case-image" />
+      </section>
+
+      <!-- SCREENS -->
+      <section class="case-section fade-up">
+        <p class="case-section__eyebrow">Screen Designs</p>
+        <h2>Every screen in the flow.</h2>
+        <p>From first open to active cooking. Checklists, timers, tag editing, step navigation, and overlap detection — all functional in the prototype.</p>
+        <div class="ai-note">
+          <p class="ai-note__label">✦ AI process note</p>
+          <p>All 8 screens were built as a fully interactive HTML prototype using Claude as design collaborator — approximately 35 iteration cycles across the sprint. Claude drafted initial layout structures; every design decision — typography, spacing, component choices, colour assignments, accessibility — was evaluated, redirected, and approved by the designer. The AI generated first drafts; the designer set direction.</p>
+        </div>
+        <img src="../assets/images/souschef-screens-1.png" alt="SousChef screens 1-4" class="case-image" />
+        <img src="../assets/images/souschef-screens-2.png" alt="SousChef screens 5-8" class="case-image" />
+      </section>
+
+      <!-- OUTCOMES -->
+      <section class="case-section fade-up">
+        <p class="case-section__eyebrow">Outcomes</p>
+        <h2>What the sprint produced.</h2>
+        <p>A complete research foundation, a documented design system, and a fully interactive 8-screen prototype — all with design decisions traceable back to specific research findings.</p>
+        <p>The three most important outputs weren't the screens themselves. They were the confidence-routing decision, the per-field uncertainty model, and cook mode as the direct response to the "long dormancy" insight from the journey map. Each can be validated independently in development, making the handoff unusually tractable.</p>
+        <img src="../assets/images/souschef-outcomes.png" alt="SousChef outcomes summary" class="case-image" />
+      </section>
+
+      <!-- LEARNINGS -->
+      <section class="case-section fade-up">
+        <p class="case-section__eyebrow">Learnings</p>
+        <h2>What this sprint taught me<br>about AI-assisted design.</h2>
+        <img src="../assets/images/souschef-learnings.png" alt="Learnings from the sprint" class="case-image" />
+      </section>
+
+    </div>
+  </div>
+
+  <!-- NEXT CASE -->
+  <section style="padding: var(--space-8) 0; border-top: 1px solid var(--color-border); background: var(--color-surface);">
+    <div class="container" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: var(--space-3);">
+      <div>
+        <p class="label mb-2">Next case study</p>
+        <h3>TD Loyalty & Rewards — Education Centre</h3>
+      </div>
+      <a href="td-ec.html" class="btn btn--primary">View case study →</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__inner">
+        <p class="footer__copy">© 2026 Alfred Law. All rights reserved.</p>
+        <div class="footer__links">
+          <a href="mailto:alfred.lawsn@gmail.com">Email</a>
+          <a href="https://www.linkedin.com/in/alfredlaw/" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://dribbble.com/iamalfred" target="_blank" rel="noopener">Dribbble</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../script.js"></script>
+</body>
+</html>

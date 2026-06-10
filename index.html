@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Alfred Law — Senior Product Designer</title>
+  <meta name="description" content="Alfred Law is a Senior Product Designer based in Toronto, specialising in FinTech and consumer mobile products." />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ── Hero ── */
+    .hero {
+      position: relative;
+      min-height: 100svh;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    #hero-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .hero__content {
+      position: relative;
+      z-index: 1;
+      padding: var(--space-16) 0 var(--space-12);
+    }
+
+    .hero__eyebrow {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      margin-bottom: var(--space-4);
+    }
+
+    .hero__eyebrow::before {
+      content: '';
+      display: block;
+      width: 32px;
+      height: 1px;
+      background: var(--color-ink-3);
+    }
+
+    .hero__headline {
+      margin-bottom: var(--space-4);
+    }
+
+    .hero__headline em {
+      font-style: italic;
+      font-weight: 400;
+    }
+
+    .hero__sub {
+      margin-bottom: var(--space-6);
+      font-size: var(--size-md);
+      max-width: 52ch;
+    }
+
+    .hero__actions {
+      display: flex;
+      gap: var(--space-2);
+      flex-wrap: wrap;
+    }
+
+    .hero__scroll {
+      position: absolute;
+      bottom: var(--space-6);
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-1);
+      z-index: 1;
+      animation: bounce 2s ease-in-out infinite;
+    }
+
+    .hero__scroll span {
+      font-size: var(--size-xs);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-ink-3);
+    }
+
+    .hero__scroll::after {
+      content: '';
+      display: block;
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, var(--color-ink-3), transparent);
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50%       { transform: translateX(-50%) translateY(6px); }
+    }
+
+    /* ── Works ── */
+    .works { padding: var(--space-16) 0; }
+
+    .section-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: var(--space-6);
+    }
+
+    @media (max-width: 640px) {
+      .section-header { flex-direction: column; align-items: flex-start; gap: var(--space-2); }
+    }
+
+    /* ── About Strip ── */
+    .about-strip {
+      padding: var(--space-16) 0;
+      border-top: 1px solid var(--color-border);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .about-strip__inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-8);
+      align-items: center;
+    }
+
+    @media (max-width: 768px) {
+      .about-strip__inner { grid-template-columns: 1fr; }
+    }
+
+    .skills-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-1);
+      margin-top: var(--space-3);
+    }
+
+    /* ── Contact ── */
+    .contact {
+      padding: var(--space-16) 0;
+      text-align: center;
+    }
+
+    .contact h2 { margin-bottom: var(--space-3); }
+    .contact p  { margin: 0 auto var(--space-6); }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav" role="navigation" aria-label="Main">
+    <div class="nav__inner">
+      <a href="/" class="nav__logo" aria-label="Alfred Law — home">
+        <img src="assets/images/logo.png" alt="AL" />
+      </a>
+      <ul class="nav__links" id="nav-links" role="list">
+        <li><a href="/">Work</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="assets/alfred-law-resume.pdf" target="_blank" rel="noopener">Résumé</a></li>
+      </ul>
+      <a href="mailto:alfred.lawsn@gmail.com" class="nav__cta btn btn--outline">Say hello</a>
+      <button class="nav__hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="nav-links">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <canvas id="hero-canvas" aria-hidden="true"></canvas>
+    <div class="container">
+      <div class="hero__content">
+        <div class="hero__eyebrow">
+          <span class="label">Senior Product Designer · Toronto</span>
+        </div>
+        <h1 class="hero__headline fade-up">
+          Designing products<br>
+          <em>people actually use.</em>
+        </h1>
+        <p class="hero__sub fade-up">
+          I work at the intersection of research, systems thinking, and craft — turning complex problems into clear, considered experiences.
+        </p>
+        <div class="hero__actions fade-up">
+          <a href="#works" class="btn btn--primary">View work</a>
+          <a href="about.html" class="btn btn--outline">About me</a>
+        </div>
+      </div>
+    </div>
+    <div class="hero__scroll" aria-hidden="true">
+      <span>Scroll</span>
+    </div>
+  </section>
+
+  <!-- SELECTED WORKS -->
+  <section class="works" id="works">
+    <div class="container">
+      <div class="section-header">
+        <div>
+          <p class="label mb-2">Selected works</p>
+          <h2>Case studies</h2>
+        </div>
+        <a href="about.html" class="btn btn--outline">About me →</a>
+      </div>
+
+      <div class="work-grid" data-stagger>
+
+        <!-- SousChef — FEATURED -->
+        <a href="work/souschef.html" class="work-card fade-up" style="grid-column: 1 / -1;">
+          <div class="work-card__thumb" style="aspect-ratio: 21/9;">
+            <img src="assets/images/souschef-cover.png" alt="SousChef app screens" loading="lazy" />
+          </div>
+          <div class="work-card__body">
+            <div class="work-card__tags">
+              <span class="tag">AI-Assisted</span>
+              <span class="tag">iOS & Android</span>
+              <span class="tag">Product Design</span>
+              <span class="tag">2026</span>
+            </div>
+            <h3 class="work-card__title">SousChef — AI-Assisted Recipe App</h3>
+            <p class="work-card__desc">Solo design sprint. From zero to fully interactive 8-screen prototype in 10 days — capturing recipes from any source using AI extraction and confidence-based routing.</p>
+          </div>
+        </a>
+
+        <!-- TD -->
+        <a href="work/td-ec.html" class="work-card fade-up">
+          <div class="work-card__thumb">
+            <img src="assets/images/td-cover.png" alt="TD Loyalty Education Centre" loading="lazy" />
+          </div>
+          <div class="work-card__body">
+            <div class="work-card__tags">
+              <span class="tag">FinTech</span>
+              <span class="tag">UX Design</span>
+              <span class="tag">Data Analysis</span>
+            </div>
+            <h3 class="work-card__title">TD Loyalty & Rewards — Education Centre</h3>
+            <p class="work-card__desc">North star vision for a rewards engagement feature inside the TD mobile app — driving deeper participation in TD Rewards programs.</p>
+          </div>
+        </a>
+
+        <!-- BMO -->
+        <a href="work/bmo.html" class="work-card fade-up">
+          <div class="work-card__thumb">
+            <img src="assets/images/bmo-cover.png" alt="BMO Personalization" loading="lazy" />
+          </div>
+          <div class="work-card__body">
+            <div class="work-card__tags">
+              <span class="tag">Growth Design</span>
+              <span class="tag">A/B Testing</span>
+              <span class="tag">Personalization</span>
+            </div>
+            <h3 class="work-card__title">BMO — Growth & Personalization</h3>
+            <p class="work-card__desc">As lead growth designer on the Personalization team, consistently hit quarterly conversion targets through rigorous A/B testing in 2022.</p>
+          </div>
+        </a>
+
+        <!-- BGIS -->
+        <a href="work/bgis.html" class="work-card fade-up">
+          <div class="work-card__thumb">
+            <img src="assets/images/bgis-cover.png" alt="BGIS Intrazone" loading="lazy" />
+          </div>
+          <div class="work-card__body">
+            <div class="work-card__tags">
+              <span class="tag">UX/UI</span>
+              <span class="tag">Accessibility</span>
+              <span class="tag">WCAG 2.1</span>
+            </div>
+            <h3 class="work-card__title">BGIS — Intrazone Revamp</h3>
+            <p class="work-card__desc">Full redesign of the BGIS intranet site — modernised, responsive, and brought to WCAG 2.1 compliance.</p>
+          </div>
+        </a>
+
+        <!-- LetsEat -->
+        <a href="work/letseat.html" class="work-card fade-up">
+          <div class="work-card__thumb">
+            <img src="assets/images/letseat-cover.png" alt="LetsEat app" loading="lazy" />
+          </div>
+          <div class="work-card__body">
+            <div class="work-card__tags">
+              <span class="tag">Mobile App</span>
+              <span class="tag">UX/UI</span>
+            </div>
+            <h3 class="work-card__title">LetsEat — Restaurant Menu App</h3>
+            <p class="work-card__desc">A dine-in app for post-COVID restaurants — contactless menus on customers' own phones, without downloading anything.</p>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT STRIP -->
+  <section class="about-strip">
+    <div class="container">
+      <div class="about-strip__inner">
+        <div class="fade-up">
+          <p class="label mb-2">About</p>
+          <h2 class="mb-4">Multidisciplinary by training, product-focused by practice.</h2>
+          <p>With a background spanning architecture, front-end development, and product design, I bring systems thinking to every problem I work on. Currently open to Senior and Lead Product Designer roles in Toronto.</p>
+          <div class="hero__actions" style="margin-top: var(--space-4);">
+            <a href="about.html" class="btn btn--primary">More about me</a>
+            <a href="assets/alfred-law-resume.pdf" target="_blank" class="btn btn--outline">Download résumé</a>
+          </div>
+        </div>
+        <div class="fade-up">
+          <p class="label mb-2">Skills</p>
+          <div class="skills-list">
+            <span class="tag">Product Strategy</span>
+            <span class="tag">UX Research</span>
+            <span class="tag">Interaction Design</span>
+            <span class="tag">Prototyping</span>
+            <span class="tag">Design Systems</span>
+            <span class="tag">A/B Testing</span>
+            <span class="tag">Growth Design</span>
+            <span class="tag">Figma</span>
+            <span class="tag">HTML & CSS</span>
+            <span class="tag">AI-Assisted Design</span>
+            <span class="tag">Accessibility</span>
+            <span class="tag">Mobile (iOS/Android)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact">
+    <div class="container">
+      <p class="label mb-2">Get in touch</p>
+      <h2 class="mb-4 fade-up">Let's work together.</h2>
+      <p class="fade-up">Open to Senior and Lead Product Designer roles.<br>Also happy to chat about your product challenges.</p>
+      <div class="hero__actions" style="justify-content: center;" class="fade-up">
+        <a href="mailto:alfred.lawsn@gmail.com" class="btn btn--primary">alfred.lawsn@gmail.com</a>
+        <a href="https://www.linkedin.com/in/alfredlaw/" target="_blank" rel="noopener" class="btn btn--outline">LinkedIn</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__inner">
+        <p class="footer__copy">© 2026 Alfred Law. All rights reserved.</p>
+        <div class="footer__links">
+          <a href="mailto:alfred.lawsn@gmail.com">Email</a>
+          <a href="https://www.linkedin.com/in/alfredlaw/" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://dribbble.com/iamalfred" target="_blank" rel="noopener">Dribbble</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    // ── Hero Canvas Animation ──────────────────
+    (() => {
+      const canvas = document.getElementById('hero-canvas');
+      const ctx    = canvas.getContext('2d');
+      let W, H, particles;
+      let mouse = { x: -9999, y: -9999 };
+
+      const COUNT       = 80;
+      const MAX_DIST    = 120;
+      const MOUSE_DIST  = 160;
+
+      function resize() {
+        W = canvas.width  = canvas.offsetWidth;
+        H = canvas.height = canvas.offsetHeight;
+        init();
+      }
+
+      function init() {
+        particles = Array.from({ length: COUNT }, () => ({
+          x:  Math.random() * W,
+          y:  Math.random() * H,
+          vx: (Math.random() - 0.5) * 0.3,
+          vy: (Math.random() - 0.5) * 0.3,
+          r:  Math.random() * 1.5 + 0.5,
+        }));
+      }
+
+      function draw() {
+        ctx.clearRect(0, 0, W, H);
+
+        // Move
+        particles.forEach(p => {
+          p.x += p.vx;
+          p.y += p.vy;
+          if (p.x < 0 || p.x > W) p.vx *= -1;
+          if (p.y < 0 || p.y > H) p.vy *= -1;
+        });
+
+        // Lines
+        for (let i = 0; i < particles.length; i++) {
+          for (let j = i + 1; j < particles.length; j++) {
+            const dx   = particles[i].x - particles[j].x;
+            const dy   = particles[i].y - particles[j].y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < MAX_DIST) {
+              ctx.beginPath();
+              ctx.moveTo(particles[i].x, particles[i].y);
+              ctx.lineTo(particles[j].x, particles[j].y);
+              ctx.strokeStyle = `rgba(10,10,10,${0.07 * (1 - dist / MAX_DIST)})`;
+              ctx.lineWidth   = 0.6;
+              ctx.stroke();
+            }
+          }
+
+          // Mouse repel
+          const mdx  = particles[i].x - mouse.x;
+          const mdy  = particles[i].y - mouse.y;
+          const mdist = Math.sqrt(mdx * mdx + mdy * mdy);
+          if (mdist < MOUSE_DIST) {
+            const force = (MOUSE_DIST - mdist) / MOUSE_DIST * 0.6;
+            particles[i].vx += (mdx / mdist) * force;
+            particles[i].vy += (mdy / mdist) * force;
+            // Dampen
+            particles[i].vx *= 0.95;
+            particles[i].vy *= 0.95;
+          }
+        }
+
+        // Dots
+        particles.forEach(p => {
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(10,10,10,0.25)';
+          ctx.fill();
+        });
+
+        requestAnimationFrame(draw);
+      }
+
+      window.addEventListener('resize', resize);
+      document.addEventListener('mousemove', e => {
+        const rect = canvas.getBoundingClientRect();
+        mouse.x = e.clientX - rect.left;
+        mouse.y = e.clientY - rect.top;
+      });
+
+      // Respect reduced motion
+      if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        resize();
+        draw();
+      }
+    })();
+  </script>
+</body>
+</html>
