@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TD Education Centre — Alfred Law</title>
+  <meta name="description" content="TD Loyalty & Rewards Education Centre: turning passive cardholders into informed, active participants. Senior Product Designer case study by Alfred Law." />
+  <link rel="stylesheet" href="../style.css" />
+  <style>
+    /* ── Case nav ── */
+    .case-nav { padding: var(--space-2) 0; border-bottom: 1px solid var(--color-border); margin-top: 64px; }
+    .case-nav a { font-size: var(--size-sm); color: var(--color-ink-3); display: inline-flex; align-items: center; gap: var(--space-1); transition: color var(--transition); }
+    .case-nav a:hover { color: var(--color-ink); }
+
+    /* ── Hero ── */
+    .cs-hero { padding: var(--space-12) 0 var(--space-8); border-bottom: 1px solid var(--color-border); }
+    .hero-tags { display: flex; gap: var(--space-1); flex-wrap: wrap; margin-bottom: var(--space-4); }
+    .hero-tag { font-size: var(--size-xs); font-weight: 500; letter-spacing: .06em; padding: 4px 12px; border-radius: 100px; border: 1px solid var(--color-border); color: var(--color-ink-2); }
+    .hero-tag--filled { background: var(--color-surface); }
+    .hero-h1 { font-family: var(--font-display); font-size: clamp(2.5rem, 5.5vw, 4.5rem); font-weight: 700; line-height: 1.08; letter-spacing: -.02em; color: var(--color-ink); margin-bottom: var(--space-3); }
+    .hero-h1 em { font-style: italic; }
+    .hero-lead { font-size: var(--size-md); line-height: 1.75; color: var(--color-ink-2); max-width: 60ch; margin-bottom: var(--space-8); }
+    .hero-meta { display: flex; gap: 0; flex-wrap: wrap; border-top: 1px solid var(--color-border); padding-top: var(--space-4); }
+    .hero-meta-item { padding-right: var(--space-6); padding-bottom: var(--space-2); }
+    .meta-label { font-size: var(--size-xs); font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--color-ink-3); margin-bottom: 5px; max-width: none; }
+    .meta-value { font-size: var(--size-sm); font-weight: 500; color: var(--color-ink); max-width: none; line-height: 1.4; }
+
+    /* ── Stat row ── */
+    .stat-row { display: grid; grid-template-columns: repeat(3,1fr); border-bottom: 1px solid var(--color-border); }
+    .stat-cell { padding: var(--space-6) var(--space-4); border-right: 1px solid var(--color-border); }
+    .stat-cell:last-child { border-right: none; }
+    .stat-num { font-family: var(--font-display); font-size: 3rem; font-weight: 700; line-height: 1; color: var(--color-ink); margin-bottom: 6px; }
+    .stat-desc { font-size: var(--size-sm); color: var(--color-ink-3); max-width: none; }
+
+    /* ── Sections ── */
+    .cs-section { padding: var(--space-12) 0; border-bottom: 1px solid var(--color-border); }
+    .cs-section:last-child { border-bottom: none; }
+    .cs-section--surface { background: var(--color-surface); }
+    .cs-section h2 { margin-bottom: var(--space-3); }
+    .cs-section p  { margin-bottom: var(--space-3); }
+    .cs-section p:last-child { margin-bottom: 0; }
+
+    .eyebrow { font-size: var(--size-xs); font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--color-ink-3); display: flex; align-items: center; gap: 10px; margin-bottom: var(--space-4); }
+    .eyebrow::after { content: ''; flex: 1; max-width: 48px; height: 1px; background: var(--color-border); }
+
+    /* ── 2-col grid ── */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-8); align-items: start; }
+    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: var(--space-3); }
+
+    /* ── Blockquote ── */
+    blockquote { border-left: 2px solid var(--color-ink); padding: 4px 0 4px var(--space-3); margin: var(--space-4) 0; }
+    blockquote p { font-family: var(--font-display); font-size: var(--size-md); font-style: italic; line-height: 1.65; color: var(--color-ink); max-width: none; margin: 0; }
+    blockquote cite { display: block; margin-top: 8px; font-size: var(--size-xs); color: var(--color-ink-3); font-style: normal; }
+
+    /* ── Insight cards ── */
+    .insight-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: var(--space-3); margin-top: var(--space-6); }
+    .insight-card { border: 1px solid var(--color-border); padding: var(--space-4); }
+    .insight-num { font-family: var(--font-display); font-size: 2rem; font-weight: 700; color: var(--color-border); line-height: 1; margin-bottom: var(--space-2); }
+    .insight-finding { font-size: var(--size-sm); font-weight: 600; color: var(--color-ink); margin-bottom: var(--space-2); line-height: 1.4; max-width: none; }
+    .insight-implication { font-size: var(--size-xs); color: var(--color-ink-3); line-height: 1.6; max-width: none; padding-top: var(--space-2); border-top: 1px solid var(--color-border); }
+    .insight-implication strong { color: var(--color-ink-2); }
+
+    /* ── Decisions ── */
+    .decision { display: grid; grid-template-columns: 200px 1fr; gap: 0; border-top: 1px solid var(--color-border); padding: var(--space-6) 0; }
+    .decision:last-child { border-bottom: 1px solid var(--color-border); }
+    .d-num { font-family: var(--font-display); font-size: 2.5rem; font-weight: 700; color: var(--color-border); line-height: 1; margin-bottom: 6px; }
+    .d-title { font-size: var(--size-sm); font-weight: 600; color: var(--color-ink); padding-right: var(--space-4); }
+    .d-chosen { display: inline-flex; align-items: center; gap: 5px; font-size: var(--size-xs); font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--color-ink); background: var(--color-surface); border: 1px solid var(--color-border); padding: 3px 11px; border-radius: 100px; margin-bottom: var(--space-2); }
+    .d-rationale { font-size: var(--size-sm); color: var(--color-ink-2); line-height: 1.75; max-width: none; margin-bottom: 0; }
+    .d-rejected { margin-top: var(--space-2); padding-top: var(--space-2); border-top: 1px solid var(--color-border); font-size: var(--size-xs); color: var(--color-ink-3); line-height: 1.6; max-width: none; }
+    .d-rejected strong { color: var(--color-ink-2); }
+
+    /* ── IA diagram ── */
+    .ia-diagram { border: 1px solid var(--color-border); margin-top: var(--space-6); overflow: hidden; }
+    .ia-header { background: var(--color-ink); color: var(--color-bg); padding: var(--space-3) var(--space-4); }
+    .ia-header-label { font-size: var(--size-xs); font-weight: 600; letter-spacing: .1em; text-transform: uppercase; opacity: .6; margin-bottom: 4px; max-width: none; }
+    .ia-header-title { font-family: var(--font-display); font-size: var(--size-lg); font-weight: 700; color: var(--color-bg); max-width: none; margin: 0; }
+    .ia-columns { display: grid; grid-template-columns: 1fr 1fr 1fr; }
+    .ia-col { padding: var(--space-4); border-right: 1px solid var(--color-border); }
+    .ia-col:last-child { border-right: none; }
+    .ia-col-title { font-size: var(--size-sm); font-weight: 700; color: var(--color-ink); margin-bottom: var(--space-2); padding-bottom: var(--space-2); border-bottom: 1.5px solid var(--color-ink); max-width: none; }
+    .ia-col-desc { font-size: var(--size-xs); color: var(--color-ink-3); line-height: 1.6; margin-bottom: var(--space-3); max-width: none; }
+    .ia-item { font-size: var(--size-xs); color: var(--color-ink-2); padding: 6px 0; border-bottom: 1px solid var(--color-border); display: flex; align-items: center; gap: 8px; max-width: none; }
+    .ia-item:last-child { border-bottom: none; }
+    .ia-item::before { content: ''; width: 4px; height: 4px; border-radius: 50%; background: var(--color-ink-3); flex-shrink: 0; }
+    .ia-cta { margin-top: var(--space-2); font-size: var(--size-xs); font-weight: 600; color: var(--color-ink); padding: 6px 0; max-width: none; }
+
+    /* ── Phone screens ── */
+    .screens-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: var(--space-3); margin-top: var(--space-6); }
+    .screen-card { border: 1px solid var(--color-border); overflow: hidden; }
+    .screen-thumb { aspect-ratio: 9/17; background: var(--color-surface); display: flex; align-items: center; justify-content: center; border-bottom: 1px solid var(--color-border); position: relative; overflow: hidden; }
+    .screen-badge { position: absolute; bottom: 9px; left: 9px; font-size: 9px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-ink); background: var(--color-bg); border: 1px solid var(--color-border); padding: 2px 8px; border-radius: 100px; }
+    .screen-info { padding: 14px 16px; }
+    .screen-name { font-size: var(--size-sm); font-weight: 600; color: var(--color-ink); margin-bottom: 3px; }
+    .screen-desc { font-size: 11px; color: var(--color-ink-3); line-height: 1.5; }
+
+    /* Phone mockup elements */
+    .mp { width: 68%; background: #fff; border: 1px solid #E2E2E2; border-radius: 10px; overflow: hidden; box-shadow: 0 3px 14px rgba(0,0,0,.06); }
+    .mp-sb { height: 10px; background: #fff; border-bottom: 1px solid #F0F0F0; display: flex; align-items: center; justify-content: flex-end; padding: 0 6px; gap: 3px; }
+    .mp-sb-dot { width: 4px; height: 4px; border-radius: 50%; background: #E2E2E2; }
+    .mp-nav { background: #fff; border-bottom: 1px solid #F0F0F0; padding: 5px 7px; display: flex; align-items: center; justify-content: space-between; }
+    .mp-logo { font-family: 'Playfair Display', serif; font-size: 8px; font-weight: 700; color: #0A0A0A; }
+    .mp-tabs { background: #fff; border-top: 1px solid #F0F0F0; display: flex; padding: 5px 0 6px; }
+    .mp-tab { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px; }
+    .mp-ti { width: 9px; height: 9px; border-radius: 1px; background: #F0F0F0; }
+    .mp-ti.on { background: #0A0A0A; }
+    .mp-tl { font-size: 4px; color: #888; }
+    .mp-tl.on { color: #0A0A0A; font-weight: 700; }
+    .mp-section-hdr { padding: 5px 7px; border-bottom: 1px solid #F0F0F0; }
+    .mp-section-title { font-size: 7px; font-weight: 700; color: #0A0A0A; }
+    .mp-card-block { margin: 6px; border: 1px solid #E2E2E2; border-radius: 3px; padding: 5px 6px; background: #fff; }
+    .mp-card-label { font-size: 5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: #888; margin-bottom: 3px; }
+    .mp-card-name { font-family: 'Playfair Display', serif; font-size: 7px; font-weight: 700; color: #0A0A0A; margin-bottom: 1px; }
+    .mp-card-pts { font-size: 6px; color: #444; }
+    .mp-row-items { padding: 4px 6px; display: flex; flex-direction: column; gap: 2px; }
+    .mp-row-item { display: flex; align-items: center; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid #F0F0F0; }
+    .mp-row-item:last-child { border-bottom: none; }
+    .mp-row-label { font-size: 6px; font-weight: 600; color: #0A0A0A; display: flex; align-items: center; gap: 4px; }
+    .mp-row-icon { width: 8px; height: 8px; background: #F0F0F0; border-radius: 2px; }
+    .mp-row-arrow { font-size: 7px; color: #888; }
+    .mp-promo { background: #F7F7F7; border: 1px solid #E2E2E2; border-radius: 3px; margin: 6px; padding: 5px 6px; display: flex; align-items: center; justify-content: space-between; }
+    .mp-promo-label { font-size: 5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: #888; margin-bottom: 2px; }
+    .mp-promo-title { font-size: 6px; font-weight: 600; color: #0A0A0A; }
+    .mp-promo-cta { font-size: 5px; font-weight: 700; color: #0A0A0A; background: #fff; border: 1px solid #E2E2E2; border-radius: 100px; padding: 2px 6px; white-space: nowrap; }
+    .mp-header { background: #fff; border-bottom: 1px solid #F0F0F0; padding: 5px 7px; display: flex; align-items: center; gap: 5px; }
+    .mp-back { width: 8px; height: 8px; border-radius: 50%; background: #F0F0F0; flex-shrink: 0; }
+    .mp-header-title { font-size: 7px; font-weight: 600; color: #0A0A0A; }
+    .mp-detail-card { background: #0A0A0A; margin: 6px; border-radius: 3px; padding: 7px 8px; }
+    .mp-dc-label { font-size: 4px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.5); margin-bottom: 3px; }
+    .mp-dc-name { font-family: 'Playfair Display', serif; font-size: 7px; font-weight: 700; color: #fff; margin-bottom: 5px; }
+    .mp-dc-pts { font-size: 10px; font-weight: 700; color: #fff; font-family: 'Playfair Display', serif; display: block; margin-bottom: 1px; }
+    .mp-dc-pts-label { font-size: 4px; color: rgba(255,255,255,.6); text-transform: uppercase; letter-spacing: .06em; }
+    .mp-nav-pills { display: flex; gap: 3px; padding: 5px 6px; border-bottom: 1px solid #F0F0F0; }
+    .mp-pill { font-size: 5px; padding: 2px 7px; border-radius: 100px; border: 1px solid #E2E2E2; color: #888; background: #fff; }
+    .mp-pill.on { background: #0A0A0A; color: #fff; border-color: #0A0A0A; }
+    .mp-list { padding: 4px 6px; }
+    .mp-list-item { display: flex; align-items: flex-start; gap: 4px; padding: 4px 0; border-bottom: 1px solid #F0F0F0; }
+    .mp-list-item:last-child { border-bottom: none; }
+    .mp-list-icon { width: 12px; height: 12px; background: #F7F7F7; border: 1px solid #E2E2E2; border-radius: 2px; flex-shrink: 0; margin-top: 1px; }
+    .mp-list-body { flex: 1; }
+    .mp-list-title { font-size: 6px; font-weight: 600; color: #0A0A0A; margin-bottom: 1px; }
+    .mp-list-desc { font-size: 5px; color: #888; line-height: 1.4; }
+    .mp-cta-bar { padding: 5px 6px; background: #fff; border-top: 1px solid #F0F0F0; }
+    .mp-cta-btn { background: #0A0A0A; color: #fff; border-radius: 100px; padding: 4px 0; font-size: 6px; font-weight: 700; text-align: center; }
+
+    /* ── Role responsibilities list ── */
+    .role-list { list-style: none; margin-top: var(--space-3); }
+    .role-list li { font-size: var(--size-sm); color: var(--color-ink-2); line-height: 1.6; padding: var(--space-2) 0; border-bottom: 1px solid var(--color-border); display: flex; align-items: baseline; gap: var(--space-2); }
+    .role-list li:last-child { border-bottom: none; }
+    .role-list li::before { content: '—'; color: var(--color-ink-3); flex-shrink: 0; font-size: var(--size-xs); }
+
+    /* ── Collaboration grid ── */
+    .collab-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); margin-top: var(--space-4); }
+    .collab-card { border: 1px solid var(--color-border); padding: var(--space-4); }
+    .collab-team { font-size: var(--size-xs); font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--color-ink-3); margin-bottom: var(--space-2); max-width: none; }
+    .collab-body { font-size: var(--size-sm); color: var(--color-ink-2); line-height: 1.65; max-width: none; }
+
+    /* ── Outcomes ── */
+    .outcomes-grid { display: grid; grid-template-columns: repeat(3,1fr); border: 1px solid var(--color-border); margin-top: var(--space-4); }
+    .outcome-cell { padding: var(--space-6) var(--space-4); border-right: 1px solid var(--color-border); }
+    .outcome-cell:last-child { border-right: none; }
+    .outcome-num { font-family: var(--font-display); font-size: 3.25rem; font-weight: 700; line-height: 1; color: var(--color-ink); margin-bottom: 6px; }
+    .outcome-num sup { font-size: 1.5rem; }
+    .outcome-label { font-size: var(--size-sm); font-weight: 600; color: var(--color-ink); margin-bottom: 6px; max-width: none; }
+    .outcome-detail { font-size: var(--size-xs); color: var(--color-ink-3); line-height: 1.6; max-width: none; }
+
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      .grid-2 { grid-template-columns: 1fr; gap: var(--space-6); }
+      .grid-3 { grid-template-columns: 1fr; }
+      .insight-grid { grid-template-columns: 1fr; }
+      .stat-row { grid-template-columns: 1fr; }
+      .stat-cell { border-right: none; border-bottom: 1px solid var(--color-border); }
+      .stat-cell:last-child { border-bottom: none; }
+      .decision { grid-template-columns: 1fr; }
+      .d-title { padding-right: 0; margin-bottom: var(--space-2); }
+      .ia-columns { grid-template-columns: 1fr; }
+      .ia-col { border-right: none; border-bottom: 1px solid var(--color-border); }
+      .ia-col:last-child { border-bottom: none; }
+      .screens-grid { grid-template-columns: 1fr 1fr; }
+      .collab-grid { grid-template-columns: 1fr; }
+      .outcomes-grid { grid-template-columns: 1fr; }
+      .outcome-cell { border-right: none; border-bottom: 1px solid var(--color-border); }
+      .outcome-cell:last-child { border-bottom: none; }
+    }
+    @media (max-width: 600px) {
+      .screens-grid { grid-template-columns: 1fr; }
+      .insight-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav" role="navigation" aria-label="Main">
+    <div class="nav__inner">
+      <a href="/" class="nav__logo" aria-label="Alfred Law — home">
+        <img src="../assets/images/AL.webp" alt="AL" />
+      </a>
+      <ul class="nav__links" id="nav-links" role="list">
+        <li><a href="/">Work</a></li>
+        <li><a href="../about.html">About</a></li>
+        <li><a href="../assets/alfred-law-resume.pdf" target="_blank" rel="noopener">Résumé</a></li>
+      </ul>
+      <button class="nav__hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="nav-links">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- BREADCRUMB -->
+  <div class="case-nav">
+    <div class="container">
+      <a href="/">← All work</a>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <section class="cs-hero">
+    <div class="container">
+      <div class="hero-tags">
+        <span class="hero-tag hero-tag--filled">Senior Product Designer</span>
+        <span class="hero-tag">TD Bank · 2024</span>
+      </div>
+      <h1 class="hero-h1 fade-up">The rewards were there.<br><em>The understanding wasn't.</em></h1>
+      <p class="hero-lead fade-up">I designed the Education Centre for TD's Loyalty &amp; Rewards mobile app — a centralized hub to help cardholders understand what they have, what it's worth, and what to do with it. Delivered end-to-end from research synthesis to production-ready specs.</p>
+      <div class="hero-meta fade-up">
+        <div class="hero-meta-item">
+          <p class="meta-label">Role</p>
+          <p class="meta-value">Senior Product Designer</p>
+        </div>
+        <div class="hero-meta-item">
+          <p class="meta-label">Company</p>
+          <p class="meta-value">TD Bank</p>
+        </div>
+        <div class="hero-meta-item">
+          <p class="meta-label">Platform</p>
+          <p class="meta-value">iOS · Android</p>
+        </div>
+        <div class="hero-meta-item">
+          <p class="meta-label">Year</p>
+          <p class="meta-value">2024</p>
+        </div>
+        <div class="hero-meta-item">
+          <p class="meta-label">Teams</p>
+          <p class="meta-value">Product · Engineering · Design Systems · Legal</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div>
+    <div class="container" style="padding-left:0;padding-right:0;max-width:100%;">
+      <div class="stat-row" style="max-width:var(--max-width);margin:0 auto;padding:0 var(--space-4);">
+        <div class="stat-cell" style="padding-left:0;">
+          <p class="stat-num">3</p>
+          <p class="stat-desc">IA pillars structured around user mental models</p>
+        </div>
+        <div class="stat-cell">
+          <p class="stat-num">4</p>
+          <p class="stat-desc">Cross-functional teams aligned to a shared vision</p>
+        </div>
+        <div class="stat-cell">
+          <p class="stat-num">2</p>
+          <p class="stat-desc">New entry points introduced to drive discoverability</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTEXT -->
+  <section class="cs-section">
+    <div class="container">
+      <p class="eyebrow">01 — Context</p>
+      <div class="grid-2">
+        <div>
+          <h2>Part of a bigger bet on loyalty.</h2>
+          <p>TD's Loyalty &amp; Rewards program spans millions of cardholders across multiple credit card tiers — each with different earning rates, redemption options, and partner integrations. It's a high-value program with significant complexity.</p>
+          <p>The <strong>North Star Vision</strong> driving this work was clear: transform users from passive participants into active advocates. The Education Centre was the first step — the foundation that everything else in the loyalty experience would reference.</p>
+        </div>
+        <div>
+          <p>My role was to take early research and abstract product thinking and translate it into a concrete, production-ready experience. That meant:</p>
+          <ul class="role-list">
+            <li>Defining how and where users enter the Education Centre across the app</li>
+            <li>Structuring the information architecture around user intent, not internal program logic</li>
+            <li>Aligning product, engineering, design systems, and legal around a shared IA model</li>
+            <li>Designing fallback states and edge cases for multi-API dependencies</li>
+            <li>Shipping production-ready specs through design review, QA, and implementation</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROBLEM -->
+  <section class="cs-section cs-section--surface">
+    <div class="container">
+      <p class="eyebrow">02 — Problem</p>
+      <div class="grid-2">
+        <div>
+          <h2>High perceived value. Low understood value.</h2>
+          <p>Users knew they had a TD credit card. Most knew they earned points. Very few could explain what those points were worth, how to earn more, or what they could actually do with them.</p>
+          <p>The gap wasn't in the product's value — it was in the product's legibility. The rewards system was rich but opaque. Users who didn't understand it didn't engage with it. And users who didn't engage with it eventually churned.</p>
+          <blockquote>
+            <p>"I know I have points but I never know how much or what to do with them."</p>
+            <cite>— Research participant, TD cardholder</cite>
+          </blockquote>
+        </div>
+        <div>
+          <p>Research showed three specific knowledge gaps driving disengagement:</p>
+          <div style="margin-top:var(--space-3);">
+            <div style="padding:var(--space-3) 0;border-bottom:1px solid var(--color-border);">
+              <p style="font-size:var(--size-sm);font-weight:600;color:var(--color-ink);margin-bottom:4px;max-width:none;">Users couldn't see their value clearly</p>
+              <p style="font-size:var(--size-xs);color:var(--color-ink-3);max-width:none;margin:0;">Points balance and card benefits were buried across multiple screens. There was no single moment of "here's what you have."</p>
+            </div>
+            <div style="padding:var(--space-3) 0;border-bottom:1px solid var(--color-border);">
+              <p style="font-size:var(--size-sm);font-weight:600;color:var(--color-ink);margin-bottom:4px;max-width:none;">Earning and redemption felt like a mystery</p>
+              <p style="font-size:var(--size-xs);color:var(--color-ink-3);max-width:none;margin:0;">Users knew spending earned points, but had no model for how, at what rate, or through which partners they could accelerate earning.</p>
+            </div>
+            <div style="padding:var(--space-3) 0;">
+              <p style="font-size:var(--size-sm);font-weight:600;color:var(--color-ink);margin-bottom:4px;max-width:none;">Dense text wasn't working</p>
+              <p style="font-size:var(--size-xs);color:var(--color-ink-3);max-width:none;margin:0;">Existing program documentation was accurate but unusable in a mobile context. Users needed visual, scannable, action-oriented content.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INSIGHTS -->
+  <section class="cs-section">
+    <div class="container">
+      <p class="eyebrow">03 — Insights</p>
+      <div class="grid-2" style="margin-bottom:var(--space-6);">
+        <div>
+          <h2>Three findings that shaped everything.</h2>
+        </div>
+        <div>
+          <p>Each insight from research had a direct design implication. The Education Centre wasn't built around features — it was built around what users needed to understand before they could act.</p>
+        </div>
+      </div>
+      <div class="insight-grid">
+        <div class="insight-card">
+          <p class="insight-num">01</p>
+          <p class="insight-finding">Users wanted clear visibility into their cards and points — in one place.</p>
+          <p class="insight-implication"><strong>Implication:</strong> Lead with the card and its current points balance before any educational content. Don't make users hunt for their own value.</p>
+        </div>
+        <div class="insight-card">
+          <p class="insight-num">02</p>
+          <p class="insight-finding">Users needed simpler explanations of earning and redemption — not more information.</p>
+          <p class="insight-implication"><strong>Implication:</strong> Structure content around three distinct user intents (Benefits, Earn, Redeem) rather than the program's internal taxonomy.</p>
+        </div>
+        <div class="insight-card">
+          <p class="insight-num">03</p>
+          <p class="insight-finding">Users responded significantly better to visual, actionable content than to dense copy.</p>
+          <p class="insight-implication"><strong>Implication:</strong> Every section needs a clear CTA that moves users forward. Education is only valuable if it leads to action.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DECISIONS -->
+  <section class="cs-section cs-section--surface">
+    <div class="container">
+      <p class="eyebrow">04 — Design decisions</p>
+      <div class="grid-2" style="margin-bottom:var(--space-8);">
+        <div>
+          <h2>Three decisions.<br>Each research-backed.</h2>
+        </div>
+        <div>
+          <p>The design decisions weren't arbitrary — each was a direct response to a specific insight. Documenting the rationale made stakeholder alignment significantly faster and created a traceable handoff for engineering.</p>
+        </div>
+      </div>
+
+      <div class="decision">
+        <div><p class="d-num">01</p><p class="d-title">Entry point strategy</p></div>
+        <div>
+          <span class="d-chosen">✦ Multiple contextual entry points</span>
+          <p class="d-rationale">Users arrive at the rewards section from different contexts — some are browsing rewards broadly, others are reviewing a specific credit card. A single entry point in one location would miss the majority of discovery moments. I introduced a permanent entry point on the Rewards landing page, a contextual entry from the credit card account screen, and a temporary "New for You" awareness card to drive initial adoption. Each entry point meets users where they already are rather than redirecting them somewhere new.</p>
+          <p class="d-rejected"><strong>Rejected:</strong> A single entry point on the Rewards home only. This would require users to navigate to the Rewards section before they could access the Education Centre — missing the high-intent moment when a user is already looking at their credit card account.</p>
+        </div>
+      </div>
+
+      <div class="decision">
+        <div><p class="d-num">02</p><p class="d-title">Value visibility</p></div>
+        <div>
+          <span class="d-chosen">✦ Card + points balance surfaced immediately</span>
+          <p class="d-rationale">The Education Centre opens with the user's card and current points balance front and centre — before any educational content. This is intentional. Users told us they felt disconnected from their rewards because they never had a clear sense of what they had. Anchoring the experience in their actual balance transforms education from abstract to personal: "here's what you have, and here's how to make the most of it." For multi-card users, card-switching is available inline — no navigation required to understand their full value.</p>
+          <p class="d-rejected"><strong>Rejected:</strong> Opening directly with educational content (Benefits, Earn, Redeem) without a value anchor. Tested poorly — users engaged less with content when they hadn't first seen what was personally relevant to them.</p>
+        </div>
+      </div>
+
+      <div class="decision">
+        <div><p class="d-num">03</p><p class="d-title">Information architecture</p></div>
+        <div>
+          <span class="d-chosen">✦ User intent model: Benefits → Earn → Redeem</span>
+          <p class="d-rationale">The rewards program has a complex internal taxonomy built around product teams and program categories. Users don't think in those terms. Research showed users approach rewards with three distinct intents: understanding what their card does (Benefits), learning how to accumulate points (Earn), and figuring out how to spend them (Redeem). Organizing the IA around this mental model — rather than the program's internal logic — meant users could find what they were looking for without learning a new system first. Each section ends with an actionable CTA, turning comprehension into behaviour.</p>
+          <p class="d-rejected"><strong>Rejected:</strong> Organizing by program category (e.g., Travel, Dining, Partners). This reflects how the product team thinks about the program, not how users navigate it. Card program logic isn't a user mental model.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOLUTION -->
+  <section class="cs-section">
+    <div class="container">
+      <p class="eyebrow">05 — Solution</p>
+      <div class="grid-2" style="margin-bottom:var(--space-8);">
+        <div>
+          <h2>A centralized hub built around user intent.</h2>
+          <p>The Education Centre is a single, discoverable destination that surfaces what users have, explains the system in plain language, and gives them a clear next step — from any entry point in the app.</p>
+        </div>
+        <div>
+          <p>The solution scales across card types: the Benefits, Earn, and Redeem model adapts to different reward structures (points, cashback, travel). For cashback cards, Earn and Redeem are combined into a single section — reducing cognitive overhead without changing the underlying IA.</p>
+        </div>
+      </div>
+
+      <!-- IA DIAGRAM -->
+      <div class="ia-diagram">
+        <div class="ia-header">
+          <p class="ia-header-label">Information architecture</p>
+          <p class="ia-header-title">Education Centre</p>
+        </div>
+        <div class="ia-columns">
+          <div class="ia-col">
+            <p class="ia-col-title">Benefits</p>
+            <p class="ia-col-desc">What does this card offer? Answer before users ask.</p>
+            <div class="ia-item">Card features overview</div>
+            <div class="ia-item">Insurance &amp; protections</div>
+            <div class="ia-item">Exclusive privileges</div>
+            <div class="ia-item">Partner benefits</div>
+            <p class="ia-cta">→ Explore card benefits</p>
+          </div>
+          <div class="ia-col">
+            <p class="ia-col-title">Earn</p>
+            <p class="ia-col-desc">How do I get more points? Make the path to earning legible.</p>
+            <div class="ia-item">Base earn rate</div>
+            <div class="ia-item">Bonus categories</div>
+            <div class="ia-item">Partner earn opportunities</div>
+            <div class="ia-item">Accelerators &amp; promotions</div>
+            <p class="ia-cta">→ Start earning more</p>
+          </div>
+          <div class="ia-col">
+            <p class="ia-col-title">Redeem</p>
+            <p class="ia-col-desc">What can I do with my points? Make value tangible.</p>
+            <div class="ia-item">Redemption options</div>
+            <div class="ia-item">Point value by category</div>
+            <div class="ia-item">Partner redemptions (Expedia, Aeroplan)</div>
+            <div class="ia-item">Minimum thresholds</div>
+            <p class="ia-cta">→ Redeem your points</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCREEN MOCKUPS -->
+      <div class="screens-grid">
+
+        <!-- 1: REWARDS HOME with entry point -->
+        <div class="screen-card">
+          <div class="screen-thumb">
+            <div class="mp">
+              <div class="mp-sb"><div class="mp-sb-dot"></div><div class="mp-sb-dot"></div><div class="mp-sb-dot"></div></div>
+              <div class="mp-nav"><span class="mp-logo">TD Rewards</span></div>
+              <div class="mp-section-hdr"><p class="mp-section-title">Your points</p></div>
+              <div style="padding:4px 6px;">
+                <div style="display:flex;align-items:center;justify-content:space-between;padding:3px 0;border-bottom:1px solid #F0F0F0;">
+                  <span style="font-size:5px;color:#888;font-weight:700;letter-spacing:.06em;text-transform:uppercase;">TD Visa Infinite</span>
+                  <span style="font-family:'Playfair Display',serif;font-size:8px;font-weight:700;color:#0A0A0A;">24,500 pts</span>
+                </div>
+              </div>
+              <div class="mp-promo">
+                <div>
+                  <div class="mp-promo-label">New for you</div>
+                  <div class="mp-promo-title">Education Centre</div>
+                  <div style="font-size:5px;color:#888;margin-top:1px;">Learn how to earn more</div>
+                </div>
+                <div class="mp-promo-cta">Explore →</div>
+              </div>
+              <div class="mp-section-hdr" style="margin-top:2px;"><p class="mp-section-title">Featured offers</p></div>
+              <div style="padding:3px 5px;">
+                <div style="background:#F7F7F7;border:1px solid #E2E2E2;border-radius:2px;padding:4px 5px;margin-bottom:3px;">
+                  <div style="font-size:5px;color:#888;">Partner offer</div>
+                  <div style="font-size:6px;font-weight:600;color:#0A0A0A;">3× points at Expedia</div>
+                </div>
+              </div>
+              <div class="mp-tabs">
+                <div class="mp-tab"><div class="mp-ti on"></div><div class="mp-tl on">Rewards</div></div>
+                <div class="mp-tab"><div class="mp-ti"></div><div class="mp-tl">Cards</div></div>
+                <div class="mp-tab"><div class="mp-ti"></div><div class="mp-tl">Offers</div></div>
+                <div class="mp-tab"><div class="mp-ti"></div><div class="mp-tl">More</div></div>
+              </div>
+            </div>
+            <span class="screen-badge">Entry point</span>
+          </div>
+          <div class="screen-info">
+            <p class="screen-name">Rewards home</p>
+            <p class="screen-desc">Promotional "New for You" card drives initial awareness. Permanent entry also accessible via nav.</p>
+          </div>
+        </div>
+
+        <!-- 2: EDUCATION CENTRE HOME -->
+        <div class="screen-card">
+          <div class="screen-thumb">
+            <div class="mp">
+              <div class="mp-sb"><div class="mp-sb-dot"></div><div class="mp-sb-dot"></div><div class="mp-sb-dot"></div></div>
+              <div class="mp-header"><div class="mp-back"></div><span class="mp-header-title">Education Centre</span></div>
+              <div class="mp-detail-card">
+                <div class="mp-dc-label">TD Visa Infinite · ···· 4567</div>
+                <div class="mp-dc-name">Your rewards</div>
+                <span class="mp-dc-pts">24,500</span>
+                <span class="mp-dc-pts-label">TD Rewards Points</span>
+              </div>
+              <div class="mp-row-items">
+                <div class="mp-row-item">
+                  <div class="mp-row-label"><div class="mp-row-icon"></div>Benefits</div>
+                  <div class="mp-row-arrow">›</div>
+                </div>
+                <div class="mp-row-item">
+                  <div class="mp-row-label"><div class="mp-row-icon"></div>Earn</div>
+                  <div class="mp-row-arrow">›</div>
+                </div>
+                <div class="mp-row-item">
+                  <div class="mp-row-label"><div class="mp-row-icon"></div>Redeem</div>
+                  <div class="mp-row-arrow">›</div>
+                </div>
+              </div>
+            </div>
+            <span class="screen-badge">EC home</span>
+          </div>
+          <div class="screen-info">
+            <p class="screen-name">Education Centre</p>
+            <p class="screen-desc">Card and points balance anchored at top. Three intent-based sections below. Card-switching inline.</p>
+          </div>
+        </div>
+
+        <!-- 3: EARN SECTION DETAIL -->
+        <div class="screen-card">
+          <div class="screen-thumb">
+            <div class="mp">
+              <div class="mp-sb"><div class="mp-sb-dot"></div><div class="mp-sb-dot"></div><div class="mp-sb-dot"></div></div>
+              <div class="mp-header"><div class="mp-back"></div><span class="mp-header-title">Earn</span></div>
+              <div class="mp-nav-pills">
+                <div class="mp-pill on">All</div>
+                <div class="mp-pill">Groceries</div>
+                <div class="mp-pill">Travel</div>
+                <div class="mp-pill">Dining</div>
+              </div>
+              <div class="mp-list">
+                <div class="mp-list-item">
+                  <div class="mp-list-icon"></div>
+                  <div class="mp-list-body">
+                    <div class="mp-list-title">3× on groceries</div>
+                    <div class="mp-list-desc">At participating grocery stores</div>
+                  </div>
+                </div>
+                <div class="mp-list-item">
+                  <div class="mp-list-icon"></div>
+                  <div class="mp-list-body">
+                    <div class="mp-list-title">3× on dining</div>
+                    <div class="mp-list-desc">Restaurants, cafés, food delivery</div>
+                  </div>
+                </div>
+                <div class="mp-list-item">
+                  <div class="mp-list-icon"></div>
+                  <div class="mp-list-body">
+                    <div class="mp-list-title">8× via Expedia for TD</div>
+                    <div class="mp-list-desc">Book flights, hotels, and more</div>
+                  </div>
+                </div>
+                <div class="mp-list-item">
+                  <div class="mp-list-icon"></div>
+                  <div class="mp-list-body">
+                    <div class="mp-list-title">1× on everything else</div>
+                    <div class="mp-list-desc">Every other purchase</div>
+                  </div>
+                </div>
+              </div>
+              <div class="mp-cta-bar"><div class="mp-cta-btn">Start earning more →</div></div>
+            </div>
+            <span class="screen-badge">Section detail</span>
+          </div>
+          <div class="screen-info">
+            <p class="screen-name">Earn section</p>
+            <p class="screen-desc">Category-filtered earn rates. Scannable list format. CTA drives users to act, not just read.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CROSS-FUNCTIONAL -->
+  <section class="cs-section cs-section--surface">
+    <div class="container">
+      <p class="eyebrow">06 — Constraints &amp; collaboration</p>
+      <div class="grid-2" style="margin-bottom:var(--space-6);">
+        <div>
+          <h2>Complexity beyond the screen.</h2>
+          <p>The Education Centre wasn't a solo effort — it required sustained cross-functional coordination across four teams, each with distinct constraints that shaped the final design.</p>
+        </div>
+        <div>
+          <p>Navigating these constraints wasn't friction to minimize — it was part of the design work. A senior designer's job isn't to hand off specs and wait. It's to hold the thread across all of these surfaces simultaneously.</p>
+        </div>
+      </div>
+      <div class="collab-grid">
+        <div class="collab-card">
+          <p class="collab-team">Product</p>
+          <p class="collab-body">Worked closely with the PM to align the Education Centre scope within the broader North Star Vision without overbuilding for v1. Maintained weekly sync to keep design, product, and roadmap decisions in lockstep throughout the sprint.</p>
+        </div>
+        <div class="collab-card">
+          <p class="collab-team">Engineering</p>
+          <p class="collab-body">The feature depends on multiple backend APIs — card data, points balance, partner feeds, and program content. I defined fallback states and error handling for each API failure scenario, ensuring the UI remained coherent even under partial data conditions.</p>
+        </div>
+        <div class="collab-card">
+          <p class="collab-team">Design Systems</p>
+          <p class="collab-body">Worked with the design systems team to ensure the Education Centre used existing component primitives where possible, and flagged new patterns that should be incorporated into the system rather than built as one-offs. Prevented future drift.</p>
+        </div>
+        <div class="collab-card">
+          <p class="collab-team">Legal &amp; Compliance</p>
+          <p class="collab-body">Benefits content is legally regulated. I collaborated with the legal team to define what language was permissible, where disclosures were required, and how to communicate program terms accurately without breaking the visual hierarchy or making content unreadable.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OUTCOMES -->
+  <section class="cs-section">
+    <div class="container">
+      <p class="eyebrow">07 — Outcomes</p>
+      <div class="grid-2" style="margin-bottom:var(--space-8);align-items:start;">
+        <div>
+          <h2>From abstract vision to shipped product.</h2>
+          <p>The Education Centre went from early research to production-ready specifications — a complete, validated design with documented decisions, edge cases, and component specs.</p>
+        </div>
+        <div>
+          <p>The most important outcome wasn't any individual screen. It was establishing a shared mental model — across the product team, engineering, and design — for how TD's rewards experience should work. That model is reusable.</p>
+          <p>The Benefits / Earn / Redeem IA now anchors the broader Loyalty &amp; Rewards redesign. Future features will extend this structure rather than building parallel information architectures.</p>
+        </div>
+      </div>
+      <div class="outcomes-grid">
+        <div class="outcome-cell">
+          <p class="outcome-num">1</p>
+          <p class="outcome-label">Scalable IA model</p>
+          <p class="outcome-detail">Benefits → Earn → Redeem supports all three TD reward types — points, cashback, and travel — with structural adaptation for each.</p>
+        </div>
+        <div class="outcome-cell">
+          <p class="outcome-num">4</p>
+          <p class="outcome-label">Teams aligned</p>
+          <p class="outcome-detail">Product, engineering, design systems, and legal operating from a shared IA and spec set — reducing decision latency throughout implementation.</p>
+        </div>
+        <div class="outcome-cell">
+          <p class="outcome-num">0</p>
+          <p class="outcome-label">Major QA revisions</p>
+          <p class="outcome-detail">Production-ready specs with defined fallback states, error handling, and edge cases delivered clean through engineering review and QA.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REFLECTION -->
+  <section class="cs-section cs-section--surface">
+    <div class="container">
+      <p class="eyebrow">08 — Reflection</p>
+      <div class="grid-2">
+        <div>
+          <h2>What I'd do differently.</h2>
+          <p>The IA model worked well, but the entry point strategy was designed reactively — defined after the core experience rather than in parallel. In hindsight, discovery and discoverability should be designed together from day one. A feature that users can't find is a feature that doesn't exist.</p>
+          <p>I'd also push earlier for a content audit before finalizing the IA. The legal review introduced late-stage edits to benefits descriptions that, with earlier involvement, could have shaped the structure rather than constraining it.</p>
+        </div>
+        <div>
+          <h2>What this reinforced.</h2>
+          <p>Cross-functional complexity isn't an obstacle to good design — it's the medium senior designers work in. The decisions that mattered most here weren't visual; they were about what to include, how to structure it, and how to communicate that structure to four different stakeholders with four different concerns.</p>
+          <p>Design systems alignment also proved its value. Committing to existing components early prevented a proliferation of one-off patterns that would have slowed engineering and created maintenance debt.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__inner">
+        <p class="footer__copy">© 2026 Alfred Law. All rights reserved.</p>
+        <div class="footer__links">
+          <a href="mailto:alfred.lawsn@gmail.com">Email</a>
+          <a href="https://www.linkedin.com/in/alfredlaw/" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://dribbble.com/iamalfred" target="_blank" rel="noopener">Dribbble</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../script.js"></script>
+</body>
+</html>
