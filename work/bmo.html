@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BMO Growth & Personalization — Alfred Law</title>
+  <meta name="description" content="Growth design at BMO: 57.2% conversion lift on the Auto Loan lead form, plus a full homepage redesign from competitive analysis to launch. Senior Product Designer case study by Alfred Law." />
+  <link rel="stylesheet" href="../style.css" />
+  <style>
+    /* ── Case nav ── */
+    .case-nav { padding: var(--space-2) 0; border-bottom: 1px solid var(--color-border); margin-top: 64px; }
+    .case-nav a { font-size: var(--size-sm); color: var(--color-ink-3); display: inline-flex; align-items: center; gap: var(--space-1); transition: color var(--transition); }
+    .case-nav a:hover { color: var(--color-ink); }
+
+    /* ── Hero ── */
+    .cs-hero { padding: var(--space-12) 0 var(--space-8); border-bottom: 1px solid var(--color-border); }
+    .hero-tags { display: flex; gap: var(--space-1); flex-wrap: wrap; margin-bottom: var(--space-4); }
+    .hero-tag { font-size: var(--size-xs); font-weight: 500; letter-spacing: .06em; padding: 4px 12px; border-radius: 100px; border: 1px solid var(--color-border); color: var(--color-ink-2); }
+    .hero-tag--filled { background: var(--color-surface); }
+    .hero-h1 { font-family: var(--font-display); font-size: clamp(2.5rem, 5.5vw, 4.5rem); font-weight: 700; line-height: 1.08; letter-spacing: -.02em; color: var(--color-ink); margin-bottom: var(--space-3); }
+    .hero-h1 em { font-style: italic; }
+    .hero-lead { font-size: var(--size-md); line-height: 1.75; color: var(--color-ink-2); max-width: 60ch; margin-bottom: var(--space-8); }
+    .hero-meta { display: flex; gap: 0; flex-wrap: wrap; border-top: 1px solid var(--color-border); padding-top: var(--space-4); }
+    .hero-meta-item { padding-right: var(--space-6); padding-bottom: var(--space-2); }
+    .meta-label { font-size: var(--size-xs); font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--color-ink-3); margin-bottom: 5px; max-width: none; }
+    .meta-value { font-size: var(--size-sm); font-weight: 500; color: var(--color-ink); max-width: none; line-height: 1.4; }
+
+    /* ── Stat row ── */
+    .stat-row { display: grid; grid-template-columns: repeat(4,1fr); border-bottom: 1px solid var(--color-border); }
+    .stat-cell { padding: var(--space-6) var(--space-4); border-right: 1px solid var(--color-border); }
+    .stat-cell:last-child { border-right: none; }
+    .stat-num { font-family: var(--font-display); font-size: 3rem; font-weight: 700; line-height: 1; color: var(--color-ink); margin-bottom: 6px; }
+    .stat-desc { font-size: var(--size-sm); color: var(--color-ink-3); max-width: none; }
+
+    /* ── Sections ── */
+    .cs-section { padding: var(--space-12) 0; border-bottom: 1px solid var(--color-border); }
+    .cs-section:last-child { border-bottom: none; }
+    .cs-section--surface { background: var(--color-surface); }
+    .cs-section h2 { margin-bottom: var(--space-3); }
+    .cs-section p  { margin-bottom: var(--space-3); }
+    .cs-section p:last-child { margin-bottom: 0; }
+
+    .eyebrow { font-size: var(--size-xs); font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--color-ink-3); display: flex; align-items: center; gap: 10px; margin-bottom: var(--space-4); }
+    .eyebrow::after { content: ''; flex: 1; max-width: 48px; height: 1px; background: var(--color-border); }
+
+    /* ── Grids ── */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-8); align-items: start; }
+
+    /* ── Blockquote ── */
+    blockquote { border-left: 2px solid var(--color-ink); padding: 4px 0 4px var(--space-3); margin: var(--space-4) 0; }
+    blockquote p { font-family: var(--font-display); font-size: var(--size-md); font-style: italic; line-height: 1.65; color: var(--color-ink); max-width: none; margin: 0; }
+
+    /* ── Project header ── */
+    .project-header { display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-8); padding-bottom: var(--space-4); border-bottom: 1px solid var(--color-border); }
+    .project-num { font-family: var(--font-display); font-size: 3rem; font-weight: 700; color: var(--color-border); line-height: 1; flex-shrink: 0; }
+    .project-label { font-size: var(--size-xs); font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--color-ink-3); margin-bottom: 4px; max-width: none; }
+    .project-title { font-family: var(--font-display); font-size: clamp(1.5rem, 3vw, 2.25rem); font-weight: 700; line-height: 1.1; color: var(--color-ink); max-width: none; margin: 0; }
+
+    /* ── Result callout ── */
+    .result-callout { border: 1px solid var(--color-ink); padding: var(--space-6); margin: var(--space-6) 0; display: flex; align-items: center; gap: var(--space-6); }
+    .result-num { font-family: var(--font-display); font-size: 3.5rem; font-weight: 700; line-height: 1; color: var(--color-ink); flex-shrink: 0; }
+    .result-label { font-size: var(--size-sm); font-weight: 500; color: var(--color-ink-2); line-height: 1.6; max-width: none; }
+    .result-label strong { color: var(--color-ink); display: block; font-size: var(--size-md); margin-bottom: 4px; }
+
+    /* ── Insight cards ── */
+    .insight-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: var(--space-3); margin-top: var(--space-6); }
+    .insight-card { border: 1px solid var(--color-border); padding: var(--space-4); }
+    .insight-num { font-family: var(--font-display); font-size: 2rem; font-weight: 700; color: var(--color-border); line-height: 1; margin-bottom: var(--space-2); }
+    .insight-finding { font-size: var(--size-sm); font-weight: 600; color: var(--color-ink); margin-bottom: var(--space-2); line-height: 1.4; max-width: none; }
+    .insight-implication { font-size: var(--size-xs); color: var(--color-ink-3); line-height: 1.6; max-width: none; padding-top: var(--space-2); border-top: 1px solid var(--color-border); }
+    .insight-implication strong { color: var(--color-ink-2); }
+
+    /* ── Principles grid ── */
+    .principles-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: var(--color-border); border: 1px solid var(--color-border); margin-top: var(--space-6); }
+    .principle-cell { background: var(--color-bg); padding: var(--space-4); }
+    .principle-num { font-size: var(--size-xs); font-weight: 700; color: var(--color-ink-3); margin-bottom: var(--space-1); max-width: none; }
+    .principle-text { font-size: var(--size-sm); font-weight: 500; color: var(--color-ink); line-height: 1.5; max-width: none; margin: 0; }
+
+    /* ── Process steps ── */
+    .process-steps { margin-top: var(--space-6); }
+    .process-step { display: grid; grid-template-columns: 40px 1fr; gap: var(--space-3); padding: var(--space-4) 0; border-bottom: 1px solid var(--color-border); align-items: start; }
+    .process-step:last-child { border-bottom: none; }
+    .step-num { font-family: var(--font-display); font-size: var(--size-lg); font-weight: 700; color: var(--color-border); line-height: 1.2; }
+    .step-title { font-size: var(--size-sm); font-weight: 700; color: var(--color-ink); margin-bottom: 6px; max-width: none; }
+    .step-desc { font-size: var(--size-sm); color: var(--color-ink-2); line-height: 1.7; max-width: none; margin: 0; }
+
+    /* ── AB test comparison ── */
+    .ab-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); margin-top: var(--space-6); }
+    .ab-card { border: 1px solid var(--color-border); overflow: hidden; }
+    .ab-card--variant { border-color: var(--color-ink); }
+    .ab-header { padding: var(--space-2) var(--space-3); border-bottom: 1px solid var(--color-border); display: flex; align-items: center; justify-content: space-between; }
+    .ab-card--variant .ab-header { background: var(--color-ink); border-color: var(--color-ink); }
+    .ab-label { font-size: var(--size-xs); font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--color-ink-3); }
+    .ab-card--variant .ab-label { color: rgba(255,255,255,.6); }
+    .ab-badge { font-size: var(--size-xs); font-weight: 700; color: var(--color-ink); background: var(--color-surface); border: 1px solid var(--color-border); padding: 2px 10px; border-radius: 100px; }
+    .ab-card--variant .ab-badge { background: rgba(255,255,255,.15); border-color: rgba(255,255,255,.2); color: #fff; }
+    .ab-body { padding: var(--space-4); }
+    .ab-item { font-size: var(--size-sm); color: var(--color-ink-2); padding: var(--space-1) 0; border-bottom: 1px solid var(--color-border); display: flex; align-items: baseline; gap: var(--space-2); line-height: 1.5; }
+    .ab-item:last-child { border-bottom: none; }
+    .ab-item::before { content: '—'; color: var(--color-ink-3); flex-shrink: 0; font-size: var(--size-xs); }
+    .ab-result { padding: var(--space-3); background: var(--color-surface); border-top: 1px solid var(--color-border); font-size: var(--size-sm); color: var(--color-ink-2); max-width: none; margin: 0; }
+    .ab-card--variant .ab-result { background: var(--color-ink); color: rgba(255,255,255,.7); border-color: var(--color-ink); }
+    .ab-result strong { color: var(--color-ink); }
+    .ab-card--variant .ab-result strong { color: #fff; }
+
+    /* ── Learning callout ── */
+    .learning { background: var(--color-surface); border-left: 2px solid var(--color-ink); padding: var(--space-4); margin: var(--space-4) 0; }
+    .learning-label { font-size: var(--size-xs); font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--color-ink-3); margin-bottom: var(--space-1); max-width: none; }
+    .learning-body { font-size: var(--size-sm); color: var(--color-ink-2); line-height: 1.7; max-width: none; margin: 0; }
+    .learning-body strong { color: var(--color-ink); }
+
+    /* ── Collab grid ── */
+    .collab-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); margin-top: var(--space-4); }
+    .collab-card { border: 1px solid var(--color-border); padding: var(--space-4); }
+    .collab-team { font-size: var(--size-xs); font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--color-ink-3); margin-bottom: var(--space-2); max-width: none; }
+    .collab-body { font-size: var(--size-sm); color: var(--color-ink-2); line-height: 1.65; max-width: none; }
+
+    /* ── Outcomes ── */
+    .outcomes-grid { display: grid; grid-template-columns: repeat(3,1fr); border: 1px solid var(--color-border); margin-top: var(--space-4); }
+    .outcome-cell { padding: var(--space-6) var(--space-4); border-right: 1px solid var(--color-border); }
+    .outcome-cell:last-child { border-right: none; }
+    .outcome-num { font-family: var(--font-display); font-size: 3.25rem; font-weight: 700; line-height: 1; color: var(--color-ink); margin-bottom: 6px; }
+    .outcome-label { font-size: var(--size-sm); font-weight: 600; color: var(--color-ink); margin-bottom: 6px; max-width: none; }
+    .outcome-detail { font-size: var(--size-xs); color: var(--color-ink-3); line-height: 1.6; max-width: none; }
+
+    /* ── Timeline badge ── */
+    .timeline-badge { display: inline-flex; align-items: center; gap: var(--space-2); background: var(--color-surface); border: 1px solid var(--color-border); padding: var(--space-1) var(--space-3); font-size: var(--size-xs); font-weight: 600; color: var(--color-ink-2); margin-bottom: var(--space-4); }
+    .timeline-badge span { width: 6px; height: 6px; border-radius: 50%; background: var(--color-ink); flex-shrink: 0; }
+
+    /* ── Role list ── */
+    .role-list { list-style: none; margin-top: var(--space-3); }
+    .role-list li { font-size: var(--size-sm); color: var(--color-ink-2); line-height: 1.6; padding: var(--space-2) 0; border-bottom: 1px solid var(--color-border); display: flex; align-items: baseline; gap: var(--space-2); }
+    .role-list li:last-child { border-bottom: none; }
+    .role-list li::before { content: '—'; color: var(--color-ink-3); flex-shrink: 0; font-size: var(--size-xs); }
+
+    /* ── Decision row ── */
+    .decision-row { display: grid; grid-template-columns: 200px 1fr; gap: 0; border-top: 1px solid var(--color-border); padding: var(--space-6) 0; }
+    .decision-row:last-child { border-bottom: 1px solid var(--color-border); }
+    .d-num { font-family: var(--font-display); font-size: 2.5rem; font-weight: 700; color: var(--color-border); line-height: 1; margin-bottom: 6px; }
+    .d-title { font-size: var(--size-sm); font-weight: 600; color: var(--color-ink); padding-right: var(--space-4); }
+    .d-chosen { display: inline-flex; align-items: center; gap: 5px; font-size: var(--size-xs); font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--color-ink); background: var(--color-surface); border: 1px solid var(--color-border); padding: 3px 11px; border-radius: 100px; margin-bottom: var(--space-2); }
+    .d-body { font-size: var(--size-sm); color: var(--color-ink-2); line-height: 1.75; max-width: none; }
+
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      .grid-2 { grid-template-columns: 1fr; gap: var(--space-6); }
+      .insight-grid { grid-template-columns: 1fr; }
+      .principles-grid { grid-template-columns: 1fr 1fr; }
+      .stat-row { grid-template-columns: 1fr 1fr; }
+      .ab-grid { grid-template-columns: 1fr; }
+      .collab-grid { grid-template-columns: 1fr; }
+      .outcomes-grid { grid-template-columns: 1fr; }
+      .outcome-cell { border-right: none; border-bottom: 1px solid var(--color-border); }
+      .outcome-cell:last-child { border-bottom: none; }
+      .result-callout { flex-direction: column; gap: var(--space-3); }
+      .decision-row { grid-template-columns: 1fr; }
+      .d-title { padding-right: 0; margin-bottom: var(--space-2); }
+    }
+    @media (max-width: 600px) {
+      .principles-grid { grid-template-columns: 1fr; }
+      .stat-row { grid-template-columns: 1fr; }
+      .stat-cell { border-right: none; border-bottom: 1px solid var(--color-border); }
+      .stat-cell:last-child { border-bottom: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav" role="navigation" aria-label="Main">
+    <div class="nav__inner">
+      <a href="/" class="nav__logo" aria-label="Alfred Law — home" style="display:flex;align-items:center;gap:12px;">
+        <img src="../assets/images/AL.webp" alt="AL" />
+        <span style="font-size:var(--size-sm);font-weight:500;color:var(--color-ink-2);letter-spacing:0.01em;">Alfred Law · Portfolio</span>
+      </a>
+      <ul class="nav__links" id="nav-links" role="list">
+        <li><a href="/">Work</a></li>
+        <li><a href="../about.html">About</a></li>
+        <li><a href="../assets/alfred-law-resume.pdf" target="_blank" rel="noopener">Résumé</a></li>
+      </ul>
+      <button class="nav__hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="nav-links">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- BREADCRUMB -->
+  <div class="case-nav">
+    <div class="container">
+      <a href="/">← All work</a>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <section class="cs-hero">
+    <div class="container">
+      <div class="hero-tags">
+        <span class="hero-tag hero-tag--filled">Senior Product Designer</span>
+        <span class="hero-tag">BMO · 2022–2023</span>
+      </div>
+      <h1 class="hero-h1 fade-up">Growth design at one of<br><em>Canada's biggest banks.</em></h1>
+      <p class="hero-lead fade-up">On BMO's Personalization team, I used A/B testing and behavioural data to drive measurable conversion gains — including a 57.2% lift on the Auto Loan lead form — and contributed to a full homepage redesign from competitive analysis through to launch.</p>
+      <div class="hero-meta fade-up">
+        <div class="hero-meta-item">
+          <p class="meta-label">Role</p>
+          <p class="meta-value">Senior Product Designer</p>
+        </div>
+        <div class="hero-meta-item">
+          <p class="meta-label">Company</p>
+          <p class="meta-value">BMO Bank of Montreal</p>
+        </div>
+        <div class="hero-meta-item">
+          <p class="meta-label">Platform</p>
+          <p class="meta-value">Web (bmo.com)</p>
+        </div>
+        <div class="hero-meta-item">
+          <p class="meta-label">Timeline</p>
+          <p class="meta-value">2022 – 2023</p>
+        </div>
+        <div class="hero-meta-item">
+          <p class="meta-label">Teams</p>
+          <p class="meta-value">Personalization · Research · Design Systems · CMS · Product</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div>
+    <div class="container" style="padding-left:0;padding-right:0;max-width:100%;">
+      <div class="stat-row" style="max-width:var(--max-width);margin:0 auto;padding:0 var(--space-4);">
+        <div class="stat-cell" style="padding-left:0;">
+          <p class="stat-num">57%</p>
+          <p class="stat-desc">Conversion lift on Auto Loan lead form across all devices</p>
+        </div>
+        <div class="stat-cell">
+          <p class="stat-num">5</p>
+          <p class="stat-desc">Cross-functional teams aligned on the homepage redesign</p>
+        </div>
+        <div class="stat-cell">
+          <p class="stat-num">7</p>
+          <p class="stat-desc">Design principles distilled from competitive analysis</p>
+        </div>
+        <div class="stat-cell">
+          <p class="stat-num">2</p>
+          <p class="stat-desc">Major projects shipped — form optimisation + homepage</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTEXT -->
+  <section class="cs-section">
+    <div class="container">
+      <p class="eyebrow">01 — Context</p>
+      <div class="grid-2">
+        <div>
+          <h2>Growth design is design with a scorecard.</h2>
+          <p>BMO's Personalization team sits at the intersection of design, data, and product. The mandate: reduce attrition, increase conversion, and improve the digital experience using 1st-party behavioural data and rapid A/B experimentation.</p>
+          <p>Unlike feature teams shipping on quarterly roadmaps, the Personalization team operates in fast cycles — hypothesis, design, test, learn, iterate. A good designer here is comfortable reading test results, updating hypotheses, and treating data as a primary design input.</p>
+        </div>
+        <div>
+          <p>My role spanned the full experimentation lifecycle. I contributed to shaping what we tested and why — not just executing specs handed down from product:</p>
+          <ul class="role-list">
+            <li>Synthesizing quantitative and qualitative data into testable hypotheses</li>
+            <li>Designing control and variant experiences for A/B tests</li>
+            <li>Interpreting test results and translating them into design decisions</li>
+            <li>Contributing UX research, ideation, and workshopping to the homepage redesign</li>
+            <li>Collaborating across product, research, design systems, and CMS teams</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECT 1: AUTO LOAN -->
+  <section class="cs-section cs-section--surface">
+    <div class="container">
+      <p class="eyebrow">02 — Project one</p>
+      <div class="project-header">
+        <p class="project-num">01</p>
+        <div>
+          <p class="project-label">Site optimisation · A/B test</p>
+          <p class="project-title">Auto Loan Lead Form Redesign</p>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div>
+          <h2>Forms are where conversion goes to die.</h2>
+          <p>The Auto Loan lead form was a high-stakes page with high abandonment. Customers who reached it were already interested — but the form was losing them before they could complete it. Drop-off data pointed to specific fields where users stalled or abandoned entirely.</p>
+          <p>The hypothesis: the form's cognitive load was too high. Too many open text fields, no visual hierarchy to guide users through the flow, and a layout that felt equally demanding on desktop and mobile.</p>
+          <blockquote>
+            <p>"The fields with the highest drop-offs shared a pattern: they required freeform text input where structured input could have done the job better."</p>
+          </blockquote>
+        </div>
+        <div>
+          <h2>The design approach.</h2>
+          <p>Rather than a full-form overhaul, the redesign targeted friction at its source — the fields with the steepest abandonment curves.</p>
+          <div class="process-steps">
+            <div class="process-step">
+              <p class="step-num">1</p>
+              <div>
+                <p class="step-title">Replace dropdowns with icon-based selectors</p>
+                <p class="step-desc">Dropdown menus require users to mentally parse a list before selecting. Icon + button UI makes options scannable and tappable — reducing time-on-field and error rate.</p>
+              </div>
+            </div>
+            <div class="process-step">
+              <p class="step-num">2</p>
+              <div>
+                <p class="step-title">Restructure for mobile-first completion</p>
+                <p class="step-desc">Drop-off was disproportionately high on mobile. The redesign prioritised thumb-reach zones and reduced required scrolling to reach the primary CTA.</p>
+              </div>
+            </div>
+            <div class="process-step">
+              <p class="step-num">3</p>
+              <div>
+                <p class="step-title">Reduce visual density in key decision fields</p>
+                <p class="step-desc">Heavy labels and tightly grouped inputs created cognitive overload. Increased white space and simplified labelling reduced the perceived effort of completing the form.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="result-callout">
+        <p class="result-num">57.2%</p>
+        <div class="result-label">
+          <strong>Overall conversion lift — at confidence — across all devices</strong>
+          The variant outperformed the control across desktop and mobile. Achieved at statistical confidence, making this one of the highest-performing tests on the Personalization team that quarter.
+        </div>
+      </div>
+
+      <div class="learning">
+        <p class="learning-label">Key learning</p>
+        <p class="learning-body"><strong>Reducing input type is as valuable as reducing input count.</strong> We didn't remove fields — we changed how users interacted with them. Switching from freeform text to structured selection reduced the perceived cost of each field without changing what we collected.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECT 2: HOMEPAGE -->
+  <section class="cs-section">
+    <div class="container">
+      <p class="eyebrow">03 — Project two</p>
+      <div class="project-header">
+        <p class="project-num">02</p>
+        <div>
+          <p class="project-label">End-to-end redesign · Research → Launch</p>
+          <p class="project-title">BMO Homepage Redesign</p>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div>
+          <h2>A homepage that reflected the bank's complexity — and overwhelmed users because of it.</h2>
+          <p>BMO's homepage served as a catch-all for every product, promotion, and business unit that wanted visibility. The result was a page that worked for the organization's internal priorities, not for the people visiting it.</p>
+        </div>
+        <div>
+          <p>The redesign was a full-cycle project involving five teams and every phase of the design process: competitive analysis, moderated user research, ideation and workshopping, pre-launch A/B testing, and a phased rollout.</p>
+          <div class="timeline-badge"><span></span>A/B tested October 2022 · Officially launched February 2023</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESEARCH -->
+  <section class="cs-section cs-section--surface">
+    <div class="container">
+      <p class="eyebrow">04 — Research</p>
+      <div class="grid-2" style="margin-bottom:var(--space-8);">
+        <div>
+          <h2>Two research streams. One aligned problem statement.</h2>
+          <p>The redesign was grounded in both quantitative behavioural data and qualitative user research — run in parallel so each could validate the other before any design decisions were made.</p>
+        </div>
+        <div>
+          <p><strong>Competitive analysis</strong> reviewed traditional financial institutions, fintechs, and indirect competitors against a structured grading system covering branding, innovation, navigation, technical quality, and accessibility. Designers, stakeholders, and agile team members were brought into workshops to score and discuss findings.</p>
+          <p><strong>User research</strong> was conducted with BMO's dedicated research team and included synthesis of prior research, heuristic review, internal stakeholder interviews, and moderated usability testing — both on competitor sites and on bmo.com.</p>
+        </div>
+      </div>
+
+      <p style="font-size:var(--size-xs);font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--color-ink-3);margin-bottom:var(--space-3);max-width:none;">7 design principles from competitive analysis</p>
+      <div class="principles-grid">
+        <div class="principle-cell">
+          <p class="principle-num">01</p>
+          <p class="principle-text">Use contrast and colour to place deliberate focus on CTAs</p>
+        </div>
+        <div class="principle-cell">
+          <p class="principle-num">02</p>
+          <p class="principle-text">Tailor messages to the user — not the product catalogue</p>
+        </div>
+        <div class="principle-cell">
+          <p class="principle-num">03</p>
+          <p class="principle-text">White space increases comprehension and reduces fatigue</p>
+        </div>
+        <div class="principle-cell">
+          <p class="principle-num">04</p>
+          <p class="principle-text">Sticky navigation allows for 22% quicker wayfinding</p>
+        </div>
+        <div class="principle-cell">
+          <p class="principle-num">05</p>
+          <p class="principle-text">Navigation structured around user needs, not org structure</p>
+        </div>
+        <div class="principle-cell">
+          <p class="principle-num">06</p>
+          <p class="principle-text">First impressions drive trust — the hero sets the tone for everything below</p>
+        </div>
+        <div class="principle-cell" style="grid-column:1/-1;">
+          <p class="principle-num">07</p>
+          <p class="principle-text">Iconography as visible language — reduces cognitive load without removing information</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INSIGHTS -->
+  <section class="cs-section">
+    <div class="container">
+      <p class="eyebrow">05 — Insights</p>
+      <div class="grid-2" style="margin-bottom:var(--space-6);">
+        <div>
+          <h2>Three pain points. Each with a direct design implication.</h2>
+        </div>
+        <div>
+          <p>Qualitative user research surfaced three consistent pain points that shaped the redesign's core priorities — not just what to change, but why and in what order.</p>
+        </div>
+      </div>
+      <div class="insight-grid">
+        <div class="insight-card">
+          <p class="insight-num">01</p>
+          <p class="insight-finding">The homepage was product-centric, not user-centric — listing everything without considering why someone had arrived.</p>
+          <p class="insight-implication"><strong>Implication:</strong> Reorganize around user intent. The page needed to answer "what are you here for?" before trying to sell anything.</p>
+        </div>
+        <div class="insight-card">
+          <p class="insight-num">02</p>
+          <p class="insight-finding">Visual and performance inconsistency eroded trust and made the page feel unpolished despite the brand's scale.</p>
+          <p class="insight-implication"><strong>Implication:</strong> Enforce design system consistency. Not just component-level polish — systemic coherence across the entire page.</p>
+        </div>
+        <div class="insight-card">
+          <p class="insight-num">03</p>
+          <p class="insight-finding">The page was too long. Users didn't scroll — they bounced. Components below the fold had near-zero engagement.</p>
+          <p class="insight-implication"><strong>Implication:</strong> Reduce page length through a modular layout that groups content, makes scanning easy, and eliminates dead-weight sections.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DESIGN DECISIONS -->
+  <section class="cs-section cs-section--surface">
+    <div class="container">
+      <p class="eyebrow">06 — Design decisions</p>
+      <div class="grid-2" style="margin-bottom:var(--space-8);">
+        <div>
+          <h2>Two structural changes drove most of the improvement.</h2>
+        </div>
+        <div>
+          <p>The new UI was visually simpler — better contrast, micro-interactions, animation, and white space. But the changes that mattered most were structural: a rebuilt IA and a new modular layout system.</p>
+        </div>
+      </div>
+
+      <div>
+        <div class="decision-row">
+          <div>
+            <p class="d-num">01</p>
+            <p class="d-title">Simplified, needs-based IA</p>
+          </div>
+          <div>
+            <span class="d-chosen">✦ Restructure around user goals</span>
+            <p class="d-body">The original IA reflected BMO's internal product taxonomy — good for org charts, confusing for customers. The redesign rebuilt navigation around how users actually think: find a product first, then explore from there. A/B testing confirmed the direction: users with the new navigation adopted a needs-based exploration pattern, starting with their target product category, then moving outward. Segment links placed beneath product labels generated the highest engagement across all nav variants tested.</p>
+          </div>
+        </div>
+        <div class="decision-row">
+          <div>
+            <p class="d-num">02</p>
+            <p class="d-title">New modular layout system</p>
+          </div>
+          <div>
+            <span class="d-chosen">✦ Group content into scannable modules</span>
+            <p class="d-body">A new modular layout grouped related product offers and points of interest into coherent sections — replacing a single-column list of components. This made the page shorter, more cohesive, and easier to scan. The modular component was new to the design system, requiring close collaboration with the DS team to build it as a reusable, extensible pattern — not a one-off. The homepage redesign contributed to the system rather than forking from it.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- A/B TESTING -->
+  <section class="cs-section">
+    <div class="container">
+      <p class="eyebrow">07 — Pre-launch testing</p>
+      <div class="grid-2" style="margin-bottom:var(--space-6);">
+        <div>
+          <h2>Testing before launching. Learning before committing.</h2>
+          <p>Before the new homepage rolled out, both the modular layout and updated navigation were A/B tested on the existing homepage. This generated quantitative data on real user behaviour, reducing launch risk and sharpening the final design.</p>
+        </div>
+        <div>
+          <p>The results didn't just validate direction — they surfaced a specific, actionable finding about content position that directly changed how the final design was sequenced.</p>
+        </div>
+      </div>
+
+      <div class="ab-grid">
+        <div class="ab-card">
+          <div class="ab-header">
+            <span class="ab-label">Module test — control</span>
+            <span class="ab-badge">Existing layout</span>
+          </div>
+          <div class="ab-body">
+            <div class="ab-item">Products listed individually in a flat structure</div>
+            <div class="ab-item">Special Offers given high placement</div>
+            <div class="ab-item">No content grouping or hierarchy</div>
+            <div class="ab-item">Equal visual weight across all sections</div>
+          </div>
+          <p class="ab-result">Baseline engagement. No position-based differentiation.</p>
+        </div>
+        <div class="ab-card ab-card--variant">
+          <div class="ab-header">
+            <span class="ab-label">Module test — variant</span>
+            <span class="ab-badge">✓ Winner</span>
+          </div>
+          <div class="ab-body">
+            <div class="ab-item" style="border-color:rgba(255,255,255,.1);color:#0A0A0A;">Grouped modular layout with product clustering</div>
+            <div class="ab-item" style="border-color:rgba(255,255,255,.1);color:#0A0A0A;">Credit Cards and Bank Accounts (top position) saw significant lift</div>
+            <div class="ab-item" style="border-color:rgba(255,255,255,.1);color:#0A0A0A;">Special Offers moved to lower grid position</div>
+            <div class="ab-item" style="border-color:rgba(255,255,255,.1);color:#0A0A0A;border-bottom:none;">Position in grid directly correlated with engagement</div>
+          </div>
+          <p class="ab-result"><strong>Significant lift</strong> for top-position product pages. Special Offers saw reduced click-through after moving to a lower grid position.</p>
+        </div>
+      </div>
+
+      <div class="learning">
+        <p class="learning-label">Key learning — position matters as much as content</p>
+        <p class="learning-body"><strong>Top elements in the module received substantially more engagement than bottom elements.</strong> This wasn't just confirmation that the modular layout worked — it was a signal to be deliberate about sequencing. Special Offers performed well at high placement; moving them down reduced engagement regardless of visual treatment. The final design reflected this directly: high-priority products and CTAs were placed at the top of the module hierarchy.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CROSS-FUNCTIONAL -->
+  <section class="cs-section cs-section--surface">
+    <div class="container">
+      <p class="eyebrow">08 — Collaboration</p>
+      <div class="grid-2" style="margin-bottom:var(--space-6);">
+        <div>
+          <h2>Five teams. One consistent direction.</h2>
+          <p>A homepage redesign at a major bank touches more teams than a typical product feature. Each brought constraints that shaped the final design — and aligning them without losing design integrity was part of the work.</p>
+        </div>
+        <div>
+          <p>Holding the design direction steady while incorporating feedback from five different stakeholder groups — and still shipping on time — is the kind of cross-functional coordination that doesn't show up in a prototype but is felt across every phase of delivery.</p>
+        </div>
+      </div>
+      <div class="collab-grid">
+        <div class="collab-card">
+          <p class="collab-team">Product team</p>
+          <p class="collab-body">Collaborated on scoping the redesign phases and aligning the roadmap. The February 2023 launch followed a controlled October 2022 A/B rollout — a sequencing decision made jointly with product to manage risk and generate pre-launch learnings.</p>
+        </div>
+        <div class="collab-card">
+          <p class="collab-team">Research team</p>
+          <p class="collab-body">Worked with BMO's dedicated user research team to design the research plan and synthesize findings. The three core pain points that drove the redesign emerged from this collaboration — not from assumptions or competitive benchmarking alone.</p>
+        </div>
+        <div class="collab-card">
+          <p class="collab-team">Design Systems team</p>
+          <p class="collab-body">The modular layout was new to the system. Rather than building it as a one-off homepage component, I worked with the DS team to define it as a reusable, documented pattern — ensuring the homepage investment contributed to the system and remained available for use across bmo.com.</p>
+        </div>
+        <div class="collab-card">
+          <p class="collab-team">CMS team</p>
+          <p class="collab-body">The new modular structure required CMS architecture changes to support flexible content slotting. I worked with the CMS team to define the content model so design flexibility didn't create authoring complexity — a constraint that shaped several layout decisions.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OUTCOMES -->
+  <section class="cs-section">
+    <div class="container">
+      <p class="eyebrow">09 — Outcomes</p>
+      <div class="grid-2" style="margin-bottom:var(--space-8);align-items:start;">
+        <div>
+          <h2>Measurable results and a more capable system.</h2>
+          <p>The most visible outcome was the 57.2% conversion lift on the Auto Loan form — a concrete, at-confidence result that directly influenced the Personalization team's subsequent test priorities.</p>
+        </div>
+        <div>
+          <p>The homepage redesign's impact is structural: a cleaner IA that reflects how users actually navigate, a modular layout system that's now part of the design system, and a validated methodology for testing before shipping at scale.</p>
+        </div>
+      </div>
+      <div class="outcomes-grid">
+        <div class="outcome-cell">
+          <p class="outcome-num">57.2%</p>
+          <p class="outcome-label">Conversion lift</p>
+          <p class="outcome-detail">At statistical confidence across all devices on the Auto Loan lead form — one of the highest-performing tests that quarter.</p>
+        </div>
+        <div class="outcome-cell">
+          <p class="outcome-num">1</p>
+          <p class="outcome-label">New design system component</p>
+          <p class="outcome-detail">The modular layout built for the homepage was contributed to the design system as a reusable, documented pattern available across bmo.com.</p>
+        </div>
+        <div class="outcome-cell">
+          <p class="outcome-num">Feb '23</p>
+          <p class="outcome-label">Homepage shipped</p>
+          <p class="outcome-detail">Full homepage launched after a phased A/B rollout, with navigation and layout validated by real user behaviour before going live.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REFLECTION -->
+  <section class="cs-section cs-section--surface">
+    <div class="container">
+      <p class="eyebrow">10 — Reflection</p>
+      <div class="grid-2">
+        <div>
+          <h2>What I'd do differently.</h2>
+          <p>The competitive analysis was thorough but primarily a benchmark exercise — evaluating what others had done rather than stress-testing our own assumptions. In retrospect, I'd push for lightweight generative research with BMO users earlier in the process, before the competitive audit, so we were grounding competitor observations in actual user behaviour rather than the other way around.</p>
+          <p>I'd also advocate for a longer A/B testing window on the module test. The results were significant, but a longer run would have given more confidence on lower-traffic segments — particularly mobile users in smaller markets.</p>
+        </div>
+        <div>
+          <h2>What this reinforced.</h2>
+          <p>Growth design teaches you to hold two things at once: conviction about the problem, and humility about the solution. You can be confident in your hypothesis and still get surprised by the data. The best test results weren't the ones that confirmed what we designed — they were the ones that told us something we didn't expect.</p>
+          <p>The position-matters finding from the module test is a good example. We didn't design to test that; we discovered it because we were reading the data carefully. That kind of accidental learning only happens when the team treats A/B tests as genuine experiments, not just validation exercises.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__inner">
+        <p class="footer__copy">© 2026 Alfred Law. All rights reserved.</p>
+        <div class="footer__links">
+          <a href="mailto:alfred.lawsn@gmail.com">Email</a>
+          <a href="https://www.linkedin.com/in/alfredlaw/" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://dribbble.com/iamalfred" target="_blank" rel="noopener">Dribbble</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../script.js"></script>
+</body>
+</html>
