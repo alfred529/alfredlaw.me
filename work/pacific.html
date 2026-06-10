@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pacific — Alfred Law</title>
+  <meta name="description" content="Pacific: a two-sided mental health intake system designed for Kids Help Phone in 48 hours — gamified youth intake + real-time counselor dashboard. Hackathon case study by Alfred Law." />
+  <link rel="stylesheet" href="../style.css" />
+  <style>
+    /* ── Case nav ── */
+    .case-nav { padding: var(--space-2) 0; border-bottom: 1px solid var(--color-border); margin-top: 64px; }
+    .case-nav a { font-size: var(--size-sm); color: var(--color-ink-3); display: inline-flex; align-items: center; gap: var(--space-1); transition: color var(--transition); }
+    .case-nav a:hover { color: var(--color-ink); }
+
+    /* ── Hero ── */
+    .cs-hero { padding: var(--space-12) 0 var(--space-8); border-bottom: 1px solid var(--color-border); }
+    .hero-tags { display: flex; gap: var(--space-1); flex-wrap: wrap; margin-bottom: var(--space-4); }
+    .hero-tag { font-size: var(--size-xs); font-weight: 500; letter-spacing: .06em; padding: 4px 12px; border-radius: 100px; border: 1px solid var(--color-border); color: var(--color-ink-2); }
+    .hero-h1 { font-family: var(--font-display); font-size: clamp(2.5rem, 5.5vw, 4.5rem); font-weight: 700; line-height: 1.08; letter-spacing: -.02em; color: var(--color-ink); margin-bottom: var(--space-3); }
+    .hero-h1 em { font-style: italic; }
+    .hero-lead { font-size: var(--size-md); line-height: 1.75; color: var(--color-ink-2); max-width: 60ch; margin-bottom: var(--space-8); }
+    .hero-meta { display: flex; gap: 0; flex-wrap: wrap; border-top: 1px solid var(--color-border); padding-top: var(--space-4); }
+    .hero-meta-item { padding-right: var(--space-6); padding-bottom: var(--space-2); }
+    .meta-label { font-size: var(--size-xs); font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--color-ink-3); margin-bottom: 5px; max-width: none; }
+    .meta-value { font-size: var(--size-sm); font-weight: 500; color: var(--color-ink); max-width: none; line-height: 1.4; }
+
+    /* ── Stat row ── */
+    .stat-row { display: grid; grid-template-columns: repeat(4,1fr); border-bottom: 1px solid var(--color-border); }
+    .stat-cell { padding: var(--space-6) var(--space-4); border-right: 1px solid var(--color-border); }
+    .stat-cell:last-child { border-right: none; }
+    .stat-num { font-family: var(--font-display); font-size: 3rem; font-weight: 700; line-height: 1; color: var(--color-ink); margin-bottom: 6px; }
+    .stat-desc { font-size: var(--size-sm); color: var(--color-ink-3); max-width: none; }
+
+    /* ── Sections ── */
+    .cs-section { padding: var(--space-12) 0; border-bottom: 1px solid var(--color-border); }
+    .cs-section:last-child { border-bottom: none; }
+    .cs-section--surface { background: var(--color-surface); }
+    .cs-section h2 { margin-bottom: var(--space-3); }
+    .cs-section p  { margin-bottom: var(--space-3); }
+    .cs-section p:last-child { margin-bottom: 0; }
+
+    .eyebrow { font-size: var(--size-xs); font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--color-ink-3); display: flex; align-items: center; gap: 10px; margin-bottom: var(--space-4); }
+    .eyebrow::after { content: ''; flex: 1; max-width: 48px; height: 1px; background: var(--color-border); }
+
+    /* ── 2-col grid ── */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-8); align-items: start; }
+
+    /* ── Blockquote ── */
+    blockquote { border-left: 2px solid var(--color-ink); padding: 4px 0 4px var(--space-3); margin: var(--space-4) 0; }
+    blockquote p { font-family: var(--font-display); font-size: var(--size-md); font-style: italic; line-height: 1.65; color: var(--color-ink); max-width: none; margin: 0; }
+    blockquote cite { display: block; font-family: var(--font-body); font-style: normal; font-size: var(--size-xs); color: var(--color-ink-3); margin-top: var(--space-2); letter-spacing: .05em; text-transform: uppercase; }
+
+    /* ── Problem cards ── */
+    .problem-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); margin-top: var(--space-4); }
+    .problem-card { border: 1px solid var(--color-border); padding: var(--space-4); }
+    .problem-user { font-size: var(--size-xs); font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--color-ink-3); margin-bottom: var(--space-2); max-width: none; }
+    .problem-title { font-size: var(--size-md); font-weight: 600; color: var(--color-ink); margin-bottom: var(--space-2); line-height: 1.4; max-width: none; }
+    .problem-body { font-size: var(--size-sm); color: var(--color-ink-2); line-height: 1.7; max-width: none; margin: 0; }
+
+    /* ── Insight cards ── */
+    .insight-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: var(--space-3); margin-top: var(--space-6); }
+    .insight-card { border: 1px solid var(--color-border); padding: var(--space-4); }
+    .insight-num { font-family: var(--font-display); font-size: 2rem; font-weight: 700; color: var(--color-border); line-height: 1; margin-bottom: var(--space-2); }
+    .insight-finding { font-size: var(--size-sm); font-weight: 600; color: var(--color-ink); margin-bottom: var(--space-2); line-height: 1.4; max-width: none; }
+    .insight-implication { font-size: var(--size-xs); color: var(--color-ink-3); line-height: 1.6; max-width: none; padding-top: var(--space-2); border-top: 1px solid var(--color-border); }
+    .insight-implication strong { color: var(--color-ink-2); }
+
+    /* ── Decisions ── */
+    .decision { display: grid; grid-template-columns: 200px 1fr; gap: 0; border-top: 1px solid var(--color-border); padding: var(--space-6) 0; }
+    .decision:last-child { border-bottom: 1px solid var(--color-border); }
+    .d-num { font-family: var(--font-display); font-size: 2.5rem; font-weight: 700; color: var(--color-border); line-height: 1; margin-bottom: 6px; }
+    .d-title { font-size: var(--size-sm); font-weight: 600; color: var(--color-ink); padding-right: var(--space-4); }
+    .d-chosen { display: inline-flex; align-items: center; gap: 5px; font-size: var(--size-xs); font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--color-ink); background: var(--color-surface); border: 1px solid var(--color-border); padding: 3px 11px; border-radius: 100px; margin-bottom: var(--space-2); }
+    .d-rationale { font-size: var(--size-sm); color: var(--color-ink-2); line-height: 1.75; max-width: none; margin-bottom: var(--space-2); }
+    .d-rejected { padding-top: var(--space-2); border-top: 1px solid var(--color-border); font-size: var(--size-xs); color: var(--color-ink-3); line-height: 1.6; max-width: none; }
+    .d-rejected strong { color: var(--color-ink-2); }
+
+    /* ── Flow steps ── */
+    .flow-steps { display: grid; grid-template-columns: repeat(5,1fr); gap: 0; border: 1px solid var(--color-border); margin-top: var(--space-4); }
+    .flow-step { padding: var(--space-3) var(--space-3); border-right: 1px solid var(--color-border); }
+    .flow-step:last-child { border-right: none; }
+    .flow-num { font-family: var(--font-display); font-size: 1.25rem; font-weight: 700; color: var(--color-border); margin-bottom: 6px; line-height: 1; }
+    .flow-label { font-size: var(--size-xs); font-weight: 600; color: var(--color-ink); margin-bottom: 4px; max-width: none; line-height: 1.3; }
+    .flow-desc { font-size: 10px; color: var(--color-ink-3); line-height: 1.5; max-width: none; }
+
+    /* ── Priority levels ── */
+    .priority-row { display: grid; grid-template-columns: repeat(4,1fr); gap: var(--space-2); margin-top: var(--space-4); }
+    .priority-cell { padding: var(--space-3) var(--space-3); border: 1px solid var(--color-border); }
+    .priority-badge { display: inline-block; font-size: 9px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; padding: 2px 8px; border-radius: 100px; margin-bottom: var(--space-2); }
+    .p-immediate { background: #0A0A0A; color: #fff; }
+    .p-high { background: #444; color: #fff; }
+    .p-medium { background: #888; color: #fff; }
+    .p-low { background: var(--color-surface); color: var(--color-ink-2); border: 1px solid var(--color-border); }
+    .priority-desc { font-size: var(--size-xs); color: var(--color-ink-3); line-height: 1.5; max-width: none; margin: 0; }
+
+    /* ── Screens grid ── */
+    .screens-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: var(--space-4); margin-top: var(--space-6); align-items: start; }
+    .screen-card { border: 1px solid var(--color-border); overflow: hidden; }
+    .screen-thumb { background: var(--color-surface); display: flex; align-items: center; justify-content: center; border-bottom: 1px solid var(--color-border); position: relative; overflow: hidden; padding: var(--space-4) var(--space-3); }
+    .screen-thumb--mobile { aspect-ratio: 9/17; }
+    .screen-thumb--desktop { aspect-ratio: 16/9; }
+    .screen-info { padding: 14px 16px; }
+    .screen-name { font-size: var(--size-sm); font-weight: 600; color: var(--color-ink); margin-bottom: 3px; }
+    .screen-desc { font-size: 11px; color: var(--color-ink-3); line-height: 1.5; }
+
+    /* ── Phone mockup shared ── */
+    .mp { width: 68%; background: #fff; border: 1.5px solid #E2E2E2; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,.08); }
+    .mp-sb { height: 10px; background: #fff; border-bottom: 1px solid #F0F0F0; display: flex; align-items: center; justify-content: flex-end; padding: 0 7px; gap: 3px; }
+    .mp-sb-dot { width: 4px; height: 4px; border-radius: 50%; background: #E2E2E2; }
+    .mp-nav { background: #fff; border-bottom: 1px solid #F0F0F0; padding: 6px 8px; display: flex; align-items: center; justify-content: space-between; }
+    .mp-logo { font-family: 'Playfair Display', serif; font-size: 8px; font-weight: 700; color: #0A0A0A; }
+    .mp-logo-khp { font-size: 7px; font-weight: 700; color: #0A0A0A; letter-spacing: .02em; }
+    .mp-progress { height: 2px; background: #F0F0F0; }
+    .mp-progress-fill { height: 100%; background: #0A0A0A; }
+
+    /* intake body */
+    .mp-intake-body { padding: 10px 9px; }
+    .mp-intake-step { font-size: 5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #888; margin-bottom: 4px; }
+    .mp-intake-q { font-size: 8px; font-weight: 700; color: #0A0A0A; margin-bottom: 8px; line-height: 1.4; }
+    .mp-age-btn { display: block; width: 100%; padding: 6px 8px; margin-bottom: 4px; border: 1.5px solid #E2E2E2; border-radius: 8px; font-size: 7px; font-weight: 600; color: #0A0A0A; text-align: left; cursor: pointer; background: #fff; }
+    .mp-age-btn.selected { border-color: #0A0A0A; background: #0A0A0A; color: #fff; }
+    .mp-age-emoji { font-size: 9px; margin-right: 4px; }
+    .mp-intake-next { display: block; width: 100%; padding: 6px; margin-top: 8px; background: #0A0A0A; color: #fff; font-size: 6px; font-weight: 700; border-radius: 100px; text-align: center; }
+
+    /* mood screen */
+    .mp-mood-body { padding: 10px 9px; }
+    .mp-mood-label { font-size: 5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #888; margin-bottom: 4px; }
+    .mp-mood-q { font-size: 8px; font-weight: 700; color: #0A0A0A; margin-bottom: 10px; line-height: 1.35; }
+    .mp-mood-scale { display: flex; align-items: center; justify-content: space-between; gap: 3px; margin-bottom: 8px; }
+    .mp-mood-dot { width: 18px; height: 18px; border-radius: 50%; border: 1.5px solid #E2E2E2; display: flex; align-items: center; justify-content: center; font-size: 9px; }
+    .mp-mood-dot.sel { border-color: #0A0A0A; background: #0A0A0A; }
+    .mp-mood-ticks { display: flex; justify-content: space-between; }
+    .mp-mood-tick { font-size: 5px; color: #888; }
+    .mp-safe-label { font-size: 5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #888; margin-top: 8px; margin-bottom: 4px; }
+    .mp-safe-scale { display: flex; align-items: center; justify-content: space-between; gap: 3px; }
+    .mp-safe-dot { width: 18px; height: 18px; border-radius: 50%; border: 1.5px solid #E2E2E2; display: flex; align-items: center; justify-content: center; font-size: 9px; }
+    .mp-safe-dot.sel { border-color: #444; background: #444; }
+
+    /* confirm screen */
+    .mp-confirm-body { padding: 12px 10px; display: flex; flex-direction: column; align-items: center; text-align: center; }
+    .mp-confirm-icon { width: 32px; height: 32px; border-radius: 50%; background: #0A0A0A; display: flex; align-items: center; justify-content: center; margin: 0 auto var(--space-2); }
+    .mp-confirm-check { color: #fff; font-size: 14px; }
+    .mp-confirm-title { font-size: 9px; font-weight: 700; color: #0A0A0A; margin-bottom: 5px; line-height: 1.35; }
+    .mp-confirm-sub { font-size: 6px; color: #888; line-height: 1.5; margin-bottom: 10px; }
+    .mp-queue-badge { background: var(--color-surface); border: 1px solid #E2E2E2; border-radius: 6px; padding: 7px 10px; width: 100%; text-align: center; margin-bottom: 8px; }
+    .mp-queue-n { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; color: #0A0A0A; line-height: 1; }
+    .mp-queue-l { font-size: 5px; color: #888; margin-top: 2px; }
+    .mp-confirm-cta { font-size: 5px; color: #888; font-style: italic; }
+
+    /* ── Dashboard mockup ── */
+    .dash { width: 92%; background: #fff; border: 1px solid #E2E2E2; border-radius: 6px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,.07); }
+    .dash-titlebar { height: 20px; background: #F7F7F7; border-bottom: 1px solid #E2E2E2; display: flex; align-items: center; padding: 0 10px; gap: 5px; }
+    .dash-dot { width: 6px; height: 6px; border-radius: 50%; }
+    .dash-dot--r { background: #ff5f57; }
+    .dash-dot--y { background: #febc2e; }
+    .dash-dot--g { background: #28c840; }
+    .dash-header { display: flex; align-items: center; justify-content: space-between; padding: 8px 10px; border-bottom: 1px solid #E2E2E2; background: #fff; }
+    .dash-brand { font-family: 'Playfair Display', serif; font-size: 9px; font-weight: 700; color: #0A0A0A; }
+    .dash-greeting { font-size: 6px; color: #888; }
+    .dash-body { display: grid; grid-template-columns: 130px 1fr; }
+    .dash-sidebar { border-right: 1px solid #E2E2E2; padding: 8px 0; }
+    .dash-nav-item { padding: 5px 10px; font-size: 6px; color: #888; cursor: pointer; }
+    .dash-nav-item.active { background: #F7F7F7; color: #0A0A0A; font-weight: 700; border-left: 2px solid #0A0A0A; }
+    .dash-main { padding: 8px 10px; }
+    .dash-stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 5px; margin-bottom: 8px; }
+    .dash-stat { border: 1px solid #E2E2E2; padding: 5px 7px; border-radius: 3px; }
+    .dash-stat-n { font-family: 'Playfair Display', serif; font-size: 14px; font-weight: 700; color: #0A0A0A; line-height: 1; margin-bottom: 2px; }
+    .dash-stat-l { font-size: 5px; color: #888; line-height: 1.3; }
+    .dash-section-label { font-size: 6px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: #888; margin-bottom: 5px; }
+    .dash-queue { border: 1px solid #E2E2E2; border-radius: 3px; overflow: hidden; }
+    .dash-queue-header { display: grid; grid-template-columns: 1.5fr 0.8fr 0.8fr 0.8fr; gap: 0; border-bottom: 1px solid #E2E2E2; background: #F7F7F7; }
+    .dash-th { font-size: 5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: #888; padding: 4px 6px; }
+    .dash-row { display: grid; grid-template-columns: 1.5fr 0.8fr 0.8fr 0.8fr; gap: 0; border-bottom: 1px solid #F0F0F0; align-items: center; }
+    .dash-row:last-child { border-bottom: none; }
+    .dash-td { font-size: 5px; color: #444; padding: 4px 6px; }
+    .dash-td--name { font-weight: 600; color: #0A0A0A; }
+    .dash-badge { display: inline-block; font-size: 4px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; padding: 1px 5px; border-radius: 100px; }
+    .dash-b-imm { background: #0A0A0A; color: #fff; }
+    .dash-b-hi { background: #444; color: #fff; }
+    .dash-b-med { background: #888; color: #fff; }
+    .dash-b-lo { background: #F0F0F0; color: #888; }
+
+    /* ── Team callout ── */
+    .team-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: var(--space-3); margin-top: var(--space-4); }
+    .team-card { border: 1px solid var(--color-border); padding: var(--space-4); }
+    .team-role { font-size: var(--size-xs); font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--color-ink-3); margin-bottom: var(--space-2); max-width: none; }
+    .team-name { font-size: var(--size-sm); font-weight: 600; color: var(--color-ink); margin-bottom: 6px; max-width: none; }
+    .team-contrib { font-size: var(--size-xs); color: var(--color-ink-3); line-height: 1.6; max-width: none; margin: 0; }
+
+    /* ── Learning callout ── */
+    .learning { background: var(--color-surface); border-left: 2px solid var(--color-ink); padding: var(--space-4); margin: var(--space-4) 0; }
+    .learning-label { font-size: var(--size-xs); font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--color-ink-3); margin-bottom: var(--space-1); max-width: none; }
+    .learning-body { font-size: var(--size-sm); color: var(--color-ink-2); line-height: 1.7; max-width: none; margin: 0; }
+    .learning-body strong { color: var(--color-ink); }
+
+    /* ── Outcomes ── */
+    .outcomes-row { display: grid; grid-template-columns: repeat(3,1fr); border: 1px solid var(--color-border); margin-top: var(--space-4); }
+    .outcome-cell { padding: var(--space-6) var(--space-4); border-right: 1px solid var(--color-border); }
+    .outcome-cell:last-child { border-right: none; }
+    .outcome-num { font-family: var(--font-display); font-size: 3.25rem; font-weight: 700; line-height: 1; color: var(--color-ink); margin-bottom: 6px; }
+    .outcome-label { font-size: var(--size-sm); font-weight: 600; color: var(--color-ink); margin-bottom: 6px; max-width: none; }
+    .outcome-detail { font-size: var(--size-xs); color: var(--color-ink-3); line-height: 1.6; max-width: none; }
+
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      .grid-2 { grid-template-columns: 1fr; gap: var(--space-6); }
+      .insight-grid { grid-template-columns: 1fr; }
+      .decision { grid-template-columns: 1fr; }
+      .d-title { padding-right: 0; margin-bottom: var(--space-2); }
+      .problem-grid { grid-template-columns: 1fr; }
+      .team-grid { grid-template-columns: 1fr; }
+      .screens-grid { grid-template-columns: 1fr 1fr; }
+      .flow-steps { grid-template-columns: repeat(3,1fr); }
+      .priority-row { grid-template-columns: 1fr 1fr; }
+      .outcomes-row { grid-template-columns: 1fr; }
+      .outcome-cell { border-right: none; border-bottom: 1px solid var(--color-border); }
+      .outcome-cell:last-child { border-bottom: none; }
+      .stat-row { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 640px) {
+      .screens-grid { grid-template-columns: 1fr; }
+      .flow-steps { grid-template-columns: 1fr 1fr; }
+      .stat-row { grid-template-columns: 1fr; }
+      .stat-cell { border-right: none; border-bottom: 1px solid var(--color-border); }
+      .stat-cell:last-child { border-bottom: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav" role="navigation" aria-label="Main">
+    <div class="nav__inner">
+      <a href="/" class="nav__logo" aria-label="Alfred Law — home" style="display:flex;align-items:center;gap:12px;">
+        <img src="../assets/images/AL.webp" alt="AL" />
+        <span style="font-size:var(--size-sm);font-weight:500;color:var(--color-ink-2);letter-spacing:0.01em;">Alfred Law · Portfolio</span>
+      </a>
+      <ul class="nav__links" role="list">
+        <li><a href="/#work">Work</a></li>
+        <li><a href="/#about">About</a></li>
+        <li><a href="/#contact" class="nav__cta">Get in touch</a></li>
+      </ul>
+      <button class="nav__hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- BREADCRUMB -->
+  <div class="case-nav">
+    <div class="container">
+      <a href="/">&#8592; All work</a>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <header class="cs-hero">
+    <div class="container">
+      <div class="hero-tags">
+        <span class="hero-tag">Product Design</span>
+        <span class="hero-tag">Hackathon</span>
+        <span class="hero-tag">Health Tech · 2018</span>
+      </div>
+      <h1 class="hero-h1">Two sides of<br><em>one crisis moment.</em></h1>
+      <p class="hero-lead">Pacific is a two-sided mental health intake system I designed for Kids Help Phone in 48 hours — a gamified, age-appropriate intake flow for children paired with a real-time counselor dashboard that prioritizes the queue before a session even starts.</p>
+      <div class="hero-meta">
+        <div class="hero-meta-item">
+          <p class="meta-label">Role</p>
+          <p class="meta-value">Product Designer</p>
+        </div>
+        <div class="hero-meta-item">
+          <p class="meta-label">Type</p>
+          <p class="meta-value">Hackathon · 48 hrs</p>
+        </div>
+        <div class="hero-meta-item">
+          <p class="meta-label">Platform</p>
+          <p class="meta-value">Web · Mobile + Desktop</p>
+        </div>
+        <div class="hero-meta-item">
+          <p class="meta-label">Year</p>
+          <p class="meta-value">2018</p>
+        </div>
+        <div class="hero-meta-item">
+          <p class="meta-label">Outcome</p>
+          <p class="meta-value">Hackathon Winner</p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- STATS -->
+  <div class="stat-row">
+    <div class="stat-cell">
+      <div class="stat-num">48</div>
+      <p class="stat-desc">Hours from brief to shipped prototype</p>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-num">2</div>
+      <p class="stat-desc">User types solved for simultaneously</p>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-num">11</div>
+      <p class="stat-desc">Intake steps designed for ages 0–9</p>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-num">1st</div>
+      <p class="stat-desc">Place — Capital One Kids Help Phone challenge</p>
+    </div>
+  </div>
+
+  <!-- 01 CONTEXT -->
+  <section class="cs-section">
+    <div class="container">
+      <p class="eyebrow">01 &nbsp;Context</p>
+      <div class="grid-2">
+        <div>
+          <h2>A 48-hour sprint to redesign a crisis touchpoint.</h2>
+          <p>Kids Help Phone is Canada's only 24/7 youth counseling service — free, confidential, and judgment-free. Every interaction happens at a moment of vulnerability: a child who just worked up the courage to reach out.</p>
+          <p>The Capital One hackathon challenge asked teams to "design a new strategy or method to engage visitors on the website." Most teams read that as marketing or engagement optimization. We read it differently — the biggest drop-off wasn't marketing, it was the moment <em>after</em> someone decided to ask for help.</p>
+          <p>I joined a team of five: one researcher with a psychology background, and three developers. In 48 hours we had to go from discovery to a working, demo-ready prototype.</p>
+        </div>
+        <div>
+          <div class="learning">
+            <p class="learning-label">Framing the problem</p>
+            <p class="learning-body">Most hackathon teams optimized for awareness. We questioned <strong>why kids were abandoning after already deciding to reach out</strong> — and found the intake experience itself was the problem. That reframe is what won.</p>
+          </div>
+          <div class="learning" style="margin-top: var(--space-3);">
+            <p class="learning-label">Team composition</p>
+            <p class="learning-body">Having a researcher with psychology training wasn't a nice-to-have — it was the structural reason our design was grounded. <strong>She knew how children process anxiety and communicate distress in ways I didn't.</strong></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 PROBLEM -->
+  <section class="cs-section cs-section--surface">
+    <div class="container">
+      <p class="eyebrow">02 &nbsp;Problem</p>
+      <h2>The intake wasn't designed for someone in crisis.</h2>
+      <p>The existing experience treated intake like a bureaucratic form — identical for a 7-year-old and a 19-year-old, loaded with questions up front, and completely disconnected from the counselor side. Three friction points kept surfacing.</p>
+
+      <div class="problem-grid">
+        <div class="problem-card">
+          <p class="problem-user">Child's perspective</p>
+          <p class="problem-title">The form felt clinical and unwelcoming before a single word of support was offered.</p>
+          <p class="problem-body">No age differentiation, no warmth, no acknowledgment that the child just took a hard step. The intake was designed for data collection — not for a kid who's scared or upset.</p>
+        </div>
+        <div class="problem-card">
+          <p class="problem-user">Counselor's perspective</p>
+          <p class="problem-title">Counselors had no visibility into the queue or caller context until a session started.</p>
+          <p class="problem-body">Managing multiple waiting sessions with no prioritization tools meant counselors had to triage blind — wasting the first minutes of every session gathering information they could have had before the call.</p>
+        </div>
+      </div>
+
+      <div class="learning" style="margin-top: var(--space-6);">
+        <p class="learning-label">The core insight</p>
+        <p class="learning-body">The problem wasn't one-sided. <strong>Fixing the child's experience without fixing the counselor's workflow would still result in dropout during wait times.</strong> A two-sided solution was the only way to reduce the full funnel of abandonment.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 RESEARCH & FRAMING -->
+  <section class="cs-section">
+    <div class="container">
+      <p class="eyebrow">03 &nbsp;Research &amp; Framing</p>
+      <h2>What 48 hours of focused discovery revealed.</h2>
+      <p>We couldn't do traditional user research in a hackathon — no time for interviews, no access to real callers. What we could do was rapid secondary research, leverage our team's psychology expertise, and interview the Kids Help Phone stakeholders present at the event.</p>
+
+      <div class="insight-grid">
+        <div class="insight-card">
+          <div class="insight-num">01</div>
+          <p class="insight-finding">Children abandon intake when they can't predict how long it will take or what comes next.</p>
+          <p class="insight-implication"><strong>Design implication:</strong> Progressive disclosure and step-by-step framing reduces perceived burden. Each step should feel completable, not infinite.</p>
+        </div>
+        <div class="insight-card">
+          <div class="insight-num">02</div>
+          <p class="insight-finding">Age-undifferentiated experiences feel alienating — especially to younger children who process forms differently.</p>
+          <p class="insight-implication"><strong>Design implication:</strong> Age-gating at the entry point lets us match language, iconography, and interaction style to cognitive development stage.</p>
+        </div>
+        <div class="insight-card">
+          <div class="insight-num">03</div>
+          <p class="insight-finding">Counselors' effectiveness increases dramatically when they enter a session with context — mood, safety level, age — already surfaced.</p>
+          <p class="insight-implication"><strong>Design implication:</strong> The intake flow should serve double duty: calming the child <em>and</em> building the counselor's brief before the session begins.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 DESIGN DECISIONS -->
+  <section class="cs-section cs-section--surface">
+    <div class="container">
+      <p class="eyebrow">04 &nbsp;Design Decisions</p>
+      <h2>Three decisions that shaped the system.</h2>
+      <p>Given the time constraint, we had to make clear calls fast. Each decision was about maximizing impact within 48 hours while building something the Kids Help Phone team could realistically ship.</p>
+
+      <div class="decision">
+        <div>
+          <div class="d-num">01</div>
+          <p class="d-title">Gamified, step-by-step intake instead of a form</p>
+        </div>
+        <div>
+          <span class="d-chosen">&#10003; &nbsp;Chosen</span>
+          <p class="d-rationale">Rather than presenting intake as a form to fill out, we broke it into 11 discrete steps — each with a single question, large tap targets, friendly iconography, and immediate positive reinforcement after each answer. This shifts the mental model from "filling out paperwork" to "having a conversation." Our psychologist-researcher grounded this in how children under 10 experience anxiety: one manageable step at a time reduces overwhelm significantly.</p>
+          <div class="d-rejected">
+            <strong>Rejected:</strong> A condensed single-screen form that collected all information at once. Faster for power users but fundamentally wrong for a child in distress — cognitive load peaks exactly when resilience is lowest.
+          </div>
+        </div>
+      </div>
+
+      <div class="decision">
+        <div>
+          <div class="d-num">02</div>
+          <p class="d-title">Age-gating at the first step to fork the experience</p>
+        </div>
+        <div>
+          <span class="d-chosen">&#10003; &nbsp;Chosen</span>
+          <p class="d-rationale">The very first screen asks users to select their age group (0–9, 10–19, 19+). This single gate lets everything downstream adapt — language complexity, illustration style, interaction patterns, and the questions asked. For the hackathon MVP, we scoped the full intake build to the 0–9 group (the highest-risk abandonment segment) while scaffolding the architecture to support the other cohorts. Scoping right let us ship something complete rather than three things half-done.</p>
+          <div class="d-rejected">
+            <strong>Rejected:</strong> Building one intake flow for all ages and using conditional logic to adjust. Deferred complexity that would have made the flow feel generic to everyone and excellent for no one.
+          </div>
+        </div>
+      </div>
+
+      <div class="decision">
+        <div>
+          <div class="d-num">03</div>
+          <p class="d-title">Real-time WebSocket sync between intake and counselor dashboard</p>
+        </div>
+        <div>
+          <span class="d-chosen">&#10003; &nbsp;Chosen</span>
+          <p class="d-rationale">As a child moves through intake, their responses populate the counselor dashboard live — severity is calculated automatically (mood + safety scores), the queue reorders by priority, and the counselor can see a child's profile building before the session begins. This required the developers to implement WebSockets, a non-trivial technical lift in 48 hours. The decision was worth it: it's what made the demo compelling and what the Kids Help Phone stakeholders responded to most strongly.</p>
+          <div class="d-rejected">
+            <strong>Rejected:</strong> A static intake that emails data to counselors post-submission. Technically simpler, but loses the real-time prioritization capability that was the core differentiator of our solution.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 KEY SCREENS -->
+  <section class="cs-section">
+    <div class="container">
+      <p class="eyebrow">05 &nbsp;Key Screens</p>
+      <h2>Intake flow &amp; counselor dashboard.</h2>
+      <p>The system runs in two environments simultaneously: a mobile-optimized intake experience for the child, and a desktop dashboard for the counselor. Both update in real time via WebSocket.</p>
+
+      <div class="screens-grid">
+
+        <!-- Screen 1: Age selector -->
+        <div class="screen-card">
+          <div class="screen-thumb screen-thumb--mobile">
+            <div class="mp">
+              <div class="mp-sb">
+                <div class="mp-sb-dot"></div>
+                <div class="mp-sb-dot"></div>
+                <div class="mp-sb-dot"></div>
+              </div>
+              <div class="mp-nav">
+                <span class="mp-logo-khp">Kids Help Phone</span>
+              </div>
+              <div class="mp-progress"><div class="mp-progress-fill" style="width:9%;"></div></div>
+              <div class="mp-intake-body">
+                <p class="mp-intake-step">Step 1 of 11</p>
+                <p class="mp-intake-q">How old are you?</p>
+                <button class="mp-age-btn selected"><span class="mp-age-emoji">🐣</span> 0 – 9</button>
+                <button class="mp-age-btn"><span class="mp-age-emoji">🌱</span> 10 – 19</button>
+                <button class="mp-age-btn"><span class="mp-age-emoji">🌳</span> 19 &amp; over</button>
+                <button class="mp-intake-next">Continue →</button>
+              </div>
+            </div>
+          </div>
+          <div class="screen-info">
+            <p class="screen-name">Age group selector</p>
+            <p class="screen-desc">Entry fork — routes to age-appropriate intake. Single large tap targets, friendly emoji cues.</p>
+          </div>
+        </div>
+
+        <!-- Screen 2: Mood assessment -->
+        <div class="screen-card">
+          <div class="screen-thumb screen-thumb--mobile">
+            <div class="mp">
+              <div class="mp-sb">
+                <div class="mp-sb-dot"></div>
+                <div class="mp-sb-dot"></div>
+                <div class="mp-sb-dot"></div>
+              </div>
+              <div class="mp-nav">
+                <span class="mp-logo-khp">Kids Help Phone</span>
+              </div>
+              <div class="mp-progress"><div class="mp-progress-fill" style="width:63%;"></div></div>
+              <div class="mp-mood-body">
+                <p class="mp-mood-label">Step 7 of 11</p>
+                <p class="mp-mood-q">How are you feeling right now?</p>
+                <div class="mp-mood-scale">
+                  <div class="mp-mood-dot">😊</div>
+                  <div class="mp-mood-dot">🙂</div>
+                  <div class="mp-mood-dot sel">😐</div>
+                  <div class="mp-mood-dot">😟</div>
+                  <div class="mp-mood-dot">😢</div>
+                </div>
+                <div class="mp-mood-ticks">
+                  <span class="mp-mood-tick">Happy</span>
+                  <span class="mp-mood-tick">Sad</span>
+                </div>
+                <p class="mp-safe-label" style="margin-top:8px;">Do you feel safe right now?</p>
+                <div class="mp-safe-scale">
+                  <div class="mp-safe-dot">✅</div>
+                  <div class="mp-safe-dot sel">🤔</div>
+                  <div class="mp-safe-dot">😰</div>
+                  <div class="mp-safe-dot">🆘</div>
+                  <div class="mp-safe-dot">🚨</div>
+                </div>
+                <button class="mp-intake-next" style="margin-top:10px;">Continue →</button>
+              </div>
+            </div>
+          </div>
+          <div class="screen-info">
+            <p class="screen-name">Mood &amp; safety assessment</p>
+            <p class="screen-desc">Dual-scale tap input. Data feeds directly into counselor's priority score in real time.</p>
+          </div>
+        </div>
+
+        <!-- Screen 3: Queue confirmation -->
+        <div class="screen-card">
+          <div class="screen-thumb screen-thumb--mobile">
+            <div class="mp">
+              <div class="mp-sb">
+                <div class="mp-sb-dot"></div>
+                <div class="mp-sb-dot"></div>
+                <div class="mp-sb-dot"></div>
+              </div>
+              <div class="mp-nav">
+                <span class="mp-logo-khp">Kids Help Phone</span>
+              </div>
+              <div class="mp-progress"><div class="mp-progress-fill" style="width:100%;"></div></div>
+              <div class="mp-confirm-body">
+                <div class="mp-confirm-icon">
+                  <span class="mp-confirm-check">✓</span>
+                </div>
+                <p class="mp-confirm-title">You're all set, Alex!</p>
+                <p class="mp-confirm-sub">A counselor will be with you soon.<br>You can play a game while you wait.</p>
+                <div class="mp-queue-badge">
+                  <div class="mp-queue-n">3</div>
+                  <p class="mp-queue-l">people ahead of you</p>
+                </div>
+                <p class="mp-confirm-cta">Want to play a quick game while you wait?</p>
+              </div>
+            </div>
+          </div>
+          <div class="screen-info">
+            <p class="screen-name">Queue confirmation</p>
+            <p class="screen-desc">Child sees real-time queue position. Optional game keeps them engaged and prevents dropout.</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Counselor dashboard full row -->
+      <h3 style="margin-top: var(--space-8); margin-bottom: var(--space-2);">Counselor dashboard</h3>
+      <p style="margin-bottom: var(--space-4);">While the child moves through intake, the counselor's dashboard updates live — severity scores calculate automatically, the queue reorders, and each child's profile is ready before the session begins.</p>
+
+      <div style="display:flex;justify-content:center;padding:var(--space-6) var(--space-4);background:var(--color-surface);border:1px solid var(--color-border);">
+        <div class="dash">
+          <div class="dash-titlebar">
+            <div class="dash-dot dash-dot--r"></div>
+            <div class="dash-dot dash-dot--y"></div>
+            <div class="dash-dot dash-dot--g"></div>
+          </div>
+          <div class="dash-header">
+            <span class="dash-brand">Pacific — Counselor Dashboard</span>
+            <span class="dash-greeting">Welcome back, Sarah · 4 in queue</span>
+          </div>
+          <div class="dash-body">
+            <div class="dash-sidebar">
+              <div class="dash-nav-item active">Queue</div>
+              <div class="dash-nav-item">Active Sessions</div>
+              <div class="dash-nav-item">Analytics</div>
+              <div class="dash-nav-item">Settings</div>
+            </div>
+            <div class="dash-main">
+              <div class="dash-stats">
+                <div class="dash-stat">
+                  <div class="dash-stat-n">4</div>
+                  <p class="dash-stat-l">In queue</p>
+                </div>
+                <div class="dash-stat">
+                  <div class="dash-stat-n">2</div>
+                  <p class="dash-stat-l">Active sessions</p>
+                </div>
+                <div class="dash-stat">
+                  <div class="dash-stat-n">~8m</div>
+                  <p class="dash-stat-l">Avg wait time</p>
+                </div>
+              </div>
+              <p class="dash-section-label">Current Queue — sorted by priority</p>
+              <div class="dash-queue">
+                <div class="dash-queue-header">
+                  <div class="dash-th">Name · Age</div>
+                  <div class="dash-th">Wait</div>
+                  <div class="dash-th">Mood</div>
+                  <div class="dash-th">Priority</div>
+                </div>
+                <div class="dash-row">
+                  <div class="dash-td dash-td--name">Alex, 8</div>
+                  <div class="dash-td">2m</div>
+                  <div class="dash-td">😰 Unsafe</div>
+                  <div class="dash-td"><span class="dash-badge dash-b-imm">Immediate</span></div>
+                </div>
+                <div class="dash-row">
+                  <div class="dash-td dash-td--name">Jordan, 7</div>
+                  <div class="dash-td">5m</div>
+                  <div class="dash-td">😟 Sad</div>
+                  <div class="dash-td"><span class="dash-badge dash-b-hi">High</span></div>
+                </div>
+                <div class="dash-row">
+                  <div class="dash-td dash-td--name">Sam, 9</div>
+                  <div class="dash-td">9m</div>
+                  <div class="dash-td">😐 Neutral</div>
+                  <div class="dash-td"><span class="dash-badge dash-b-med">Medium</span></div>
+                </div>
+                <div class="dash-row">
+                  <div class="dash-td dash-td--name">Casey, 6</div>
+                  <div class="dash-td">11m</div>
+                  <div class="dash-td">🙂 OK</div>
+                  <div class="dash-td"><span class="dash-badge dash-b-lo">Low</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Priority legend -->
+      <p style="margin-top:var(--space-6);margin-bottom:0;" class="eyebrow" style="margin-bottom:var(--space-2);">Priority classification</p>
+      <div class="priority-row">
+        <div class="priority-cell">
+          <span class="priority-badge p-immediate">Immediate</span>
+          <p class="priority-desc">High distress + safety concern signals. Counselor notified to connect immediately regardless of queue order.</p>
+        </div>
+        <div class="priority-cell">
+          <span class="priority-badge p-high">High</span>
+          <p class="priority-desc">Significant emotional distress indicated. Next in queue, no extended wait.</p>
+        </div>
+        <div class="priority-cell">
+          <span class="priority-badge p-medium">Medium</span>
+          <p class="priority-desc">Moderate distress, seeking support. Standard queue position maintained.</p>
+        </div>
+        <div class="priority-cell">
+          <span class="priority-badge p-low">Low</span>
+          <p class="priority-desc">Stable mood, looking to talk. May receive async resource suggestions while waiting.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 06 COLLABORATION -->
+  <section class="cs-section cs-section--surface">
+    <div class="container">
+      <p class="eyebrow">06 &nbsp;Cross-functional Collaboration</p>
+      <h2>How a team of five shipped a working system in 48 hours.</h2>
+      <p>Hackathon teams often have a designer hand off visuals to developers and hope for the best. We couldn't afford that — every hour mattered, and the product had to actually work for the demo. That required tight, real-time collaboration from hour one.</p>
+
+      <div class="team-grid">
+        <div class="team-card">
+          <p class="team-role">Product Design</p>
+          <p class="team-name">Alfred (me)</p>
+          <p class="team-contrib">Led product strategy, wireframing, and visual design for both sides of the system. Facilitated the initial problem reframe that shaped the entire direction.</p>
+        </div>
+        <div class="team-card">
+          <p class="team-role">Research &amp; Psychology</p>
+          <p class="team-name">Researcher</p>
+          <p class="team-contrib">Grounded the intake design in child psychology — informed question sequencing, emotional language, and why progressive disclosure matters for this age group specifically.</p>
+        </div>
+        <div class="team-card">
+          <p class="team-role">Engineering (×3)</p>
+          <p class="team-name">Development Team</p>
+          <p class="team-contrib">Built the React + WebSocket stack from scratch in 48 hours. Collaborated directly with design on feasibility — the real-time sync capability came from a developer suggesting WebSockets during a design critique.</p>
+        </div>
+      </div>
+
+      <div class="learning" style="margin-top: var(--space-6);">
+        <p class="learning-label">What made the collaboration work</p>
+        <p class="learning-body">We ran a 30-minute design sprint at the start to align on the problem before anyone opened a design tool or wrote a line of code. <strong>That shared understanding meant developers weren't blocked waiting for specs — they understood the "why" well enough to make implementation decisions on their own.</strong></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 07 OUTCOMES -->
+  <section class="cs-section">
+    <div class="container">
+      <p class="eyebrow">07 &nbsp;Outcomes</p>
+      <h2>A working prototype, a win, and a real endorsement.</h2>
+      <p>At the end of 48 hours, Pacific was a fully interactive prototype with both the intake flow and counselor dashboard running in real time. We presented to a panel of judges including Kids Help Phone stakeholders.</p>
+
+      <div class="outcomes-row">
+        <div class="outcome-cell">
+          <div class="outcome-num">1st</div>
+          <p class="outcome-label">Place — Design Award</p>
+          <p class="outcome-detail">Won the Kids Help Phone challenge among all competing teams at the Capital One hackathon.</p>
+        </div>
+        <div class="outcome-cell">
+          <div class="outcome-num">2</div>
+          <p class="outcome-label">Sides solved simultaneously</p>
+          <p class="outcome-detail">Child intake + counselor prioritization — the two-pronged approach was the differentiating factor according to judges.</p>
+        </div>
+        <div class="outcome-cell">
+          <div class="outcome-num">48h</div>
+          <p class="outcome-label">From brief to live prototype</p>
+          <p class="outcome-detail">Full end-to-end design and implementation with real-time data sync. The prototype ran live during the presentation.</p>
+        </div>
+      </div>
+
+      <blockquote style="margin-top: var(--space-6);">
+        <p>"If we were to deploy this winning solution in the next few months, it would dramatically improve the experience that kids have."</p>
+        <cite>— Ted Kaiser, Kids Help Phone</cite>
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- 08 REFLECTION -->
+  <section class="cs-section cs-section--surface">
+    <div class="container">
+      <p class="eyebrow">08 &nbsp;Reflection</p>
+      <h2>What designing under constraint taught me.</h2>
+
+      <div class="learning">
+        <p class="learning-label">Reframing is the highest-leverage design move</p>
+        <p class="learning-body">Every other team optimized the existing experience. We questioned whether the existing experience was solving the right problem. <strong>Spending the first two hours on problem framing — rather than jumping to solutions — is what created space for a genuinely different answer.</strong> That habit has stayed with me in every project since.</p>
+      </div>
+
+      <div class="learning">
+        <p class="learning-label">Cross-disciplinary teams outperform mono-disciplinary ones</p>
+        <p class="learning-body">A researcher with psychology training fundamentally changed the quality of the design. Without her, we'd have built something visually polished but emotionally wrong. <strong>The best design decisions came from the intersection of design craft and domain expertise — not from design craft alone.</strong></p>
+      </div>
+
+      <div class="learning">
+        <p class="learning-label">Two-sided systems require two-sided thinking from day one</p>
+        <p class="learning-body">The temptation in a hackathon is to pick one user and nail their experience. We bet on solving both simultaneously — and it was harder, but the system-level coherence is what made the solution compelling. <strong>Designing for only one side of a two-sided platform creates the illusion of a solution while leaving half the problem unsolved.</strong></p>
+      </div>
+
+      <p style="margin-top: var(--space-4);">Pacific was an early signal of the kind of designer I wanted to be — one who leads with systems thinking, moves fast without sacrificing rigour, and collaborates closely enough with other disciplines that the final product reflects everyone's expertise, not just the designer's.</p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__inner">
+        <p class="footer__copy">&#169; 2024 Alfred Law</p>
+        <nav class="footer__links" aria-label="Footer">
+          <a href="mailto:alfred@alfredlaw.me">Email</a>
+          <a href="https://linkedin.com/in/alfredlaw" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="/">All work</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../script.js"></script>
+</body>
+</html>
