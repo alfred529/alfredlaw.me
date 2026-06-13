@@ -85,8 +85,8 @@
     .step-desc { font-size: var(--size-sm); color: var(--color-ink-2); line-height: 1.7; max-width: none; margin: 0; }
 
     /* ── AB test comparison ── */
-    .ab-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); margin-top: var(--space-6); }
-    .ab-card { border: 1px solid var(--color-border); overflow: hidden; }
+    .ab-grid { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: auto 1fr auto; gap: var(--space-3); margin-top: var(--space-6); }
+    .ab-card { border: 1px solid var(--color-border); overflow: hidden; display: grid; grid-template-rows: subgrid; grid-row: span 3; }
     .ab-card--variant { border-color: var(--color-ink); }
     .ab-header { padding: var(--space-2) var(--space-3); border-bottom: 1px solid var(--color-border); display: flex; align-items: center; justify-content: space-between; }
     .ab-card--variant .ab-header { background: var(--color-ink); border-color: var(--color-ink); }
@@ -162,6 +162,18 @@
       .stat-cell { border-right: none; border-bottom: 1px solid var(--color-border); }
       .stat-cell:last-child { border-bottom: none; }
     }
+
+    /* ── Carousel ── */
+    .carousel { user-select: none; }
+    .carousel__track-wrap { overflow: hidden; border-radius: 0; }
+    .carousel__track { display: flex; transition: transform 0.35s cubic-bezier(.4,0,.2,1); will-change: transform; }
+    .carousel__slide { flex: 0 0 100%; width: 100%; height: auto; display: block; object-fit: contain; }
+    .carousel__controls { display: flex; align-items: center; justify-content: center; gap: var(--space-3); margin-top: var(--space-4); }
+    .carousel__btn { background: none; border: 1px solid var(--color-border); border-radius: 100px; width: 36px; height: 36px; cursor: pointer; font-size: var(--size-md); color: var(--color-ink); display: flex; align-items: center; justify-content: center; transition: background var(--transition), color var(--transition); }
+    .carousel__btn:hover { background: var(--color-ink); color: var(--color-bg); border-color: var(--color-ink); }
+    .carousel__dots { display: flex; gap: 6px; align-items: center; }
+    .carousel__dot { width: 6px; height: 6px; border-radius: 100px; background: var(--color-border); border: none; padding: 0; cursor: pointer; transition: background var(--transition), width var(--transition); }
+    .carousel__dot.active { background: var(--color-ink); width: 18px; }
   </style>
 </head>
 <body>
@@ -322,6 +334,23 @@
         </div>
       </div>
 
+      <div class="carousel" id="bmoAutoCarousel" style="margin:var(--space-4) 0;max-width:75%;margin-left:auto;margin-right:auto;">
+        <div class="carousel__track-wrap">
+          <div class="carousel__track">
+            <img src="../assets/images/bmo-autoloan-control.png"    alt="Auto Loan — control"    class="carousel__slide" />
+            <img src="../assets/images/bmo-autoloan-ideation1.png"  alt="Auto Loan — ideation 1" class="carousel__slide" />
+            <img src="../assets/images/bmo-autoloan-ideation2.png"  alt="Auto Loan — ideation 2" class="carousel__slide" />
+            <img src="../assets/images/bmo-autoloan-final.png"      alt="Auto Loan — final"      class="carousel__slide" />
+            <img src="../assets/images/bmo-autoloan-responsive.png" alt="Auto Loan — responsive"  class="carousel__slide" />
+          </div>
+        </div>
+        <div class="carousel__controls">
+          <button class="carousel__btn carousel__btn--prev" aria-label="Previous">&#8592;</button>
+          <div class="carousel__dots" id="bmoAutoCarouselDots"></div>
+          <button class="carousel__btn carousel__btn--next" aria-label="Next">&#8594;</button>
+        </div>
+      </div>
+
       <div class="result-callout">
         <p class="result-num">57.2%</p>
         <div class="result-label">
@@ -464,6 +493,7 @@
           <div>
             <span class="d-chosen">✦ Restructure around user goals</span>
             <p class="d-body">The original IA reflected BMO's internal product taxonomy — good for org charts, confusing for customers. The redesign rebuilt navigation around how users actually think: find a product first, then explore from there. A/B testing confirmed the direction: users with the new navigation adopted a needs-based exploration pattern, starting with their target product category, then moving outward. Segment links placed beneath product labels generated the highest engagement across all nav variants tested.</p>
+            <img src="../assets/images/bmo-homepage-redesignnavfinal.png" alt="Simplified needs-based navigation IA" class="case-image" style="max-width:75%;margin-left:auto;margin-right:auto;display:block;border:none;" />
           </div>
         </div>
         <div class="decision-row">
@@ -474,6 +504,7 @@
           <div>
             <span class="d-chosen">✦ Group content into scannable modules</span>
             <p class="d-body">A new modular layout grouped related product offers and points of interest into coherent sections — replacing a single-column list of components. This made the page shorter, more cohesive, and easier to scan. The modular component was new to the design system, requiring close collaboration with the DS team to build it as a reusable, extensible pattern — not a one-off. The homepage redesign contributed to the system rather than forking from it.</p>
+            <img src="../assets/images/bmo-homepage-modular.png" alt="New modular layout system" class="case-image" style="border:none;" />
           </div>
         </div>
       </div>
@@ -493,6 +524,8 @@
           <p>The results didn't just validate direction — they surfaced a specific, actionable finding about content position that directly changed how the final design was sequenced.</p>
         </div>
       </div>
+
+      <img src="../assets/images/bmo-homepage-abtest.png" alt="Homepage A/B test" class="case-image" style="margin-bottom:var(--space-6);border:none;border-radius:0;" />
 
       <div class="ab-grid">
         <div class="ab-card">
@@ -527,6 +560,8 @@
         <p class="learning-label">Key learning — position matters as much as content</p>
         <p class="learning-body"><strong>Top elements in the module received substantially more engagement than bottom elements.</strong> This wasn't just confirmation that the modular layout worked — it was a signal to be deliberate about sequencing. Special Offers performed well at high placement; moving them down reduced engagement regardless of visual treatment. The final design reflected this directly: high-priority products and CTAs were placed at the top of the module hierarchy.</p>
       </div>
+
+      <img src="../assets/images/bmo-homepage-nav-abtest.png" alt="Homepage navigation A/B test" class="case-image" style="border:none;border-radius:0;" />
     </div>
   </section>
 
@@ -543,6 +578,8 @@
           <p>Holding the design direction steady while incorporating feedback from five different stakeholder groups — and still shipping on time — is the kind of cross-functional coordination that doesn't show up in a prototype but is felt across every phase of delivery.</p>
         </div>
       </div>
+      <img src="../assets/images/bmo-homepage-redesignfinal.png" alt="BMO homepage redesign final" class="case-image" style="margin-bottom:var(--space-6);border:none;border-radius:0;" />
+
       <div class="collab-grid">
         <div class="collab-card">
           <p class="collab-team">Product team</p>
@@ -631,5 +668,35 @@
   </footer>
 
   <script src="../script.js"></script>
+  <script>
+    (function () {
+      var carousel = document.getElementById('bmoAutoCarousel');
+      if (!carousel) return;
+      var track = carousel.querySelector('.carousel__track');
+      var slides = carousel.querySelectorAll('.carousel__slide');
+      var dotsWrap = document.getElementById('bmoAutoCarouselDots');
+      var total = slides.length;
+      var current = 0;
+
+      slides.forEach(function (_, i) {
+        var dot = document.createElement('button');
+        dot.className = 'carousel__dot' + (i === 0 ? ' active' : '');
+        dot.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+        dot.addEventListener('click', function () { goTo(i); });
+        dotsWrap.appendChild(dot);
+      });
+
+      function goTo(n) {
+        current = (n + total) % total;
+        track.style.transform = 'translateX(-' + (current * 100) + '%)';
+        dotsWrap.querySelectorAll('.carousel__dot').forEach(function (d, i) {
+          d.classList.toggle('active', i === current);
+        });
+      }
+
+      carousel.querySelector('.carousel__btn--prev').addEventListener('click', function () { goTo(current - 1); });
+      carousel.querySelector('.carousel__btn--next').addEventListener('click', function () { goTo(current + 1); });
+    })();
+  </script>
 </body>
 </html>
