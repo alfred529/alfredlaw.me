@@ -41,14 +41,14 @@
     .cs-section p:last-child { margin-bottom: 0; }
 
     .eyebrow { font-size: var(--size-xs); font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--color-ink-3); display: flex; align-items: center; gap: 10px; margin-bottom: var(--space-4); }
-    .eyebrow::after { content: ''; flex: 1; max-width: 48px; height: 1px; background: var(--color-highlight); }
+    .eyebrow::after { content: ''; flex: 1; max-width: 48px; height: 1px; background: var(--color-border); }
 
     /* ── 2-col grid ── */
     .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-8); align-items: start; }
     .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: var(--space-3); }
 
     /* ── Blockquote ── */
-    blockquote { border-left: 2px solid var(--color-highlight); padding: 4px 0 4px var(--space-3); margin: var(--space-4) 0; }
+    blockquote { border-left: 2px solid var(--color-ink); padding: 4px 0 4px var(--space-3); margin: var(--space-4) 0; }
     blockquote p { font-family: var(--font-display); font-size: var(--size-md); font-style: italic; line-height: 1.65; color: var(--color-ink); max-width: none; margin: 0; }
     blockquote cite { display: block; margin-top: 8px; font-size: var(--size-xs); color: var(--color-ink-3); font-style: normal; }
 
@@ -290,6 +290,10 @@
           </ul>
         </div>
       </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-3);margin-top:var(--space-6);">
+        <img src="../assets/images/td-EC-concept1.png" alt="TD Education Centre concept 1" class="case-image" style="margin:0;" />
+        <img src="../assets/images/td-EC-concept2.png" alt="TD Education Centre concept 2" class="case-image" style="margin:0;" />
+      </div>
     </div>
   </section>
 
@@ -378,6 +382,7 @@
         <div>
           <span class="d-chosen">✦ Multiple contextual entry points</span>
           <p class="d-rationale">Users arrive at the rewards section from different contexts — some are browsing rewards broadly, others are reviewing a specific credit card. A single entry point in one location would miss the majority of discovery moments. I introduced a permanent entry point on the Rewards landing page, a contextual entry from the credit card account screen, and a temporary "New for You" awareness card to drive initial adoption. Each entry point meets users where they already are rather than redirecting them somewhere new.</p>
+          <img src="../assets/images/td-decision1.png" alt="Entry point strategy" class="case-image" />
           <p class="d-rejected"><strong>Rejected:</strong> A single entry point on the Rewards home only. This would require users to navigate to the Rewards section before they could access the Education Centre — missing the high-intent moment when a user is already looking at their credit card account.</p>
         </div>
       </div>
@@ -387,6 +392,7 @@
         <div>
           <span class="d-chosen">✦ Card + points balance surfaced immediately</span>
           <p class="d-rationale">The Education Centre opens with the user's card and current points balance front and centre — before any educational content. This is intentional. Users told us they felt disconnected from their rewards because they never had a clear sense of what they had. Anchoring the experience in their actual balance transforms education from abstract to personal: "here's what you have, and here's how to make the most of it." For multi-card users, card-switching is available inline — no navigation required to understand their full value.</p>
+          <img src="../assets/images/td-decision2.png" alt="Value visibility" class="case-image" />
           <p class="d-rejected"><strong>Rejected:</strong> Opening directly with educational content (Benefits, Earn, Redeem) without a value anchor. Tested poorly — users engaged less with content when they hadn't first seen what was personally relevant to them.</p>
         </div>
       </div>
@@ -396,6 +402,7 @@
         <div>
           <span class="d-chosen">✦ User intent model: Benefits → Earn → Redeem</span>
           <p class="d-rationale">The rewards program has a complex internal taxonomy built around product teams and program categories. Users don't think in those terms. Research showed users approach rewards with three distinct intents: understanding what their card does (Benefits), learning how to accumulate points (Earn), and figuring out how to spend them (Redeem). Organizing the IA around this mental model — rather than the program's internal logic — meant users could find what they were looking for without learning a new system first. Each section ends with an actionable CTA, turning comprehension into behaviour.</p>
+          <img src="../assets/images/td-decision3.png" alt="Information architecture" class="case-image" />
           <p class="d-rejected"><strong>Rejected:</strong> Organizing by program category (e.g., Travel, Dining, Partners). This reflects how the product team thinks about the program, not how users navigate it. Card program logic isn't a user mental model.</p>
         </div>
       </div>
@@ -453,140 +460,7 @@
         </div>
       </div>
 
-      <!-- SCREEN MOCKUPS -->
-      <div class="screens-grid">
-
-        <!-- 1: REWARDS HOME with entry point -->
-        <div class="screen-card">
-          <div class="screen-thumb">
-            <div class="mp">
-              <div class="mp-sb"><div class="mp-sb-dot"></div><div class="mp-sb-dot"></div><div class="mp-sb-dot"></div></div>
-              <div class="mp-nav"><span class="mp-logo">TD Rewards</span></div>
-              <div class="mp-section-hdr"><p class="mp-section-title">Your points</p></div>
-              <div style="padding:4px 6px;">
-                <div style="display:flex;align-items:center;justify-content:space-between;padding:3px 0;border-bottom:1px solid #F0F0F0;">
-                  <span style="font-size:5px;color:#888;font-weight:700;letter-spacing:.06em;text-transform:uppercase;">TD Visa Infinite</span>
-                  <span style="font-family:'Playfair Display',serif;font-size:8px;font-weight:700;color:#0A0A0A;">24,500 pts</span>
-                </div>
-              </div>
-              <div class="mp-promo">
-                <div>
-                  <div class="mp-promo-label">New for you</div>
-                  <div class="mp-promo-title">Education Centre</div>
-                  <div style="font-size:5px;color:#888;margin-top:1px;">Learn how to earn more</div>
-                </div>
-                <div class="mp-promo-cta">Explore →</div>
-              </div>
-              <div class="mp-section-hdr" style="margin-top:2px;"><p class="mp-section-title">Featured offers</p></div>
-              <div style="padding:3px 5px;">
-                <div style="background:#F7F7F7;border:1px solid #E2E2E2;border-radius:2px;padding:4px 5px;margin-bottom:3px;">
-                  <div style="font-size:5px;color:#888;">Partner offer</div>
-                  <div style="font-size:6px;font-weight:600;color:#0A0A0A;">3× points at Expedia</div>
-                </div>
-              </div>
-              <div class="mp-tabs">
-                <div class="mp-tab"><div class="mp-ti on"></div><div class="mp-tl on">Rewards</div></div>
-                <div class="mp-tab"><div class="mp-ti"></div><div class="mp-tl">Cards</div></div>
-                <div class="mp-tab"><div class="mp-ti"></div><div class="mp-tl">Offers</div></div>
-                <div class="mp-tab"><div class="mp-ti"></div><div class="mp-tl">More</div></div>
-              </div>
-            </div>
-            <span class="screen-badge">Entry point</span>
-          </div>
-          <div class="screen-info">
-            <p class="screen-name">Rewards home</p>
-            <p class="screen-desc">Promotional "New for You" card drives initial awareness. Permanent entry also accessible via nav.</p>
-          </div>
-        </div>
-
-        <!-- 2: EDUCATION CENTRE HOME -->
-        <div class="screen-card">
-          <div class="screen-thumb">
-            <div class="mp">
-              <div class="mp-sb"><div class="mp-sb-dot"></div><div class="mp-sb-dot"></div><div class="mp-sb-dot"></div></div>
-              <div class="mp-header"><div class="mp-back"></div><span class="mp-header-title">Education Centre</span></div>
-              <div class="mp-detail-card">
-                <div class="mp-dc-label">TD Visa Infinite · ···· 4567</div>
-                <div class="mp-dc-name">Your rewards</div>
-                <span class="mp-dc-pts">24,500</span>
-                <span class="mp-dc-pts-label">TD Rewards Points</span>
-              </div>
-              <div class="mp-row-items">
-                <div class="mp-row-item">
-                  <div class="mp-row-label"><div class="mp-row-icon"></div>Benefits</div>
-                  <div class="mp-row-arrow">›</div>
-                </div>
-                <div class="mp-row-item">
-                  <div class="mp-row-label"><div class="mp-row-icon"></div>Earn</div>
-                  <div class="mp-row-arrow">›</div>
-                </div>
-                <div class="mp-row-item">
-                  <div class="mp-row-label"><div class="mp-row-icon"></div>Redeem</div>
-                  <div class="mp-row-arrow">›</div>
-                </div>
-              </div>
-            </div>
-            <span class="screen-badge">EC home</span>
-          </div>
-          <div class="screen-info">
-            <p class="screen-name">Education Centre</p>
-            <p class="screen-desc">Card and points balance anchored at top. Three intent-based sections below. Card-switching inline.</p>
-          </div>
-        </div>
-
-        <!-- 3: EARN SECTION DETAIL -->
-        <div class="screen-card">
-          <div class="screen-thumb">
-            <div class="mp">
-              <div class="mp-sb"><div class="mp-sb-dot"></div><div class="mp-sb-dot"></div><div class="mp-sb-dot"></div></div>
-              <div class="mp-header"><div class="mp-back"></div><span class="mp-header-title">Earn</span></div>
-              <div class="mp-nav-pills">
-                <div class="mp-pill on">All</div>
-                <div class="mp-pill">Groceries</div>
-                <div class="mp-pill">Travel</div>
-                <div class="mp-pill">Dining</div>
-              </div>
-              <div class="mp-list">
-                <div class="mp-list-item">
-                  <div class="mp-list-icon"></div>
-                  <div class="mp-list-body">
-                    <div class="mp-list-title">3× on groceries</div>
-                    <div class="mp-list-desc">At participating grocery stores</div>
-                  </div>
-                </div>
-                <div class="mp-list-item">
-                  <div class="mp-list-icon"></div>
-                  <div class="mp-list-body">
-                    <div class="mp-list-title">3× on dining</div>
-                    <div class="mp-list-desc">Restaurants, cafés, food delivery</div>
-                  </div>
-                </div>
-                <div class="mp-list-item">
-                  <div class="mp-list-icon"></div>
-                  <div class="mp-list-body">
-                    <div class="mp-list-title">8× via Expedia for TD</div>
-                    <div class="mp-list-desc">Book flights, hotels, and more</div>
-                  </div>
-                </div>
-                <div class="mp-list-item">
-                  <div class="mp-list-icon"></div>
-                  <div class="mp-list-body">
-                    <div class="mp-list-title">1× on everything else</div>
-                    <div class="mp-list-desc">Every other purchase</div>
-                  </div>
-                </div>
-              </div>
-              <div class="mp-cta-bar"><div class="mp-cta-btn">Start earning more →</div></div>
-            </div>
-            <span class="screen-badge">Section detail</span>
-          </div>
-          <div class="screen-info">
-            <p class="screen-name">Earn section</p>
-            <p class="screen-desc">Category-filtered earn rates. Scannable list format. CTA drives users to act, not just read.</p>
-          </div>
-        </div>
-
-      </div>
+      <img src="../assets/images/td-overview.png" alt="TD Education Centre overview" class="case-image" style="width:100%;max-width:100%;" />
     </div>
   </section>
 
@@ -638,6 +512,10 @@
           <p>The Benefits / Earn / Redeem IA now anchors the broader Loyalty &amp; Rewards redesign. Future features will extend this structure rather than building parallel information architectures.</p>
         </div>
       </div>
+      <figure style="margin:var(--space-6) 0;">
+        <img src="../assets/images/td-scalability.png" alt="IA scaling across reward products" style="width:60%;border-radius:var(--radius-md);display:block;margin:0 auto;" />
+        <figcaption style="margin-top:var(--space-2);font-size:var(--size-sm);color:var(--color-ink-3);line-height:1.6;width:60%;margin-left:auto;margin-right:auto;text-align:center;">The IA adapts to each reward product's complexity. For Cashback and Aeroplan — where earning and redemption options are simpler — Earn and Redeem collapse into a single tab, maintaining structural consistency while keeping the experience focused.</figcaption>
+      </figure>
       <div class="outcomes-grid">
         <div class="outcome-cell">
           <p class="outcome-num">1</p>

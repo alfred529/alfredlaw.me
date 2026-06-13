@@ -41,13 +41,13 @@
     .cs-section p:last-child { margin-bottom: 0; }
 
     .eyebrow { font-size: var(--size-xs); font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--color-ink-3); display: flex; align-items: center; gap: 10px; margin-bottom: var(--space-4); }
-    .eyebrow::after { content: ''; flex: 1; max-width: 48px; height: 1px; background: var(--color-highlight); }
+    .eyebrow::after { content: ''; flex: 1; max-width: 48px; height: 1px; background: var(--color-border); }
 
     /* ── Grids ── */
     .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-8); align-items: start; }
 
     /* ── Blockquote ── */
-    blockquote { border-left: 2px solid var(--color-highlight); padding: 4px 0 4px var(--space-3); margin: var(--space-4) 0; }
+    blockquote { border-left: 2px solid var(--color-ink); padding: 4px 0 4px var(--space-3); margin: var(--space-4) 0; }
     blockquote p { font-family: var(--font-display); font-size: var(--size-md); font-style: italic; line-height: 1.65; color: var(--color-ink); max-width: none; margin: 0; }
 
     /* ── Project header ── */
@@ -104,7 +104,7 @@
     .ab-card--variant .ab-result strong { color: #fff; }
 
     /* ── Learning callout ── */
-    .learning { background: var(--color-surface); border-left: 2px solid var(--color-highlight); padding: var(--space-4); margin: var(--space-4) 0; }
+    .learning { background: var(--color-surface); border-left: 2px solid var(--color-ink); padding: var(--space-4); margin: var(--space-4) 0; }
     .learning-label { font-size: var(--size-xs); font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--color-ink-3); margin-bottom: var(--space-1); max-width: none; }
     .learning-body { font-size: var(--size-sm); color: var(--color-ink-2); line-height: 1.7; max-width: none; margin: 0; }
     .learning-body strong { color: var(--color-ink); }
@@ -125,7 +125,7 @@
 
     /* ── Timeline badge ── */
     .timeline-badge { display: inline-flex; align-items: center; gap: var(--space-2); background: var(--color-surface); border: 1px solid var(--color-border); padding: var(--space-1) var(--space-3); font-size: var(--size-xs); font-weight: 600; color: var(--color-ink-2); margin-bottom: var(--space-4); }
-    .timeline-badge span { width: 6px; height: 6px; border-radius: 50%; background: var(--color-highlight); flex-shrink: 0; }
+    .timeline-badge span { width: 6px; height: 6px; border-radius: 50%; background: var(--color-ink); flex-shrink: 0; }
 
     /* ── Role list ── */
     .role-list { list-style: none; margin-top: var(--space-3); }

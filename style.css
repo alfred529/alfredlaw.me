@@ -15,8 +15,6 @@
   --color-border:       #E2E2E2;
   --color-accent:       #0A0A0A;
   --color-mint:         #B3EFC3;
-  --color-purple:       #8968CD;
-  --color-highlight:    #FF781F;
 
   --font-display:       'Playfair Display', Georgia, serif;
   --font-body:          'DM Sans', system-ui, sans-serif;
@@ -143,11 +141,11 @@ p {
   transition: color var(--transition);
 }
 
-.nav__links a:hover { color: var(--color-highlight); }
+.nav__links a:hover { color: var(--color-ink); }
 
 .nav__links a.active {
   color: var(--color-ink);
-  border-bottom: 1px solid var(--color-highlight);
+  border-bottom: 1px solid var(--color-ink);
   padding-bottom: 2px;
 }
 
@@ -161,9 +159,8 @@ p {
 }
 
 .nav__cta:hover {
-  background: var(--color-highlight);
+  background: var(--color-ink);
   color: var(--color-bg);
-  border-color: var(--color-highlight);
 }
 
 /* Mobile nav */
@@ -294,9 +291,9 @@ p {
   font-size: var(--size-xs);
   font-weight: 500;
   padding: 3px 10px;
-  border: 1px solid var(--color-purple);
+  border: 1px solid var(--color-border);
   border-radius: 100px;
-  color: var(--color-purple);
+  color: var(--color-ink-2);
 }
 
 .work-card__title {
@@ -408,7 +405,7 @@ p {
   transition: color var(--transition);
 }
 
-.footer__links a:hover { color: var(--color-highlight); }
+.footer__links a:hover { color: var(--color-ink); }
 
 @media (max-width: 768px) {
   .footer__inner { flex-direction: column; gap: var(--space-2); text-align: center; }
