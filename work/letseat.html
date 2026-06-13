@@ -69,8 +69,8 @@
     .d-rejected strong { color: var(--color-ink-2); }
 
     /* ── Phone screens ── */
-    .screens-grid { display: grid; grid-template-columns: repeat(5,1fr); gap: var(--space-3); margin-top: var(--space-6); align-items: end; }
-    .screen-card { border: 1px solid var(--color-border); overflow: hidden; }
+    .screens-grid { display: grid; grid-template-columns: repeat(5,1fr); gap: var(--space-3); margin-top: var(--space-6); align-items: stretch; }
+    .screen-card { border: 1px solid var(--color-border); overflow: hidden; display: flex; flex-direction: column; }
     .screen-thumb { aspect-ratio: 9/17; background: var(--color-surface); display: flex; align-items: center; justify-content: center; border-bottom: 1px solid var(--color-border); position: relative; overflow: hidden; }
     .screen-badge { position: absolute; bottom: 9px; left: 9px; font-size: 9px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--color-ink); background: var(--color-bg); border: 1px solid var(--color-border); padding: 2px 8px; border-radius: 100px; }
     .screen-info { padding: 12px 14px; }
@@ -373,6 +373,10 @@
           </div>
         </div>
       </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-3);margin-top:var(--space-6);">
+        <img src="../assets/images/letseat-personas.png" alt="LetsEat personas" class="case-image" style="margin:0;" />
+        <img src="../assets/images/letseat-workflow.png" alt="LetsEat workflow" class="case-image" style="margin:0;" />
+      </div>
     </div>
   </section>
 
@@ -389,6 +393,7 @@
           <p>This is the value of low-fidelity testing: the findings are about interaction, not aesthetics. Users could tell you what felt wrong before the visual design had any chance to distract them.</p>
         </div>
       </div>
+      <img src="../assets/images/letseat-usertesting.png" alt="User testing insights" class="case-image" />
       <div class="insight-grid" style="grid-template-columns:1fr 1fr;">
         <div class="insight-card">
           <p class="insight-num">01</p>
@@ -438,6 +443,7 @@
           <div>
             <span class="d-chosen">✦ Black, white, and grey UI</span>
             <p class="d-rationale">LetsEat is infrastructure for restaurants — it needs to work for a French bistro, a ramen bar, a pizza chain, and a fine dining venue without feeling out of place in any of them. A strong branded color would compete with the restaurant's own identity. A neutral palette becomes an invisible frame, letting the restaurant's photography and food take center stage. The product disappears into the background — which is exactly what a platform should do.</p>
+            <img src="../assets/images/letseat-moodboard.png" alt="Neutral B&W palette moodboard" class="case-image" />
             <p class="d-rejected"><strong>Rejected:</strong> A branded accent color. Tested several warm and cool accent options during the moodboard phase — all of them created tension with certain restaurant photography styles. Neutral was the only option that worked universally.</p>
           </div>
         </div>
@@ -471,7 +477,8 @@
         </div>
       </div>
 
-      <div class="screens-grid">
+      <p style="font-size:var(--size-sm);font-weight:600;color:var(--color-ink);margin-bottom:var(--space-2);margin-top:var(--space-6);">Wireframes</p>
+      <div class="screens-grid" style="margin-top:0;">
 
         <!-- Screen 1: Onboarding/QR -->
         <div class="screen-card">
@@ -676,6 +683,8 @@
         </div>
 
       </div>
+      <p style="font-size:var(--size-sm);font-weight:600;color:var(--color-ink);margin-bottom:var(--space-2);margin-top:var(--space-6);">High fidelity prototype</p>
+      <img src="../assets/images/letseat-finaldesign.png" alt="LetsEat final design — key screens" class="case-image" style="margin-top:0;" />
     </div>
   </section>
 
