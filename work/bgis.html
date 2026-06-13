@@ -145,7 +145,7 @@
     .contrast-row { display: flex; align-items: center; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid #E2E2E2; }
     .contrast-body--hc .contrast-row { border-color: #444; }
     .contrast-text { font-size: var(--size-xs); color: var(--color-ink); }
-    .contrast-body--hc .contrast-text { color: #FFFF00; font-weight: 600; }
+    .contrast-body--hc .contrast-text { color: #7AF8CB; font-weight: 600; }
     .contrast-link { font-size: var(--size-xs); color: var(--color-ink-3); text-decoration: underline; }
     .contrast-body--hc .contrast-link { color: #fff; }
     .contrast-ratio { font-size: 10px; font-weight: 700; padding: 2px 8px; border: 1px solid var(--color-border); border-radius: 100px; color: var(--color-ink-3); }
@@ -281,6 +281,7 @@
           <p>The mandate was clear: modernise the look and feel, bring the site to WCAG 2.1 AA compliance, and make it fully responsive — without breaking the content workflows that administrators relied on to maintain it.</p>
         </div>
       </div>
+      <img src="../assets/images/bgis-old-intrazone.png" alt="BGIS old Intrazone" class="case-image" style="margin-top:var(--space-6);width:60%;margin-left:auto;margin-right:auto;" />
     </div>
   </section>
 
@@ -353,6 +354,7 @@
           <div>
             <span class="d-chosen">✦ Fixed right-column sidebar on all pages</span>
             <p class="d-rationale">The most-accessed links on Intrazone were buried inconsistently across different pages. Users had to remember where things lived rather than develop a predictable mental model. The redesign anchors a links hub to the right-hand side of every page — persistent across navigation, always in the same place regardless of content.</p>
+            <img src="../assets/images/bgis-linkshub.png" alt="Persistent links hub" class="case-image" />
             <p class="d-note"><strong>Why right column:</strong> The main content area needed to remain the focal point. Placing the links hub on the right preserves left-to-right reading flow while ensuring utility links are always within a short eye movement. On mobile and tablet, the sidebar collapses behind a persistent floating button — maintaining access without competing with the primary content.</p>
           </div>
         </div>
@@ -365,6 +367,7 @@
           <div>
             <span class="d-chosen">✦ User-triggered accessibility mode</span>
             <p class="d-rationale">WCAG 2.1 AA requires a minimum contrast ratio of 4.5:1 for normal text. The existing site's colour palette failed this threshold in multiple places. Rather than simply selecting compliant colours for the default theme and calling it done, the redesign introduced a high contrast mode toggle — giving users with visual impairments the option to activate significantly enhanced contrast at any time.</p>
+            <img src="../assets/images/bgis-darkmode.png" alt="High contrast mode toggle" class="case-image" />
             <p class="d-note"><strong>Why a toggle vs. system preference detection:</strong> Enterprise environments often have managed system settings that don't reflect individual employee preferences. A user-controlled toggle inside the portal ensures the option is always available regardless of what the operating system reports. It also makes the accessibility commitment visible — a signal that the organisation takes it seriously.</p>
           </div>
         </div>
@@ -398,116 +401,19 @@
         </div>
       </div>
 
-      <div class="device-grid">
-        <!-- Desktop -->
-        <div class="device-card">
-          <div class="device-screen" style="height:240px;">
-            <div class="ds-bar">
-              <span class="ds-logo">BGIS Intrazone</span>
-              <div class="ds-nav">
-                <span class="ds-nav-item">Home</span>
-                <span class="ds-nav-item">Teams</span>
-                <span class="ds-nav-item">Training</span>
-                <span class="ds-nav-item">HR</span>
-              </div>
-            </div>
-            <div class="ds-content">
-              <div class="ds-main">
-                <div class="ds-hero-block">
-                  <div class="ds-hero-title">Welcome to Intrazone</div>
-                  <div class="ds-hero-sub">Your central hub for BGIS resources</div>
-                </div>
-                <div class="ds-section-label">Quick access</div>
-                <div class="ds-card-row">
-                  <div class="ds-card"><div class="ds-card-title">Training</div><div class="ds-card-sub">Courses &amp; certifications</div></div>
-                  <div class="ds-card"><div class="ds-card-title">HR</div><div class="ds-card-sub">Benefits &amp; policies</div></div>
-                  <div class="ds-card"><div class="ds-card-title">IT Help</div><div class="ds-card-sub">Support &amp; tickets</div></div>
-                </div>
-                <div class="ds-section-label">News &amp; announcements</div>
-                <div class="ds-card-row">
-                  <div class="ds-card" style="flex:2;"><div class="ds-card-title">Q3 Update</div><div class="ds-card-sub">Company performance highlights</div></div>
-                  <div class="ds-card"><div class="ds-card-title">Events</div><div class="ds-card-sub">Upcoming</div></div>
-                </div>
-              </div>
-              <div class="ds-sidebar">
-                <div class="ds-link-group">
-                  <div class="ds-link-label">Most visited</div>
-                  <div class="ds-link-item">Payroll portal</div>
-                  <div class="ds-link-item">Time &amp; attendance</div>
-                  <div class="ds-link-item">Benefits</div>
-                  <div class="ds-link-item">IT helpdesk</div>
-                  <div class="ds-link-item">Sharepoint</div>
-                </div>
-                <div class="ds-link-group" style="margin-top:6px;">
-                  <div class="ds-link-label">My team</div>
-                  <div class="ds-link-item">Team hub</div>
-                  <div class="ds-link-item">Documents</div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="device-info">
-            <p class="device-name">Desktop</p>
-            <p class="device-desc">Full two-column layout. Links hub always visible in right sidebar.</p>
-          </div>
+      <img src="../assets/images/bgis-responsive.png" alt="Responsive design across breakpoints" class="case-image" />
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-3);margin-top:var(--space-3);">
+        <div>
+          <p style="font-size:var(--size-sm);font-weight:600;color:var(--color-ink);margin-bottom:3px;">Desktop</p>
+          <p style="font-size:11px;color:var(--color-ink-3);line-height:1.5;">Full two-column layout. Links hub always visible in right sidebar.</p>
         </div>
-
-        <!-- Tablet -->
-        <div class="device-card">
-          <div class="device-screen" style="height:240px;">
-            <div class="ds-bar" style="height:24px;padding:0 8px;">
-              <span class="ds-logo" style="font-size:8px;">BGIS Intrazone</span>
-              <span style="font-size:14px;color:rgba(255,255,255,.7);margin-left:auto;">≡</span>
-            </div>
-            <div class="ds-tablet-content">
-              <div class="ds-tab-hero">
-                <div class="ds-tab-hero-title">Welcome to Intrazone</div>
-                <div style="font-size:5px;color:#888;margin-top:1px;">Your central hub for BGIS resources</div>
-              </div>
-              <div class="ds-tab-grid">
-                <div class="ds-tab-card"><div class="ds-tab-card-title">Training</div><div style="font-size:4px;color:#888;">Courses</div></div>
-                <div class="ds-tab-card"><div class="ds-tab-card-title">HR</div><div style="font-size:4px;color:#888;">Benefits</div></div>
-              </div>
-              <div class="ds-tab-grid" style="padding-top:0;">
-                <div class="ds-tab-card"><div class="ds-tab-card-title">IT Help</div><div style="font-size:4px;color:#888;">Support</div></div>
-                <div class="ds-tab-card"><div class="ds-tab-card-title">News</div><div style="font-size:4px;color:#888;">Updates</div></div>
-              </div>
-              <div style="flex:1;"></div>
-              <div class="ds-tab-links">
-                <span class="ds-tab-links-label">Quick Links</span>
-                <span class="ds-tab-links-btn">Open ↑</span>
-              </div>
-            </div>
-          </div>
-          <div class="device-info">
-            <p class="device-name">Tablet</p>
-            <p class="device-desc">Grid layout. Links hub collapses into a persistent bottom button.</p>
-          </div>
+        <div>
+          <p style="font-size:var(--size-sm);font-weight:600;color:var(--color-ink);margin-bottom:3px;">Tablet</p>
+          <p style="font-size:11px;color:var(--color-ink-3);line-height:1.5;">Grid layout. Links hub collapses into a persistent bottom button.</p>
         </div>
-
-        <!-- Mobile -->
-        <div class="device-card">
-          <div class="device-screen" style="height:240px;">
-            <div class="ds-mob-bar">
-              <div class="ds-mob-hamburger"><div class="ds-mob-line"></div><div class="ds-mob-line"></div><div class="ds-mob-line"></div></div>
-              <span class="ds-mob-logo">Intrazone</span>
-              <span class="ds-mob-btn">Links</span>
-            </div>
-            <div class="ds-mob-hero">
-              <div class="ds-mob-title">Welcome back</div>
-              <div class="ds-mob-sub">Your BGIS resource hub</div>
-            </div>
-            <div class="ds-mob-cards">
-              <div class="ds-mob-card"><span class="ds-mob-card-title">Training &amp; Certifications</span><span class="ds-mob-arrow">›</span></div>
-              <div class="ds-mob-card"><span class="ds-mob-card-title">HR &amp; Benefits</span><span class="ds-mob-arrow">›</span></div>
-              <div class="ds-mob-card"><span class="ds-mob-card-title">IT Help &amp; Support</span><span class="ds-mob-arrow">›</span></div>
-              <div class="ds-mob-card"><span class="ds-mob-card-title">News &amp; Announcements</span><span class="ds-mob-arrow">›</span></div>
-            </div>
-          </div>
-          <div class="device-info">
-            <p class="device-name">Mobile</p>
-            <p class="device-desc">Stacked list layout. Hamburger nav + floating Links button in header.</p>
-          </div>
+        <div>
+          <p style="font-size:var(--size-sm);font-weight:600;color:var(--color-ink);margin-bottom:3px;">Mobile</p>
+          <p style="font-size:11px;color:var(--color-ink-3);line-height:1.5;">Stacked list layout. Hamburger nav + floating Links button in header.</p>
         </div>
       </div>
     </div>
